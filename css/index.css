@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,500&family=Silkscreen:wght@400;700&display=swap");
+
+.top-bar {
+  width: 100%;
+  height: 80px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+}
+
+.image-side {
+  width: 50%;
+  flex: 1;
+}
+
+.button-side {
+  flex: 1;
+}
+
+.create-account {
+  margin-right: 50px;
+}
+
+img {
+  margin-left: 60px;
+}
+
+.login-box {
+  border: solid 2px rgb(192, 36, 36);
+  width: 500px;
+  height: 300px;
+  margin-left: 600px;
+  margin-top: 100px;
+  color: white;
+}
+.google-image {
+  width: 100%;
+  padding-left: 100px;
+  padding-top: 10px;
+}
+
+.paragraph-area {
+  width: 100%;
+  font-family: "EB Garamond", serif;
+  font-family: "Silkscreen", sans-serif;
+  font-size: 30px;
+  padding-top: 50px;
+  padding-left: 15px;
+}
+
+body{
+
+}
+
+.sub-container{
+  width: 100%;
+  display: flex;
+}
+
+.left-side{
+  flex: 1;
+}
+
+.right-side{
+  flex: 1;
+}
