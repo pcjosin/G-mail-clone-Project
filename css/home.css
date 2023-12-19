@@ -1,10 +1,8 @@
-/* CSS for Icon in title */
-link[rel="icon"] {
-    max-height: 5px; 
-}
+/* Fonts imports */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/google-sans');
 
 /* CSS for top bar */
-
 .top-bar{
     display: flex;
     box-sizing: border-box;
@@ -48,17 +46,18 @@ link[rel="icon"] {
 .search-box form{
     max-width: 720px;
     min-height: 50px;
-    background-color: #eaf1fb;
+    background-color: white;
     border-radius: 40px;
+    box-shadow: 0 2px 2px 0 #0000, 0 1px 3px 1px #0000;
 }
 
 .search-bar-input input{
     height: 46px;
-    width: 484px;;
+    width: 470px;
     max-width: 720px;
     font-family: "Google Sans",Helvetica,Arial,sans-serif;
     border: none;
-    background-color: #eaf1fb;
+    background-color: white;
 }
 
 .bi-search{
@@ -80,14 +79,14 @@ link[rel="icon"] {
 .bi-question-circle{
     position: absolute;
     top: 30px;
-    left: 82%;
+    left: 78%;
     color: #5f6368;
 }
 
 .bi-gear{
     position: absolute;
     top: 30px;
-    left: 86%;
+    left: 82%;
     color: #5f6368;  
 }
 
@@ -96,7 +95,7 @@ link[rel="icon"] {
     width: 24px;
     position: absolute;
     top: 30px;
-    left: 90%;
+    left: 86%;
     color: #5f6368;  
 }
 
@@ -107,4 +106,19 @@ link[rel="icon"] {
     position: absolute;
     top: 25px;
     left: 94%;
+}
+
+.compose button{
+    font-family: 'Product Sans Thin', sans-serif;
+    font-size: medium;
+    box-shadow: 0 1px 2px 0 #0000, 0 1px 3px 1px #0000;
+    background-color: #c2e7ff;
+    align-items: center;
+    font-weight: 500;
+    border-radius: 16px;
+    border: none;
+    height: 56px; 
+    width: 135px;
+    color: #001d35;
+    padding: 0 24px 0 0;
 }
