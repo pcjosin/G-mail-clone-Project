@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Next Page</title>
+</head>
+<body>
+
+<!-- Content for Next Page -->
+<h1>Welcome to the Next Page</h1>
+<pre id="nextpage-content" style="white-space: pre-wrap;"></pre>
+
+<script type="text/javascript">
+
+
+const CLIENT_ID = '280715447136-ejl9bcsuj842het5ifgbj7naj1jjqml3.apps.googleusercontent.com';
+      const API_KEY = 'AIzaSyAGzP3_IUN8Ds05jBNckdYrFR6jyDeoeEo';
+  // Retrieve the access token from localStorage
+  const accessToken = localStorage.getItem('accessToken');
+
+  // Load the Google API Client Library if not already loaded
+  if (typeof gapi === 'undefined') {
+    const script = document.createElement('script');
+    script.src = 'https://apis.google.com/js/api.js';
+    script.onload = initGapiClient;
+    document.head.appendChild(script);
+  } else {
+    initGapiClient();
+  }
+
+  // Initialize the Gmail API client on the Next Page
+  function initGapiClient() {
+    gapi.load('client', () => {
+      gapi.client.init({
+        apiKey: API_KEY,
+        discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest'],
+      }).then(() => {
+        // Set the access token in gapi.client
+        if (accessToken) {
+          gapi.client.setToken({ access_token: accessToken });
+
+          // Call the listLabels function
+          listLabels();
+        } else {
+          document.getElementById('nextpage-content').innerText = 'Access token not found.';
+        }
+      });
+    });
+  }
+
+  // Function to list labels
+  async function listLabels() {
+    let response;
+    try {
+      response = await gapi.client.gmail.users.labels.list({
+        'userId': 'me',
+      });
+    } catch (err) {
+      document.getElementById('nextpage-content').innerText = err.message;
+      return;
+    }
+    const labels = response.result.labels;
+    if (!labels || labels.length == 0) {
+      document.getElementById('nextpage-content').innerText = 'No labels found.';
+      return;
+    }
+    // Flatten to string to display
+    const output = labels.reduce(
+      (str, label) => `${str}${label.name}\n`,
+      'Labels:\n');
+    document.getElementById('nextpage-content').innerText = output;
+  }
+</script>
+</body>
+</html>
