@@ -1,0 +1,110 @@
+/* CSS for Icon in title */
+link[rel="icon"] {
+    max-height: 5px; 
+}
+
+/* CSS for top bar */
+
+.top-bar{
+    display: flex;
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    justify-content: space-between;
+    padding: 8px;
+}
+
+.menu-and-logo{
+    display: flex;
+}
+
+.menu-and-logo .menu-icon svg{
+    border-radius: 50%;
+    margin: 0 4px;
+    height: 24px;
+    color: #5f6368;
+}
+
+.menu-and-logo .logo img{
+    width: 109px;
+    height: 40px;
+    overflow: clip;
+    margin: 4px;
+}
+
+.search-bar{
+    display: flex;
+}
+
+.search-box{
+    flex: 1 1 auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%;
+    height: 48px;
+    display: block;
+}
+
+.search-box form{
+    max-width: 720px;
+    min-height: 50px;
+    background-color: #eaf1fb;
+    border-radius: 40px;
+}
+
+.search-bar-input input{
+    height: 46px;
+    width: 484px;;
+    max-width: 720px;
+    font-family: "Google Sans",Helvetica,Arial,sans-serif;
+    border: none;
+    background-color: #eaf1fb;
+}
+
+.bi-search{
+    color: #5f6368;
+}
+
+.bi-x{
+    color: #5f6368; 
+}
+
+.bi-filter{
+    color: #5f6368;
+}
+
+.cancel-button svg{
+    visibility: hidden;
+}
+
+.bi-question-circle{
+    position: absolute;
+    top: 30px;
+    left: 82%;
+    color: #5f6368;
+}
+
+.bi-gear{
+    position: absolute;
+    top: 30px;
+    left: 86%;
+    color: #5f6368;  
+}
+
+.bi-icon-menu{
+    height: 24px;
+    width: 24px;
+    position: absolute;
+    top: 30px;
+    left: 90%;
+    color: #5f6368;  
+}
+
+.profile-picture img{
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    position: absolute;
+    top: 25px;
+    left: 94%;
+}
