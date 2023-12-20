@@ -15,7 +15,13 @@
 .menu-and-logo{
     display: flex;
 }
+.main-container{
+    background-color :aliceblue;
+    z-index: 5;
+    position: fixed;
+    width:100vw;
 
+}
 .menu-and-logo .menu-icon svg{
     border-radius: 50%;
     margin: 0 4px;
@@ -122,8 +128,8 @@
     color: #001d35;
     padding: 0 24px 0 0;
 }
-.sender-div{
-    width: 200px !important;
+#sender-div{
+    width: 150px !important;
         margin-left: 7px;
             margin-right: 7px;
 
@@ -132,7 +138,8 @@
     color:#999999;
 }
 .preview-bar{
-    width:100% !important;
+    margin-right: 20px !important;
+    width:98% !important;
     border-bottom:0.5px solid #bbbbbb !important;
     display: flex !important;
     justify-content: space-between !important;
@@ -173,6 +180,15 @@ justify-content: flex-end!important;
 .preview{
     display: flex;
 }
+.sendertext{
+            white-space: nowrap;
+                /* Prevents text from wrapping to the next line */
+                overflow: hidden;
+                /* Hides any overflow */
+                text-overflow: ellipsis;
+                /* Adds ellipsis (...) for overflow */
+                width: 10vw;
+}
 .previewTitle{
         white-space: nowrap;
             /* Prevents text from wrapping to the next line */
@@ -203,14 +219,78 @@ justify-content: flex-end!important;
 }
 
 #main-list-header{
+    margin-left: 0.5px;
+    padding-right: 10px;
     background-color: white;
-    width:100vw;
-    z-index: 2;
-    position: fixed;
+    width:82% !important;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    z-index: 120;
+    position: absolute;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #main-list-content{
-    padding-top: 60px;
+    margin-top: 0px;
+    overflow-y: scroll !important;
+    overflow-x: hidden;
+        border-top-right-radius: 20px;
+            border-top-left-radius: 20px;
+    height: 87vh;
 
+}
+#main-list-container{
+    z-index: 7;
+        border-top-right-radius: 20px;
+            border-top-left-radius: 20px;
+            overflow: hidden;
+    background-color: white;
+}
+
+
+
+/* left bar - labels */
+
+.labelAnchor {
+    text-decoration: none;
+    font-family: sans-serif;
+    color: rgb(0, 0, 0);
+    /* text-shadow: 0 1px 1px rgba(0, 0, 0, 0.658); */
+}
+
+/* body{
+    background-color: rgb(222, 247, 255);
+} */
+
+.labelDiv:hover:not(.iconDiv) {
+    background-color: rgb(201, 243, 255);
+    border-radius: 20px;
+}
+.compose{
+    padding-bottom: 15px;
+}
+body{
+    overflow: hidden;
+}
+
+
+#display-area{
+    overflow-y: hidden;
+    height: 90vh;
+    margin-top: 100px;
+    
+    z-index: 12;
+
+}
+.preview-bar{
+    background-color: white;
+}
+#display-content-body{
+    background-color:aliceblue;
+}
+#main-sidebar{
+    margin-top: 150px !important;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
 }
