@@ -231,12 +231,12 @@ justify-content: flex-end!important;
 }
 
 #main-list-content{
-    margin-top: 0px;
+    margin-top: 60px !important;
     overflow-y: scroll !important;
     overflow-x: hidden;
         border-top-right-radius: 20px;
             border-top-left-radius: 20px;
-    height: 87vh;
+    height: 78vh !important;
 
 }
 #main-list-container{
