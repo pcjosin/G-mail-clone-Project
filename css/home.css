@@ -181,7 +181,6 @@ justify-content: flex-end!important;
     display: flex;
 }
 .sendertext{
-            white-space: nowrap;
                 /* Prevents text from wrapping to the next line */
                 overflow: hidden;
                 /* Hides any overflow */
@@ -263,7 +262,7 @@ justify-content: flex-end!important;
 } */
 
 .labelDiv:hover:not(.iconDiv) {
-    background-color: rgb(201, 243, 255);
+    background-color: rgb(223, 233, 235);
     border-radius: 20px;
 }
 .compose{
