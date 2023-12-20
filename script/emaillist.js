@@ -8,100 +8,109 @@ function loadEmailContent() {
 
     let senderNameContent = 'sender name';
     let previewTitleContent = 'this is preview title';
-    let previewTextContent = 'this is preview of email body';
+    let previewTextContent = 'this is preview of email body this is preview of email body this is preview of email body this is preview of email body this is preview of email body';
     let sendTimeContent = '09:23 pm';
 
     for (let i = 0; i < 30; i++) {
 
-    console.log(i);
+        console.log(i);
 
-    const emailPreviewBar = document.createElement('div');
-    emailPreviewBar.classList.add('d-flex','preview-bar');
-    emailPreviewBar.id = 'previewEmail' + i;
+        const emailPreviewBar = document.createElement('div');
+        emailPreviewBar.classList.add('preview-bar',);
+        emailPreviewBar.id = 'previewEmail' + i;
 
 
-    const centralLineDiv = document.createElement('div');
-    centralLineDiv.classList.add('d-flex', 'mt-2', 'mb-2');
-    centralLineDiv.id = 'centralDiv' + i;
+        const centralLineDiv = document.createElement('div');
+        centralLineDiv.classList.add('row', 'mt-1', 'mb-1','central-div');
+        centralLineDiv.id = 'centralDiv' + i;
         //left section
-        
-        // const right---//start from here
 
-    const checkbox = document.createElement('div');
+        const leftDiv = document.createElement('div');
+        leftDiv.id = 'left-div' + i;
+        leftDiv.classList.add('left-div','col-md-4');
+
+
+        const checkbox = document.createElement('div');
         checkbox.id = 'checkbox' + i;
-        checkbox.classList.add('ms-3', 'me-2');
-    checkbox.innerHTML = '<i class="bi bi-square"></i>';
+        checkbox.classList.add('list-check-box');
+        checkbox.innerHTML = '<i class="bi bi-square check-star-flag"></i>';
 
-    centralLineDiv.appendChild(checkbox);
+        leftDiv.appendChild(checkbox);
 
-    const star = document.createElement('div');
+        const star = document.createElement('div');
         star.id = 'star' + i;
-        star.classList.add('ms-2', 'me-2');
-    star.innerHTML = '<i class="bi bi-star"></i>';
+        star.classList.add('list-star');
+        star.innerHTML = '<i class="bi bi-star check-star-flag"></i>';
 
-    centralLineDiv.appendChild(star);
+        leftDiv.appendChild(star);
 
-    const important = document.createElement('div');
+        const important = document.createElement('div');
         important.id = 'important' + i;
-        important.classList.add('ms-2', 'me-2');
+        important.classList.add('list-important');
 
-    important.innerHTML = '<i class="bi bi-flag"></i>';
+        important.innerHTML = '<i class="bi bi-flag check-star-flag"></i>';
 
-    centralLineDiv.appendChild(important);
+        leftDiv.appendChild(important);
 
-    const sender = document.createElement('div');
+        const sender = document.createElement('div');
         sender.id = 'sender' + i;
-        sender.classList.add('ms-2', 'me-2');
+        sender.classList.add('sender-div');
 
 
-    const sendertext = document.createElement('span');
-    sendertext.id = 'sendertext' + i;
+        const sendertext = document.createElement('span');
+        sendertext.id = 'sendertext' + i;
+        sendertext.classList.add('sendertext');
 
-    const sendertextInside = document.createElement('strong');
-    sendertextInside.id = 'sendertextInside' + i;
-    sendertextInside.innerText = senderNameContent;
-
-    sendertext.appendChild(sendertextInside);
-    sender.appendChild(sendertext);
-        centralLineDiv.appendChild(sender);
-        
-    //right side
+        sendertext.innerText = senderNameContent+i;
+        sender.appendChild(sendertext);
+        leftDiv.appendChild(sender);
 
 
-    const preview = document.createElement('div');
-    preview.id = 'preview' + i;
-    preview.classList = ('d-flex');
+        centralLineDiv.appendChild(leftDiv);
 
-    const previewTitle = document.createElement('span');
-    previewTitle.id = 'previewTitle' + i;
 
-    const previewTitleInside = document.createElement('strong');
-    previewTitleInside.id = 'previewTitleInside' + i;
 
-    previewTitleInside.innerText = previewTitleContent +' - ';
+        const rightDiv = document.createElement('div');
+        rightDiv.id = 'right-div' + i;
+        rightDiv.classList.add('right-div','col-md-8','d-flex');
 
-    previewTitle.appendChild(previewTitleInside);
 
-    const previewText = document.createElement('span');
-    previewText.id = 'previewText' + i;
-    previewText.innerText = previewTextContent;
+        const preview = document.createElement('div');
+        preview.id = 'preview' + i;
+        preview.classList = ('preview','col','d-flex');
 
-    preview.appendChild(previewTitle);
-    preview.appendChild(previewText);
+        const previewTitle = document.createElement('div');
+        previewTitle.id = 'previewTitle' + i;
+        previewTitle.classList.add('previewTitle');
 
-    centralLineDiv.appendChild(preview);
+        previewTitle.innerText = previewTitleContent + ' - ';
 
-    const sendTime = document.createElement('div');
-    sendTime.id = 'sendTime' + i;
-    const sendTimeinside = document.createElement('span');
-    sendTimeinside.innerText = sendTimeContent;
+        const previewText = document.createElement('div');
+        previewText.id = 'previewText' + i;
+        previewText.classList.add('previewText');
+        previewText.innerText = previewTextContent;
 
-    sendTime.appendChild(sendTimeinside);
+        preview.appendChild(previewTitle);
+        preview.appendChild(previewText);
 
-    centralLineDiv.appendChild(sendTime);
+        rightDiv.appendChild(preview);
 
-    emailPreviewBar.appendChild(centralLineDiv);
-    mainListContent.appendChild(emailPreviewBar);
+        const sendTime = document.createElement('div');
+        sendTime.id = 'sendTime' + i;
+        sendTime.classList.add('preview-time','col-md-3','col-sm-3');
+        const sendTimeinside = document.createElement('span');
+        sendTimeinside.innerText = sendTimeContent;
+
+        sendTime.appendChild(sendTimeinside);
+
+        rightDiv.appendChild(sendTime);
+
+        centralLineDiv.appendChild(rightDiv);
+
+
+        emailPreviewBar.appendChild(centralLineDiv);
+        mainListContent.appendChild(emailPreviewBar);
+
     }
 
 }
