@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://apis.google.com/js/client.js"></script>
+  <script async defer src="https://apis.google.com/js/api.js"></script>
+    <script async defer src="https://accounts.google.com/gsi/client" ></script>
   <title>Next Page</title>
 </head>
 <body>
@@ -14,40 +17,40 @@
 <script type="text/javascript">
 
 
-const CLIENT_ID = '280715447136-ejl9bcsuj842het5ifgbj7naj1jjqml3.apps.googleusercontent.com';
-      const API_KEY = 'AIzaSyAGzP3_IUN8Ds05jBNckdYrFR6jyDeoeEo';
-  // Retrieve the access token from localStorage
-  const accessToken = localStorage.getItem('accessToken');
+const apiKey = sessionStorage.getItem('gapiKey');
+const clientId = sessionStorage.getItem('gapiClientId');
+const discoveryDocs = JSON.parse(sessionStorage.getItem('gapiDiscoveryDocs'));
+const scope = sessionStorage.getItem('gapiScope');
 
-  // Load the Google API Client Library if not already loaded
-  if (typeof gapi === 'undefined') {
-    const script = document.createElement('script');
-    script.src = 'https://apis.google.com/js/api.js';
-    script.onload = initGapiClient;
-    document.head.appendChild(script);
-  } else {
-    initGapiClient();
-  }
+// Reconstruct gapi.client
+
+
+
+const storedClient = sessionStorage.getItem('gapiClient');
+const restoredClient = JSON.parse(storedClient);
+const API_KEY = 'AIzaSyAGzP3_IUN8Ds05jBNckdYrFR6jyDeoeEo';
+
 
   // Initialize the Gmail API client on the Next Page
-  function initGapiClient() {
-    gapi.load('client', () => {
-      gapi.client.init({
-        apiKey: API_KEY,
-        discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest'],
-      }).then(() => {
-        // Set the access token in gapi.client
-        if (accessToken) {
-          gapi.client.setToken({ access_token: accessToken });
+  const accessToken = localStorage.getItem('accessToken');
 
-          // Call the listLabels function
-          listLabels();
-        } else {
-          document.getElementById('nextpage-content').innerText = 'Access token not found.';
-        }
-      });
+  // Initialize the Gmail API client on the Next Page
+  gapi.load('client', () => {
+    gapi.client.init({
+      apiKey: API_KEY,
+      discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest'],
+    }).then(() => {
+      // Set the access token in gapi.client
+      if (accessToken) {
+        gapi.client.setToken({ access_token: accessToken });
+
+        // Call the listLabels function
+        listLabels();
+      } else {
+        document.getElementById('nextpage-content').innerText = 'Access token not found.';
+      }
     });
-  }
+  });
 
   // Function to list labels
   async function listLabels() {
@@ -71,6 +74,7 @@ const CLIENT_ID = '280715447136-ejl9bcsuj842het5ifgbj7naj1jjqml3.apps.googleuser
       'Labels:\n');
     document.getElementById('nextpage-content').innerText = output;
   }
+    listLabels()
 </script>
 </body>
 </html>
