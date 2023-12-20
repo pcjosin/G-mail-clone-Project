@@ -1,17 +1,17 @@
-let mainListContent = document.getElementById('main-list-content');
+// let mainListContent = document.getElementById('main-list-content');
 
 
 
-function loadEmailContent() {
+function loadEmailContent(senderNameContent, previewTitleContent, previewTextContent, sendTimeContent) {
 
     console.log("function running");
 
-    let senderNameContent = 'sender name';
-    let previewTitleContent = 'this is preview title';
-    let previewTextContent = 'this is preview of email body this is preview of email body this is preview of email body this is preview of email body this is preview of email body';
-    let sendTimeContent = '09:23 pm';
+    // let senderNameContent = 'sender name';
+    // let previewTitleContent = 'this is preview title';
+    // let previewTextContent = 'this is preview of email body this is preview of email body this is preview of email body this is preview of email body this is preview of email body';
+    // let sendTimeContent = '09:23 pm';
 
-    for (let i = 0; i < 30; i++) {
+    // for (let i = 0; i < 30; i++) {
 
         console.log(i);
 
@@ -108,12 +108,12 @@ function loadEmailContent() {
         centralLineDiv.appendChild(rightDiv);
 
 
-        emailPreviewBar.appendChild(centralLineDiv);
-        mainListContent.appendChild(emailPreviewBar);
+    emailPreviewBar.appendChild(centralLineDiv);
+    return emailPreviewBar;
 
-    }
+    // }
 
 }
 
 
-window.onload = loadEmailContent();
+// window.onload = loadEmailContent();
