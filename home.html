@@ -76,15 +76,34 @@
         </div>
     </div>
     <div class="display container-fluid">
-        <div class="container-md-2 p-0" id="main-sidebar">
-            <!-- Content for the main sidebar goes here -->
-        </div>   
-        <div class="container-md-9" id="display-area">
-            <!-- Content for the display area goes here -->
+        <div class="row">
+            <div class="col-md-2 p-0" id="main-sidebar">
+                <!-- Content for the main sidebar goes here -->
+            </div>   
+            <div class="col-md-10" id="display-area">
+                <!-- Content for the display area goes here -->
+            </div>
         </div>
     </div>
+    
     <script>
-      // Reconstruct gapi.client
+      
+
+    
+
+    function loadPage2Content() {
+            fetch('mail.html')
+                .then(response => response.text())
+                .then(data => {
+                    // Inject the loaded content into the container
+                    document.getElementById('display-area').innerHTML = data;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Call the function to load content on page load
+    loadPage2Content();
+
 const API_KEY = 'AIzaSyAGzP3_IUN8Ds05jBNckdYrFR6jyDeoeEo';
 
 
@@ -104,11 +123,135 @@ gapi.load('client', () => {
 
       // Call the listLabels function
       listLabels();
+      listLatestEmails(1);
     } else {
       document.getElementById('nextpage-content').innerText = 'Access token not found.';
     }
   });
 });}
+
+async function listLatestEmails(numberOfEmails) {
+    try {
+        const response = await gapi.client.gmail.users.messages.list({
+            'userId': 'me',
+            'labelIds': ['INBOX'],
+            'maxResults': numberOfEmails,
+        });
+
+        console.log(response.result.messages);
+
+        // Now you can iterate over the messages and fetch more details if needed.
+        for (const message of response.result.messages) {
+            await getEmailContent(message.id);
+        }
+    } catch (error) {
+        console.error('Error listing emails:', error);
+    }
+}
+
+function displayList(message){
+    let clonedElement=makeclone()
+    
+
+
+}
+function makeclone(){
+    let original=document.getElementById("email-list-element")
+    let clonedElement = originalElement.cloneNode(true);
+    return clonedElement
+
+}
+
+async function getEmailContent(messageId) {
+    try {
+        const response = await gapi.client.gmail.users.messages.get({
+            'userId': 'me',
+            'id': messageId,
+        });
+
+        // Handle the response
+        const emailData = response.result;
+        console.log('Email Data:', emailData);
+
+        // Access the body of the email
+        const body = getEmailBody(emailData);
+        
+
+        // Get sender's email address
+        const senderEmail = getSenderEmail(emailData);
+        console.log('Sender Email:', senderEmail);
+
+        // Get sender's name
+       // const senderName = getSenderName(emailData);
+        //console.log('Sender Name:', senderName);
+
+        // Get send time
+        const sendSubject=getSendSubject(emailData)
+        
+        const sendTime = await getSendTime(emailData);
+        console.log('Send Time:', sendTime);
+
+        // Process the email data, body, sender's email, sender's name, and send time as needed
+    } catch (error) {
+        console.error('Error getting email content:', error);
+    }
+}
+
+async function getEmailBody(emailData) {
+    let body = '';
+
+    // Check if the email has parts
+    if (emailData.payload.parts) {
+        // Iterate through parts
+        for (const part of emailData.payload.parts) {
+            // Check if the part is text/plain (plain text)
+            if (part.mimeType === 'text/plain' && part.body && part.body.data) {
+                // Decode the base64-encoded data
+                body = atob(part.body.data);
+                console.log(body)
+                document.getElementById("body-content").innerText = body;
+                return body
+            }
+        }
+    }
+
+    return body;
+}
+async function getSenderEmail(emailData) {
+    var headers = emailData.payload.headers;
+    for (var i = 0; i < headers.length; i++) {
+        if (headers[i].name === 'From') {
+            document.getElementById("sender-adress").innerText=headers[i].value;
+            return headers[i].value;
+
+        }
+    }
+    return null; // Return null if 'From' header is not found
+}
+
+
+
+async function getSendTime(emailData) {
+    var headers = emailData.payload.headers;
+    for (var i = 0; i < headers.length; i++) {
+        if (headers[i].name === 'Date') {
+            document.getElementById("send-date").innerText=headers[i].value;
+            return new Date(headers[i].value);
+        }
+    }
+    return null; // Return null if 'Date' header is not found
+}
+async function getSendSubject(emailData) {
+    var headers = emailData.payload.headers;
+    for (var i = 0; i < headers.length; i++) {
+        if (headers[i].name === 'Subject') {
+            document.getElementById("email-subject").innerText=headers[i].value;
+            return headers[i].value;
+        }
+    }
+    return null; // Return null if 'Date' header is not found
+}
+
 
 // Function to list labels
 async function listLabels() {
