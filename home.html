@@ -89,23 +89,25 @@
     <script>
       
 
-    
+let emailListContainer
 
     function loadPage2Content() {
-            fetch('mail.html')
+            fetch("html/emaillist.html")
                 .then(response => response.text())
                 .then(data => {
                     // Inject the loaded content into the container
                     document.getElementById('display-area').innerHTML = data;
+                    emailListContainer=document.getElementById("main-list-content");
                 })
                 .catch(error => console.error('Error:', error));
         }
 
         // Call the function to load content on page load
-    loadPage2Content();
+    //loadPage2Content("mail.html");
 
 const API_KEY = 'AIzaSyAGzP3_IUN8Ds05jBNckdYrFR6jyDeoeEo';
 
+loadPage2Content();
 
 // Initialize the Gmail API client on the Next Page
 const accessToken = localStorage.getItem('accessToken');
@@ -123,7 +125,7 @@ gapi.load('client', () => {
 
       // Call the listLabels function
       listLabels();
-      listLatestEmails(1);
+      listLatestEmails(10);
     } else {
       document.getElementById('nextpage-content').innerText = 'Access token not found.';
     }
@@ -139,27 +141,65 @@ async function listLatestEmails(numberOfEmails) {
         });
 
         console.log(response.result.messages);
+     
+       
 
         // Now you can iterate over the messages and fetch more details if needed.
         for (const message of response.result.messages) {
-            await getEmailContent(message.id);
+            const senderNameContent = await getSenderName(message.id);
+            console.log(senderNameContent)
+                const previewTitleContent = await getSendSubject(message.id);
+                const previewTextContent = await getMessageSnippet(message.id);
+                const sendTimeContent = await getSendTime(message.id);
+
+                const emailListElement = loadEmailContent(senderNameContent, previewTitleContent, previewTextContent, sendTimeContent);
+                emailListContainer.appendChild(emailListElement);
         }
     } catch (error) {
         console.error('Error listing emails:', error);
     }
 }
 
-function displayList(message){
-    let clonedElement=makeclone()
-    
 
 
+async function getSenderName(messageId) {
+    try {
+        const emailData = await getEmailContent(messageId);
+
+        if (emailData && emailData.result && emailData.result.payload && emailData.result.payload.headers) {
+            const headers = emailData.result.payload.headers;
+
+            for (let i = 0; i < headers.length; i++) {
+                if (headers[i].name === 'From') {
+                    // Extract the name from the email address (assumes the format "Name <email>")
+                    const match = headers[i].value.match(/(.*) <.*>/);
+                    return match ? match[1] : headers[i].value;
+                }
+            }
+        } else {
+            console.error('Error: Invalid email data structure:', emailData);
+        }
+    } catch (error) {
+        console.error('Error getting sender name:', error);
+    }
+
+    return null; // Return null if sender's email is not found or encountered an error
 }
-function makeclone(){
-    let original=document.getElementById("email-list-element")
-    let clonedElement = originalElement.cloneNode(true);
-    return clonedElement
 
+async function getMessageSnippet(messageId) {
+    try {
+        const emailData = await getEmailContent(messageId);
+
+        if (emailData && emailData.result && emailData.result.snippet) {
+            return emailData.result.snippet;
+        } else {
+            console.error('Error: Invalid email data structure or missing snippet:', emailData);
+        }
+    } catch (error) {
+        console.error('Error getting message snippet:', error);
+    }
+
+    return null; // Return null if snippet is not found or encountered an error
 }
 
 async function getEmailContent(messageId) {
@@ -168,36 +208,21 @@ async function getEmailContent(messageId) {
             'userId': 'me',
             'id': messageId,
         });
-
-        // Handle the response
-        const emailData = response.result;
-        console.log('Email Data:', emailData);
-
-        // Access the body of the email
-        const body = getEmailBody(emailData);
-        
-
-        // Get sender's email address
-        const senderEmail = getSenderEmail(emailData);
-        console.log('Sender Email:', senderEmail);
-
-        // Get sender's name
-       // const senderName = getSenderName(emailData);
-        //console.log('Sender Name:', senderName);
-
-        // Get send time
-        const sendSubject=getSendSubject(emailData)
-        
-        const sendTime = await getSendTime(emailData);
-        console.log('Send Time:', sendTime);
-
-        // Process the email data, body, sender's email, sender's name, and send time as needed
+        return response
     } catch (error) {
+        return null
         console.error('Error getting email content:', error);
     }
 }
 
-async function getEmailBody(emailData) {
+        // Handle the response
+ 
+
+        // Process the email data, body, sender's email, sender's name, and send time as needed
+
+
+async function getEmailBody(messageId) {
+    let emailData=getEmailContent(messageId).result;
     let body = '';
 
     // Check if the email has parts
@@ -217,11 +242,12 @@ async function getEmailBody(emailData) {
 
     return body;
 }
-async function getSenderEmail(emailData) {
+async function getSenderEmail(messageId) {
+    let emailData=getEmailContent(messageId).result;
     var headers = emailData.payload.headers;
     for (var i = 0; i < headers.length; i++) {
         if (headers[i].name === 'From') {
-            document.getElementById("sender-adress").innerText=headers[i].value;
+            
             return headers[i].value;
 
         }
@@ -231,26 +257,50 @@ async function getSenderEmail(emailData) {
 
 
 
-async function getSendTime(emailData) {
-    var headers = emailData.payload.headers;
-    for (var i = 0; i < headers.length; i++) {
-        if (headers[i].name === 'Date') {
-            document.getElementById("send-date").innerText=headers[i].value;
-            return new Date(headers[i].value);
+async function getSendTime(messageId) {
+    try {
+        const emailData = await getEmailContent(messageId);
+
+        if (emailData && emailData.result && emailData.result.payload && emailData.result.payload.headers) {
+            const headers = emailData.result.payload.headers;
+
+            for (let i = 0; i < headers.length; i++) {
+                if (headers[i].name === 'Date') {
+                    return new Date(headers[i].value);
+                }
+            }
+        } else {
+            console.error('Error: Invalid email data structure:', emailData);
         }
+    } catch (error) {
+        console.error('Error getting send time:', error);
     }
-    return null; // Return null if 'Date' header is not found
+
+    return null; // Return null if 'Date' header is not found or encountered an error
 }
-async function getSendSubject(emailData) {
-    var headers = emailData.payload.headers;
-    for (var i = 0; i < headers.length; i++) {
-        if (headers[i].name === 'Subject') {
-            document.getElementById("email-subject").innerText=headers[i].value;
-            return headers[i].value;
+
+async function getSendSubject(messageId) {
+    try {
+        const emailData = await getEmailContent(messageId);
+
+        if (emailData && emailData.result && emailData.result.payload && emailData.result.payload.headers) {
+            const headers = emailData.result.payload.headers;
+
+            for (let i = 0; i < headers.length; i++) {
+                if (headers[i].name === 'Subject') {
+                    return headers[i].value;
+                }
+            }
+        } else {
+            console.error('Error: Invalid email data structure:', emailData);
         }
+    } catch (error) {
+        console.error('Error getting email subject:', error);
     }
-    return null; // Return null if 'Date' header is not found
+
+    return null; // Return null if 'Subject' header is not found or encountered an error
 }
+
 
 
 // Function to list labels
@@ -326,6 +376,113 @@ async function listLabels() {
   }
 
   console.log(labels);
+}
+
+
+function loadEmailContent(senderNameContent, previewTitleContent, previewTextContent, sendTimeContent) {
+
+console.log("function running");
+
+// let senderNameContent = 'sender name';
+// let previewTitleContent = 'this is preview title';
+// let previewTextContent = 'this is preview of email body this is preview of email body this is preview of email body this is preview of email body this is preview of email body';
+// let sendTimeContent = '09:23 pm';
+
+// for (let i = 0; i < 30; i++) {
+
+    
+
+    const emailPreviewBar = document.createElement('div');
+    emailPreviewBar.classList.add('preview-bar',);
+    
+
+
+    const centralLineDiv = document.createElement('div');
+    centralLineDiv.classList.add('row', 'mt-1', 'mb-1','central-div');
+ 
+    //left section
+
+    const leftDiv = document.createElement('div');
+
+    leftDiv.classList.add('left-div','col-md-4');
+
+
+    const checkbox = document.createElement('div');
+
+    checkbox.classList.add('list-check-box');
+    checkbox.innerHTML = '<i class="bi bi-square check-star-flag"></i>';
+
+    leftDiv.appendChild(checkbox);
+
+    const star = document.createElement('div');
+
+    star.classList.add('list-star');
+    star.innerHTML = '<i class="bi bi-star check-star-flag"></i>';
+
+    leftDiv.appendChild(star);
+
+    const important = document.createElement('div');
+
+    important.classList.add('list-important');
+
+    important.innerHTML = '<i class="bi bi-flag check-star-flag"></i>';
+
+    leftDiv.appendChild(important);
+
+    const sender = document.createElement('div');
+    sender.classList.add('sender-div');
+
+
+    const sendertext = document.createElement('span');
+    sendertext.classList.add('sendertext');
+
+    sendertext.innerText = senderNameContent
+    sender.appendChild(sendertext);
+    leftDiv.appendChild(sender);
+
+
+    centralLineDiv.appendChild(leftDiv);
+
+
+
+    const rightDiv = document.createElement('div');
+    rightDiv.classList.add('right-div','col-md-8','d-flex');
+
+
+    const preview = document.createElement('div');
+    preview.classList = ('preview','col','d-flex');
+
+    const previewTitle = document.createElement('div');
+    previewTitle.classList.add('previewTitle');
+
+    previewTitle.innerText = previewTitleContent + ' - ';
+
+    const previewText = document.createElement('div');
+    previewText.classList.add('previewText');
+    previewText.innerText = previewTextContent;
+
+    preview.appendChild(previewTitle);
+    preview.appendChild(previewText);
+
+    rightDiv.appendChild(preview);
+
+    const sendTime = document.createElement('div');
+    sendTime.classList.add('preview-time','col-md-3','col-sm-3');
+    const sendTimeinside = document.createElement('span');
+    sendTimeinside.innerText = sendTimeContent;
+
+    sendTime.appendChild(sendTimeinside);
+
+    rightDiv.appendChild(sendTime);
+
+    centralLineDiv.appendChild(rightDiv);
+
+
+emailPreviewBar.appendChild(centralLineDiv);
+return emailPreviewBar;
+
+// }
+
 }
   
       </script>
