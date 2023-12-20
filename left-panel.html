@@ -10,15 +10,18 @@
     <link rel="stylesheet" href="./css/left-bar.css">
 
   <body>
-    <p>Gmail API Quickstart</p>
+   
 
-    <!--Add buttons to initiate auth sequence and sign out-->
-    <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
-    <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
 
     <pre id="content" style="white-space: pre-wrap;"></pre>
 
     <script type="text/javascript">
+
+
+
+
+
+
      
 
       async function listLabels() {
@@ -37,7 +40,7 @@
           return;
         }
 
-        let parentDiv=document.getElementById('content');
+        let parentDiv=document.getElementById('main-sidebar');
         for(let i=0;i<labels.length;i++){
             let labelDiv=document.createElement('div');//main label div
             labelDiv.id=labels[i].id;
@@ -45,7 +48,7 @@
             
 
             
-            let iconDiv=document.createElement('div');//adding icon tag
+            let iconDiv=document.getElementById('div');//adding icon tag
             iconDiv.classList.add('bi','col-1','fs-3');
             switch(labels[i].id.toLowerCase()){
               case 'chat':iconDiv.classList.add('bi-chat-left-text');
