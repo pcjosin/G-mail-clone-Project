@@ -91,6 +91,8 @@
       
 
 let emailListContainer
+let emailBody;
+let emailSubject;
 
     function loadPage2Content() {
             fetch("html/emaillist.html")
@@ -145,7 +147,7 @@ async function listLatestEmails(numberOfEmails) {
      
        
 
-        // Now you can iterate over the messages and fetch more details if needed.
+        
         for (const message of response.result.messages) {
             const senderNameContent = await getSenderName(message.id);
             console.log(senderNameContent)
@@ -154,6 +156,9 @@ async function listLatestEmails(numberOfEmails) {
                 const sendTimeContent = await getSendTime(message.id);
 
                 const emailListElement = loadEmailContent(senderNameContent, previewTitleContent, previewTextContent, sendTimeContent);
+                emailListElement.setAttribute("id",message.id);
+                emailListElement.onclick = () => clickHandle(message.id);
+
                 emailListContainer.appendChild(emailListElement);
         }
     } catch (error) {
@@ -220,40 +225,83 @@ async function getEmailContent(messageId) {
  
 
         // Process the email data, body, sender's email, sender's name, and send time as needed
+async function  clickHandle(emailElementId){
+    fetch("mail.html")
+                .then(response => response.text())
+                .then(data => {
+                    // Inject the loaded content into the container
+                    document.getElementById('display-area').innerHTML = data;
+                   
+                    emailBody=document.getElementById("body-content");
+                    emailSubject=document.getElementById("email-subject")
+                
+                
+                    
+                })
+                .catch(error => console.error('Error:', error));
+                            
+                emailSubjectContent = await getSendSubject(emailElementId);
+                emailBodyContent=  await getEmailBodyText(emailElementId);
+                console.log(emailBodyContent+"))))))))")
+
+                // Update your HTML elements
+                emailSubject.innerText = emailSubjectContent;
+                emailBody.innerText = emailBodyContent;
+                            
 
 
-async function getEmailBody(messageId) {
-    let emailData=getEmailContent(messageId).result;
-    let body = '';
+}
 
-    // Check if the email has parts
-    if (emailData.payload.parts) {
-        // Iterate through parts
-        for (const part of emailData.payload.parts) {
-            // Check if the part is text/plain (plain text)
-            if (part.mimeType === 'text/plain' && part.body && part.body.data) {
-                // Decode the base64-encoded data
-                body = atob(part.body.data);
-                console.log(body)
-                document.getElementById("body-content").innerText = body;
-                return body
+async function getEmailBodyText(messageId) {
+    try {
+        // Use the Gmail API to get the email content
+        const response = await gapi.client.gmail.users.messages.get({
+            'userId': 'me',
+            'id': messageId,
+        });
+
+        // Access the email data from the response
+        const emailData = response.result;
+
+        // Check if the email has parts
+        if (emailData.payload && emailData.payload.parts) {
+            // Iterate through parts
+            for (const part of emailData.payload.parts) {
+                // Check if the part is text/plain (plain text)
+                if (part.mimeType === 'text/plain' && part.body && part.body.data) {
+                    // Decode the base64-encoded data
+                    const bodyText = atob(part.body.data);
+
+                    // Return the decoded body text
+                    return bodyText;
+                }
             }
         }
-    }
 
-    return body;
+        // Return an empty string if no valid body text is found
+        return '';
+    } catch (error) {
+        console.error('Error getting email body text:', error);
+        return ''; // Return an empty string in case of an error
+    }
 }
-async function getSenderEmail(messageId) {
-    let emailData=getEmailContent(messageId).result;
-    var headers = emailData.payload.headers;
-    for (var i = 0; i < headers.length; i++) {
-        if (headers[i].name === 'From') {
-            
-            return headers[i].value;
 
+async function getSenderEmail(messageId) {
+    try {
+        const emailData = await getEmailContent(messageId);
+        const headers = emailData.payload.headers;
+
+        for (let i = 0; i < headers.length; i++) {
+            if (headers[i].name === 'From') {
+                return headers[i].value;
+            }
         }
+
+        return null; // Return null if 'From' header is not found
+    } catch (error) {
+        console.error('Error getting sender email:', error);
+        return null;
     }
-    return null; // Return null if 'From' header is not found
 }
 
 
