@@ -243,7 +243,6 @@
           console.log(response.result.messages);
 
           for (const message of response.result.messages) {
-
             const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
             console.log(messagePreview);
 
@@ -263,21 +262,18 @@
       // function to return a preview of email
       async function getEmailPreview(messageId) {
         console.log("inside preview");
-        try{
-            const response=gapi.client.gmail.users.messages
-          .get({
+        try {
+          const response = gapi.client.gmail.users.messages.get({
             userId: "me",
             id: messageId,
             format: "metadata",
-            metadataHeaders: ["Subject", "From"],
+            metadataHeaders: ["Subject", "From","Date"],
           });
           console.log(response);
-            return response;
-
-        }catch (error) {
+          return response;
+        } catch (error) {
           console.error("Error getting email preview:", error);
         }
-
       }
 
       //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -563,16 +559,24 @@
       }
 
       function loadEmailContent(response) {
-
-
-        const previewTitleContent = response.result.payload.headers.find((header) => header.name === "Subject").value;
-        const senderNameContent = response.result.payload.headers.find((header) => header.name === "From").value.split('<')[0];
-        const sendTimeContent = response.headers.date;
+        const previewTitleContent = response.result.payload.headers.find(
+          (header) => header.name === "Subject"
+        ).value;
+        const senderNameContent =
+          response.result.payload.headers
+            .find((header) => header.name === "From")
+            .value.split("<")[0] == ""
+            ? response.result.payload.headers.find(
+                (header) => header.name === "From"
+              ).value
+            : response.result.payload.headers
+                .find((header) => header.name === "From")
+                .value.split("<")[0];
+        const sendTimeContent =new Date(response.result.payload.headers.find((header) => header.name === "Date").value);
         const previewTextContent = response.result.snippet;
-
+        const labels = response.result.labelIds;
 
         console.log("function running");
-
 
         //+++++++++++++++++++++++++++++++++++ code to test generation++++++++++++++++++++++++++
 
@@ -606,7 +610,13 @@
         const star = document.createElement("div");
 
         star.classList.add("list-star");
-        star.innerHTML = '<i class="bi bi-star check-star-flag"></i>';
+
+        if (labels.includes("STARRED")) {
+          star.innerHTML =
+            '<i class="bi bi-star-fill check-star-flag" style="color:yellow"></i>';
+        } else {
+          star.innerHTML = '<i class="bi bi-star check-star-flag"></i>';
+        }
 
         leftDiv.appendChild(star);
 
@@ -614,7 +624,13 @@
 
         important.classList.add("list-important");
 
-        important.innerHTML = '<i class="bi bi-flag check-star-flag"></i>';
+        if (labels.includes("IMPORTANT")) {
+          important.innerHTML =
+            '<i class="bi bi-caret-right-fill check-star-flag" style="color:yellow"></i>';
+        } else {
+          important.innerHTML =
+            '<i class="bi bi-caret-right check-star-flag"></i>';
+        }
 
         leftDiv.appendChild(important);
 
@@ -623,6 +639,10 @@
 
         const sendertext = document.createElement("span");
         sendertext.classList.add("sendertext");
+
+        if (labels.includes("UNREAD")) {
+          sendertext.classList.add("bold-text");
+        }
 
         sendertext.innerText = senderNameContent;
         sender.appendChild(sendertext);
@@ -640,6 +660,9 @@
 
         const previewTitle = document.createElement("div");
         previewTitle.classList.add("previewTitle");
+        if (labels.includes("UNREAD")) {
+          previewTitle.classList.add("bold-text");
+        }
 
         previewTitle.innerText = previewTitleContent + " - ";
 
@@ -654,7 +677,11 @@
 
         const sendTime = document.createElement("div");
         sendTime.classList.add("preview-time", "col-md-3", "col-sm-3");
+        
         const sendTimeinside = document.createElement("span");
+        if (labels.includes('UNREAD')){
+            sendTimeinside.classList.add("bold-text");
+        }
         sendTimeinside.innerText = sendTimeContent;
 
         sendTime.appendChild(sendTimeinside);
