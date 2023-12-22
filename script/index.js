@@ -79,7 +79,7 @@ function handleAuthClick() {
     }
 
 
-    localStorage.setItem('accessToken', resp.access_token);
+    localStorage.setItem('accessToken', resp.access_token); //++++++++++++++++++++++++++++ encrypt and set
 
     document.getElementById('authorize_button').innerText = 'Refresh';
     // await listLabels();
