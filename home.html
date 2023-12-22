@@ -559,6 +559,14 @@
       }
 
       function loadEmailContent(response) {
+
+
+        var shortMonthNames = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+
+
         const previewTitleContent = response.result.payload.headers.find(
           (header) => header.name === "Subject"
         ).value;
@@ -572,7 +580,33 @@
             : response.result.payload.headers
                 .find((header) => header.name === "From")
                 .value.split("<")[0];
-        const sendTimeContent =new Date(response.result.payload.headers.find((header) => header.name === "Date").value);
+        const sndDateTime =new Date(response.result.payload.headers.find((header) => header.name === "Date").value);
+        console.log('snddte:'+sndDateTime);
+        let today = new Date();
+        console.log('snddte:'+today);
+
+        if (today.getFullYear()===sndDateTime.getFullYear() &&
+            today.getMonth()===sndDateTime.getMonth() &&
+            today.getDate()===sndDateTime.getDate()){
+                var sendTimeContent=sndDateTime.toLocaleTimeString().replace(/:\d{2} /, ' ');
+                        console.log('snddte:'+sendTimeContent);
+            }
+        else if(today.getFullYear() ===sndDateTime.getFullYear()){
+            var sendTimeContent=   shortMonthNames[parseInt( sndDateTime.getMonth())] +' '+ sndDateTime.getDate();
+            console.log('snddte:'+sendTimeContent);
+
+        }
+        else{
+            var sendTimeContent=sndDateTime.toLocaleDateString();
+            console.log('snddte:'+sendTimeContent);
+
+        }
+
+        
+
+       // const sendTimeContent 
+
+
         const previewTextContent = response.result.snippet;
         const labels = response.result.labelIds;
 
@@ -676,7 +710,7 @@
         rightDiv.appendChild(preview);
 
         const sendTime = document.createElement("div");
-        sendTime.classList.add("preview-time", "col-md-3", "col-sm-3");
+        sendTime.classList.add("preview-time", "col-md-3", "col-sm-3","pe-4");
         
         const sendTimeinside = document.createElement("span");
         if (labels.includes('UNREAD')){
@@ -700,8 +734,7 @@
     <script
       async
       src="https://apis.google.com/js/api.js"
-      onload="gapiLoaded()"
-    ></script>
+      onload="gapiLoaded()"></script>
     <script async src="https://accounts.google.com/gsi/client"></script>
   </body>
 </html>
