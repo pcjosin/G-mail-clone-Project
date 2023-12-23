@@ -41,7 +41,7 @@ function gapiLoaded() {
 
           // Call the listLabels function
           listLabels();
-          listLatestEmails(20);
+          listLatestEmails(50);
         } else {
           document.getElementById("nextpage-content").innerText =
             "Access token not found.";
@@ -399,7 +399,7 @@ function loadEmailContent(response) {
   const previewTitleContent = response.result.payload.headers.find(
     (header) => header.name === "Subject"
   ).value;
-  const senderNameContent =
+  let senderNameContent =
     response.result.payload.headers
       .find((header) => header.name === "From")
       .value.split("<")[0] == ""
@@ -408,7 +408,10 @@ function loadEmailContent(response) {
         ).value
       : response.result.payload.headers
           .find((header) => header.name === "From")
-          .value.split("<")[0];
+        .value.split("<")[0];
+  if (senderNameContent.length > 19) {
+    senderNameContent = senderNameContent.slice(0, 19) + '.';
+  }
   const sndDateTime =new Date(response.result.payload.headers.find((header) => header.name === "Date").value);
   console.log('snddte:'+sndDateTime);
   let today = new Date();
