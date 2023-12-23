@@ -1,542 +1,653 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gmail</title>
-    <link rel="icon" href="img/Gmail_icon_(2020).svg.webp">
-    <link rel="stylesheet" href="css/home.css">
+    <link rel="icon" href="img/Gmail_icon_(2020).svg.webp" />
+    <link rel="stylesheet" href="css/home.css" />
     <!-- BootStrap 5 CDN link-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+      integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+      crossorigin="anonymous"
+    ></script>
     <!-- icons link -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans:400,700">
-  
-</head>
-<body style="background-color: #eef3fa;">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Google+Sans:400,700"
+    />
+  </head>
+  <body style="background-color: #eef3fa">
     <div class="main-container">
-        <header>
-            <div class="top-bar col-12" id="top-bar">
-                <div class="menu-and-logo mt-3 col-1" id="menu-and-logo">
-                    <div class="menu-icon m-2 me-3" id="menu-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-                        </svg>
-                    </div>
-                    <div class="logo" id="logo-icon">
-                        <img src="img/logo_gmail_lockup_default_1x_r5.png" alt="">
-                    </div>
-                </div>
-                <div class="search-box mt-2 col-7" id="search-box">
-                    <form action="" class="search-bar ms-5 col-11" id="search-bar">
-                        <div class="search-icon ms-4 me-2 mt-2 p-2 " id="search-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                            </svg>
-                        </div>
-                        <div class="search-bar-input p-2" id="search-bar-input">
-                            <input type="text" placeholder=" Search Mail" >
-                        </div>
-                        <div class="cancel-button mt-2 p-2 " id="cancel-button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-                            </svg>
-                        </div>
-                        <div class="filter-button mt-2 p-2" id="filter-button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="bi-filter">
-                            <path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"></path>
-                            </svg>
-                        </div>
-                    </form>
-                </div>
-                <svg class="bi bi-question-circle col-1" id="question-circle" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="#000000" focusable="false"><path fill="none" d="M0 0h24v24H0z"></path><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"></path>
-                </svg>
-                <svg class="bi bi-gear col-1" id="settings" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"><path d="M13.85 22.25h-3.7c-.74 0-1.36-.54-1.45-1.27l-.27-1.89c-.27-.14-.53-.29-.79-.46l-1.8.72c-.7.26-1.47-.03-1.81-.65L2.2 15.53c-.35-.66-.2-1.44.36-1.88l1.53-1.19c-.01-.15-.02-.3-.02-.46 0-.15.01-.31.02-.46l-1.52-1.19c-.59-.45-.74-1.26-.37-1.88l1.85-3.19c.34-.62 1.11-.9 1.79-.63l1.81.73c.26-.17.52-.32.78-.46l.27-1.91c.09-.7.71-1.25 1.44-1.25h3.7c.74 0 1.36.54 1.45 1.27l.27 1.89c.27.14.53.29.79.46l1.8-.72c.71-.26 1.48.03 1.82.65l1.84 3.18c.36.66.2 1.44-.36 1.88l-1.52 1.19c.01.15.02.3.02.46s-.01.31-.02.46l1.52 1.19c.56.45.72 1.23.37 1.86l-1.86 3.22c-.34.62-1.11.9-1.8.63l-1.8-.72c-.26.17-.52.32-.78.46l-.27 1.91c-.1.68-.72 1.22-1.46 1.22zm-3.23-2h2.76l.37-2.55.53-.22c.44-.18.88-.44 1.34-.78l.45-.34 2.38.96 1.38-2.4-2.03-1.58.07-.56c.03-.26.06-.51.06-.78s-.03-.53-.06-.78l-.07-.56 2.03-1.58-1.39-2.4-2.39.96-.45-.35c-.42-.32-.87-.58-1.33-.77l-.52-.22-.37-2.55h-2.76l-.37 2.55-.53.21c-.44.19-.88.44-1.34.79l-.45.33-2.38-.95-1.39 2.39 2.03 1.58-.07.56a7 7 0 0 0-.06.79c0 .26.02.53.06.78l.07.56-2.03 1.58 1.38 2.4 2.39-.96.45.35c.43.33.86.58 1.33.77l.53.22.38 2.55z"></path><circle cx="12" cy="12" r="3.5"></circle>
-                </svg>
-                <svg class="bi bi-icon-menu col-1" id="icon-menu" focusable="false" viewBox="0 0 24 24"><path d="M6,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM12,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM6,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM6,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM12,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM16,6c0,1.1 0.9,2 2,2s2,-0.9 2,-2 -0.9,-2 -2,-2 -2,0.9 -2,2zM12,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM18,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM18,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2z"></path><image src="https://ssl.gstatic.com/gb/images/bar/al-icon.png" alt="" height="24" width="24" style="border:none;display:none \9"></image>
-                </svg>
-                <div class="profile-picture col-1" id="profile-picture">
-                    <img src="" alt="">
-                </div>
+      <header>
+        <div class="top-bar col-12" id="top-bar">
+          <div class="menu-and-logo mt-3 col-1" id="menu-and-logo">
+            <div class="menu-icon m-2 me-3" id="menu-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="currentColor"
+                class="bi bi-list"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
+                />
+              </svg>
             </div>
-        </header>
-        <div class="main-area" id="main-area">
-            <div class="left-side">
-                <div class="compose" id="compose">
-                    <button type="button" class="compose-button pt-1 ms-4 pe-3" id="compose-button"><span class="material-symbols-outlined p-2 pt-1 mb-2">edit</span>Compose</button>
-                </div>
-                <div class="left-nav">
-
-                </div>
+            <div class="logo" id="logo-icon">
+              <img src="img/logo_gmail_lockup_default_1x_r5.png" alt="" />
             </div>
-            <div class="right-side">
-
-            </div>
+          </div>
+          <div class="search-box mt-2 col-7" id="search-box">
+            <form action="" class="search-bar ms-5 col-11" id="search-bar">
+              <div class="search-icon ms-4 me-2 mt-2 p-2" id="search-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  class="bi bi-search"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
+                  />
+                </svg>
+              </div>
+              <div class="search-bar-input p-2" id="search-bar-input">
+                <input type="text" placeholder=" Search Mail" />
+              </div>
+              <div class="cancel-button mt-2 p-2" id="cancel-button">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="28"
+                  height="28"
+                  fill="currentColor"
+                  class="bi bi-x"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"
+                  />
+                </svg>
+              </div>
+              <div class="filter-button mt-2 p-2" id="filter-button">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  class="bi-filter"
+                >
+                  <path
+                    d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"
+                  ></path>
+                </svg>
+              </div>
+            </form>
+          </div>
+          <svg
+            class="bi bi-question-circle col-1"
+            id="question-circle"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24px"
+            height="24px"
+            viewBox="0 0 24 24"
+            fill="#000000"
+            focusable="false"
+          >
+            <path fill="none" d="M0 0h24v24H0z"></path>
+            <path
+              d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"
+            ></path>
+          </svg>
+          <svg
+            class="bi bi-gear col-1"
+            id="settings"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24px"
+            height="24px"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M13.85 22.25h-3.7c-.74 0-1.36-.54-1.45-1.27l-.27-1.89c-.27-.14-.53-.29-.79-.46l-1.8.72c-.7.26-1.47-.03-1.81-.65L2.2 15.53c-.35-.66-.2-1.44.36-1.88l1.53-1.19c-.01-.15-.02-.3-.02-.46 0-.15.01-.31.02-.46l-1.52-1.19c-.59-.45-.74-1.26-.37-1.88l1.85-3.19c.34-.62 1.11-.9 1.79-.63l1.81.73c.26-.17.52-.32.78-.46l.27-1.91c.09-.7.71-1.25 1.44-1.25h3.7c.74 0 1.36.54 1.45 1.27l.27 1.89c.27.14.53.29.79.46l1.8-.72c.71-.26 1.48.03 1.82.65l1.84 3.18c.36.66.2 1.44-.36 1.88l-1.52 1.19c.01.15.02.3.02.46s-.01.31-.02.46l1.52 1.19c.56.45.72 1.23.37 1.86l-1.86 3.22c-.34.62-1.11.9-1.8.63l-1.8-.72c-.26.17-.52.32-.78.46l-.27 1.91c-.1.68-.72 1.22-1.46 1.22zm-3.23-2h2.76l.37-2.55.53-.22c.44-.18.88-.44 1.34-.78l.45-.34 2.38.96 1.38-2.4-2.03-1.58.07-.56c.03-.26.06-.51.06-.78s-.03-.53-.06-.78l-.07-.56 2.03-1.58-1.39-2.4-2.39.96-.45-.35c-.42-.32-.87-.58-1.33-.77l-.52-.22-.37-2.55h-2.76l-.37 2.55-.53.21c-.44.19-.88.44-1.34.79l-.45.33-2.38-.95-1.39 2.39 2.03 1.58-.07.56a7 7 0 0 0-.06.79c0 .26.02.53.06.78l.07.56-2.03 1.58 1.38 2.4 2.39-.96.45.35c.43.33.86.58 1.33.77l.53.22.38 2.55z"
+            ></path>
+            <circle cx="12" cy="12" r="3.5"></circle>
+          </svg>
+          <svg
+            class="bi bi-icon-menu col-1"
+            id="icon-menu"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M6,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM12,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM6,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM6,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM12,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM16,6c0,1.1 0.9,2 2,2s2,-0.9 2,-2 -0.9,-2 -2,-2 -2,0.9 -2,2zM12,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM18,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM18,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2z"
+            ></path>
+            <image
+              src="https://ssl.gstatic.com/gb/images/bar/al-icon.png"
+              alt=""
+              height="24"
+              width="24"
+              style="border: none; display: none \9"
+            ></image>
+          </svg>
+          <div class="profile-picture col-1" id="profile-picture">
+            <img src="" alt="" />
+          </div>
         </div>
+      </header>
+      <div class="main-area" id="main-area">
+        <div class="left-side">
+          <div class="compose" id="compose">
+            <button
+              type="button"
+              class="compose-button pt-1 ms-4 pe-3"
+              id="compose-button"
+            >
+              <span class="material-symbols-outlined p-2 pt-1 mb-2">edit</span
+              >Compose
+            </button>
+          </div>
+          <div class="left-nav"></div>
+        </div>
+        <div class="right-side"></div>
+      </div>
     </div>
     <div class="display container-fluid">
-        <div class="row">
-            <div class="col-md-2 p-0" id="main-sidebar">
-                <!-- Content for the main sidebar goes here -->
-            </div>   
-            <div class="col-md-10" id="display-area">
-                <!-- Content for the display area goes here -->
-            </div>
+      <div class="row">
+        <div class="col-md-2 p-0" id="main-sidebar">
+          <!-- Content for the main sidebar goes here -->
         </div>
+        <div class="col-md-10" id="display-area">
+          <!-- Content for the display area goes here -->
+        </div>
+      </div>
     </div>
-    
+
     <script>
-      
+      let emailListContainer;
+      let emailBody;
+      let emailSubject;
 
-let emailListContainer
-let emailBody;
-let emailSubject;
+      function loadPage2Content() {
+        fetch("html/emaillist.html")
+          .then((response) => response.text())
+          .then((data) => {
+            // Inject the loaded content into the container
+            document.getElementById("display-area").innerHTML = data;
+            emailListContainer = document.getElementById("main-list-content");
+          })
+          .catch((error) => console.error("Error:", error));
+      }
 
-    function loadPage2Content() {
-            fetch("html/emaillist.html")
-                .then(response => response.text())
-                .then(data => {
-                    // Inject the loaded content into the container
-                    document.getElementById('display-area').innerHTML = data;
-                    emailListContainer=document.getElementById("main-list-content");
-                })
-                .catch(error => console.error('Error:', error));
-        }
+      // Call the function to load content on page load
+      //loadPage2Content("mail.html");
 
-        // Call the function to load content on page load
-    //loadPage2Content("mail.html");
+      const API_KEY = "AIzaSyAGzP3_IUN8Ds05jBNckdYrFR6jyDeoeEo";
 
-const API_KEY = 'AIzaSyAGzP3_IUN8Ds05jBNckdYrFR6jyDeoeEo';
+      loadPage2Content();
 
-loadPage2Content();
+      // Initialize the Gmail API client on the Next Page
+      const accessToken = localStorage.getItem("accessToken");
 
-// Initialize the Gmail API client on the Next Page
-const accessToken = localStorage.getItem('accessToken');
+      // Initialize the Gmail API client on the Next Page
+      function gapiLoaded() {
+        gapi.load("client", () => {
+          gapi.client
+            .init({
+              apiKey: API_KEY,
+              discoveryDocs: [
+                "https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest",
+              ],
+            })
+            .then(() => {
+              // Set the access token in gapi.client
+              if (accessToken) {
+                gapi.client.setToken({ access_token: accessToken });
 
-// Initialize the Gmail API client on the Next Page
-function gapiLoaded(){
-gapi.load('client', () => {
-  gapi.client.init({
-    apiKey: API_KEY,
-    discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest'],
-  }).then(() => {
-    // Set the access token in gapi.client
-    if (accessToken) {
-      gapi.client.setToken({ access_token: accessToken });
-
-      // Call the listLabels function
-      listLabels();
-      listLatestEmails(10);
-    } else {
-      document.getElementById('nextpage-content').innerText = 'Access token not found.';
-    }
-  });
-});}
-
-async function listLatestEmails(numberOfEmails) {
-    try {
-        const response = await gapi.client.gmail.users.messages.list({
-            'userId': 'me',
-            'labelIds': ['INBOX'],
-            'maxResults': numberOfEmails,
+                // Call the listLabels function
+                listLabels();
+                listLatestEmails(10);
+              } else {
+                document.getElementById("nextpage-content").innerText =
+                  "Access token not found.";
+              }
+            });
         });
+      }
 
-        console.log(response.result.messages);
-     
-       
+      async function listLatestEmails(numberOfEmails) {
+        try {
+          const response = await gapi.client.gmail.users.messages.list({
+            userId: "me",
+            labelIds: ["INBOX"],
+            maxResults: numberOfEmails,
+          });
 
-        
-        for (const message of response.result.messages) {
+          console.log(response.result.messages);
+
+          for (const message of response.result.messages) {
             const senderNameContent = await getSenderName(message.id);
-            console.log(senderNameContent)
-                const previewTitleContent = await getSendSubject(message.id);
-                const previewTextContent = await getMessageSnippet(message.id);
-                const sendTimeContent = await getSendTime(message.id);
+            console.log(senderNameContent);
+            const previewTitleContent = await getSendSubject(message.id);
+            const previewTextContent = await getMessageSnippet(message.id);
+            const sendTimeContent = await getSendTime(message.id);
 
-                const emailListElement = loadEmailContent(senderNameContent, previewTitleContent, previewTextContent, sendTimeContent);
-                emailListElement.setAttribute("id",message.id);
-                emailListElement.onclick = () => clickHandle(message.id);
+            const emailListElement = loadEmailContent(
+              senderNameContent,
+              previewTitleContent,
+              previewTextContent,
+              sendTimeContent
+            );
+            emailListElement.setAttribute("id", message.id);
+            emailListElement.onclick = () => clickHandle(message.id);
 
-                emailListContainer.appendChild(emailListElement);
+            emailListContainer.appendChild(emailListElement);
+          }
+        } catch (error) {
+          console.error("Error listing emails:", error);
         }
-    } catch (error) {
-        console.error('Error listing emails:', error);
-    }
-}
+      }
 
+      async function getSenderName(messageId) {
+        try {
+          const emailData = await getEmailContent(messageId);
 
-
-async function getSenderName(messageId) {
-    try {
-        const emailData = await getEmailContent(messageId);
-
-        if (emailData && emailData.result && emailData.result.payload && emailData.result.payload.headers) {
+          if (
+            emailData &&
+            emailData.result &&
+            emailData.result.payload &&
+            emailData.result.payload.headers
+          ) {
             const headers = emailData.result.payload.headers;
 
             for (let i = 0; i < headers.length; i++) {
-                if (headers[i].name === 'From') {
-                    // Extract the name from the email address (assumes the format "Name <email>")
-                    const match = headers[i].value.match(/(.*) <.*>/);
-                    return match ? match[1] : headers[i].value;
-                }
+              if (headers[i].name === "From") {
+                // Extract the name from the email address (assumes the format "Name <email>")
+                const match = headers[i].value.match(/(.*) <.*>/);
+                return match ? match[1] : headers[i].value;
+              }
             }
-        } else {
-            console.error('Error: Invalid email data structure:', emailData);
+          } else {
+            console.error("Error: Invalid email data structure:", emailData);
+          }
+        } catch (error) {
+          console.error("Error getting sender name:", error);
         }
-    } catch (error) {
-        console.error('Error getting sender name:', error);
-    }
 
-    return null; // Return null if sender's email is not found or encountered an error
-}
+        return null; // Return null if sender's email is not found or encountered an error
+      }
 
-async function getMessageSnippet(messageId) {
-    try {
-        const emailData = await getEmailContent(messageId);
+      async function getMessageSnippet(messageId) {
+        try {
+          const emailData = await getEmailContent(messageId);
 
-        if (emailData && emailData.result && emailData.result.snippet) {
+          if (emailData && emailData.result && emailData.result.snippet) {
             return emailData.result.snippet;
-        } else {
-            console.error('Error: Invalid email data structure or missing snippet:', emailData);
+          } else {
+            console.error(
+              "Error: Invalid email data structure or missing snippet:",
+              emailData
+            );
+          }
+        } catch (error) {
+          console.error("Error getting message snippet:", error);
         }
-    } catch (error) {
-        console.error('Error getting message snippet:', error);
-    }
 
-    return null; // Return null if snippet is not found or encountered an error
-}
+        return null; // Return null if snippet is not found or encountered an error
+      }
 
-async function getEmailContent(messageId) {
-    try {
-        const response = await gapi.client.gmail.users.messages.get({
-            'userId': 'me',
-            'id': messageId,
-        });
-        return response
-    } catch (error) {
-        return null
-        console.error('Error getting email content:', error);
-    }
-}
+      async function getEmailContent(messageId) {
+        try {
+          const response = await gapi.client.gmail.users.messages.get({
+            userId: "me",
+            id: messageId,
+          });
+          return response;
+        } catch (error) {
+          return null;
+          console.error("Error getting email content:", error);
+        }
+      }
 
-        // Handle the response
- 
+      // Handle the response
 
-        // Process the email data, body, sender's email, sender's name, and send time as needed
-async function  clickHandle(emailElementId){
-    fetch("mail.html")
-                .then(response => response.text())
-                .then(data => {
-                    // Inject the loaded content into the container
-                    document.getElementById('display-area').innerHTML = data;
-                   
-                    emailBody=document.getElementById("body-content");
-                    emailSubject=document.getElementById("email-subject")
-                
-                
-                    
-                })
-                .catch(error => console.error('Error:', error));
-                            
-                emailSubjectContent = await getSendSubject(emailElementId);
-                emailBodyContent=  await getEmailBodyText(emailElementId);
-                console.log(emailBodyContent+"))))))))")
+      // Process the email data, body, sender's email, sender's name, and send time as needed
+      async function clickHandle(emailElementId) {
+        fetch("mail.html")
+          .then((response) => response.text())
+          .then((data) => {
+            // Inject the loaded content into the container
+            document.getElementById("display-area").innerHTML = data;
 
-                // Update your HTML elements
-                emailSubject.innerText = emailSubjectContent;
-                emailBody.innerText = emailBodyContent;
-                            
+            emailBody = document.getElementById("body-content");
+            emailSubject = document.getElementById("email-subject");
+          })
+          .catch((error) => console.error("Error:", error));
 
+        emailSubjectContent = await getSendSubject(emailElementId);
+        emailBodyContent = await getEmailBodyText(emailElementId);
 
-}
+        // Update your HTML elements
+        emailSubject.innerText = emailSubjectContent;
+        emailBody.innerHTML = emailBodyContent;
+      }
 
-async function getEmailBodyText(messageId) {
-    try {
-        // Use the Gmail API to get the email content
-        const response = await gapi.client.gmail.users.messages.get({
-            'userId': 'me',
-            'id': messageId,
-        });
+      async function getEmailBodyText(messageId) {
+        try {
+          // Use the Gmail API to get the email content
+          const response = await gapi.client.gmail.users.messages.get({
+            userId: "me",
+            id: messageId,
+          });
 
-        // Access the email data from the response
-        const emailData = response.result;
+          // Access the email data from the response
+          const emailData = response.result;
 
-        // Check if the email has parts
-        if (emailData.payload && emailData.payload.parts) {
+          // Check if the email has parts
+          if (emailData.payload && emailData.payload.parts) {
             // Iterate through parts
             for (const part of emailData.payload.parts) {
-                // Check if the part is text/plain (plain text)
-                if (part.mimeType === 'text/plain' && part.body && part.body.data) {
-                    // Decode the base64-encoded data
-                    const bodyText = atob(part.body.data);
+              // Check if the part is text/plain (plain text)
+              if (
+                part.mimeType === "text/html" &&
+                part.body &&
+                part.body.data
+              ) {
+                // Decode the base64-encoded data
+                const bodyText =atob(decodeURIComponent(part.body.data.replace(/=([\s\S]{2})/g, '%$1')));
+                console.log(bodyText)
 
-                    // Return the decoded body text
-                    return bodyText;
-                }
+                // Return the decoded body text
+                return bodyText;
+              }
             }
+          }
+
+          // Return an empty string if no valid body text is found
+          return "";
+        } catch (error) {
+          console.error("Error getting email body text:", error);
+          return ""; // Return an empty string in case of an error
         }
-
-        // Return an empty string if no valid body text is found
-        return '';
-    } catch (error) {
-        console.error('Error getting email body text:', error);
-        return ''; // Return an empty string in case of an error
-    }
-}
-
-async function getSenderEmail(messageId) {
-    try {
-        const emailData = await getEmailContent(messageId);
-        const headers = emailData.payload.headers;
-
-        for (let i = 0; i < headers.length; i++) {
-            if (headers[i].name === 'From') {
-                return headers[i].value;
-            }
-        }
-
-        return null; // Return null if 'From' header is not found
-    } catch (error) {
-        console.error('Error getting sender email:', error);
-        return null;
-    }
-}
-
-
-
-async function getSendTime(messageId) {
-    try {
-        const emailData = await getEmailContent(messageId);
-
-        if (emailData && emailData.result && emailData.result.payload && emailData.result.payload.headers) {
-            const headers = emailData.result.payload.headers;
-
-            for (let i = 0; i < headers.length; i++) {
-                if (headers[i].name === 'Date') {
-                    return new Date(headers[i].value);
-                }
-            }
-        } else {
-            console.error('Error: Invalid email data structure:', emailData);
-        }
-    } catch (error) {
-        console.error('Error getting send time:', error);
-    }
-
-    return null; // Return null if 'Date' header is not found or encountered an error
-}
-
-async function getSendSubject(messageId) {
-    try {
-        const emailData = await getEmailContent(messageId);
-
-        if (emailData && emailData.result && emailData.result.payload && emailData.result.payload.headers) {
-            const headers = emailData.result.payload.headers;
-
-            for (let i = 0; i < headers.length; i++) {
-                if (headers[i].name === 'Subject') {
-                    return headers[i].value;
-                }
-            }
-        } else {
-            console.error('Error: Invalid email data structure:', emailData);
-        }
-    } catch (error) {
-        console.error('Error getting email subject:', error);
-    }
-
-    return null; // Return null if 'Subject' header is not found or encountered an error
-}
-
-
-
-// Function to list labels
-async function listLabels() {
-  let response;
-  try {
-    response = await gapi.client.gmail.users.labels.list({
-      'userId': 'me',
-    });
-  } catch (err) {
-    document.getElementById('content').innerText = err.message;
-    return;
-  }
-  const labels = response.result.labels;
-  if (!labels || labels.length == 0) {
-    document.getElementById('content').innerText = 'No labels found.';
-    return;
-  }
-
-  let parentDiv=document.getElementById('main-sidebar');
-  for(let i=0;i<labels.length;i++){
-      let labelDiv=document.createElement('div');//main label div
-      labelDiv.id=labels[i].id;
-      labelDiv.classList.add('labelDiv','row','ms-2','me-1','p-2');
-      
-
-      
-      let iconDiv=document.createElement('div');//adding icon tag
-      iconDiv.classList.add('bi','col-1','fs-3');
-      switch(labels[i].id.toLowerCase()){
-        case 'chat':iconDiv.classList.add('bi-chat-left-text');
-        break;
-        case 'sent':iconDiv.classList.add('bi-send');
-        break;
-        case 'inbox':iconDiv.classList.add('bi-inbox');
-        break;
-        case 'trash':iconDiv.classList.add('bi-trash');
-        break;
-        case 'snoozed':iconDiv.classList.add('bi-clock');
-        break;
-        case 'draft':iconDiv.classList.add('bi-file-earmark');
-        break;
-        case 'spam':iconDiv.classList.add('bi-exclamation-octagon');
-        break;
-        case 'starred':iconDiv.classList.add('bi-star');
-        break;
-        case 'important':iconDiv.classList.add('bi-flag');
-        break;
-        case 'unread':iconDiv.classList.add('bi-flag');
-        break;
-        case 'category_updates':iconDiv.classList.add('bi-exclamation-circle');
-        break;
-        case 'category_promotions':iconDiv.classList.add('bi-tag');
-        break;
-        case 'category_social':iconDiv.classList.add('bi-person-lines-fill');
-        break;
-
-        
-        default:iconDiv.classList.add('bi-inbox');
       }
-      labelDiv.append(iconDiv);
 
-      let anchor=document.createElement('a');//adding anchor tag
-      let aName=labels[i].name.toLowerCase();
-      aName=aName.charAt(0).toUpperCase()+aName.slice(1);
-      anchor.innerHTML=aName;
-      anchor.classList.add('col-6','labelAnchor','fs-4');
-      labelDiv.append(anchor);
-      
-      // labelDiv.innerHTML=labels[i].name;
-      parentDiv.appendChild(labelDiv);
+      async function getSenderEmail(messageId) {
+        try {
+          const emailData = await getEmailContent(messageId);
+          const headers = emailData.payload.headers;
 
-  }
+          for (let i = 0; i < headers.length; i++) {
+            if (headers[i].name === "From") {
+              return headers[i].value;
+            }
+          }
 
-  console.log(labels);
-}
+          return null; // Return null if 'From' header is not found
+        } catch (error) {
+          console.error("Error getting sender email:", error);
+          return null;
+        }
+      }
 
+      async function getSendTime(messageId) {
+        try {
+          const emailData = await getEmailContent(messageId);
 
-function loadEmailContent(senderNameContent, previewTitleContent, previewTextContent, sendTimeContent) {
+          if (
+            emailData &&
+            emailData.result &&
+            emailData.result.payload &&
+            emailData.result.payload.headers
+          ) {
+            const headers = emailData.result.payload.headers;
 
-console.log("function running");
+            for (let i = 0; i < headers.length; i++) {
+              if (headers[i].name === "Date") {
+                return new Date(headers[i].value);
+              }
+            }
+          } else {
+            console.error("Error: Invalid email data structure:", emailData);
+          }
+        } catch (error) {
+          console.error("Error getting send time:", error);
+        }
 
-// let senderNameContent = 'sender name';
-// let previewTitleContent = 'this is preview title';
-// let previewTextContent = 'this is preview of email body this is preview of email body this is preview of email body this is preview of email body this is preview of email body';
-// let sendTimeContent = '09:23 pm';
+        return null; // Return null if 'Date' header is not found or encountered an error
+      }
 
-// for (let i = 0; i < 30; i++) {
+      async function getSendSubject(messageId) {
+        try {
+          const emailData = await getEmailContent(messageId);
 
-    
+          if (
+            emailData &&
+            emailData.result &&
+            emailData.result.payload &&
+            emailData.result.payload.headers
+          ) {
+            const headers = emailData.result.payload.headers;
 
-    const emailPreviewBar = document.createElement('div');
-    emailPreviewBar.classList.add('preview-bar',);
-    
+            for (let i = 0; i < headers.length; i++) {
+              if (headers[i].name === "Subject") {
+                return headers[i].value;
+              }
+            }
+          } else {
+            console.error("Error: Invalid email data structure:", emailData);
+          }
+        } catch (error) {
+          console.error("Error getting email subject:", error);
+        }
 
+        return null; // Return null if 'Subject' header is not found or encountered an error
+      }
 
-    const centralLineDiv = document.createElement('div');
-    centralLineDiv.classList.add('row', 'mt-1', 'mb-1','central-div');
- 
-    //left section
+      // Function to list labels
+      async function listLabels() {
+        let response;
+        try {
+          response = await gapi.client.gmail.users.labels.list({
+            userId: "me",
+          });
+        } catch (err) {
+          document.getElementById("content").innerText = err.message;
+          return;
+        }
+        const labels = response.result.labels;
+        if (!labels || labels.length == 0) {
+          document.getElementById("content").innerText = "No labels found.";
+          return;
+        }
 
-    const leftDiv = document.createElement('div');
+        let parentDiv = document.getElementById("main-sidebar");
+        for (let i = 0; i < labels.length; i++) {
+          let labelDiv = document.createElement("div"); //main label div
+          labelDiv.id = labels[i].id;
+          labelDiv.classList.add("labelDiv", "row", "ms-2", "me-1", "p-2");
 
-    leftDiv.classList.add('left-div','col-md-4');
+          let iconDiv = document.createElement("div"); //adding icon tag
+          iconDiv.classList.add("bi", "col-1", "fs-3");
+          switch (labels[i].id.toLowerCase()) {
+            case "chat":
+              iconDiv.classList.add("bi-chat-left-text");
+              break;
+            case "sent":
+              iconDiv.classList.add("bi-send");
+              break;
+            case "inbox":
+              iconDiv.classList.add("bi-inbox");
+              break;
+            case "trash":
+              iconDiv.classList.add("bi-trash");
+              break;
+            case "snoozed":
+              iconDiv.classList.add("bi-clock");
+              break;
+            case "draft":
+              iconDiv.classList.add("bi-file-earmark");
+              break;
+            case "spam":
+              iconDiv.classList.add("bi-exclamation-octagon");
+              break;
+            case "starred":
+              iconDiv.classList.add("bi-star");
+              break;
+            case "important":
+              iconDiv.classList.add("bi-flag");
+              break;
+            case "unread":
+              iconDiv.classList.add("bi-flag");
+              break;
+            case "category_updates":
+              iconDiv.classList.add("bi-exclamation-circle");
+              break;
+            case "category_promotions":
+              iconDiv.classList.add("bi-tag");
+              break;
+            case "category_social":
+              iconDiv.classList.add("bi-person-lines-fill");
+              break;
 
+            default:
+              iconDiv.classList.add("bi-inbox");
+          }
+          labelDiv.append(iconDiv);
 
-    const checkbox = document.createElement('div');
+          let anchor = document.createElement("a"); //adding anchor tag
+          let aName = labels[i].name.toLowerCase();
+          aName = aName.charAt(0).toUpperCase() + aName.slice(1);
+          anchor.innerHTML = aName;
+          anchor.classList.add("col-6", "labelAnchor", "fs-4");
+          labelDiv.append(anchor);
 
-    checkbox.classList.add('list-check-box');
-    checkbox.innerHTML = '<i class="bi bi-square check-star-flag"></i>';
+          // labelDiv.innerHTML=labels[i].name;
+          parentDiv.appendChild(labelDiv);
+        }
 
-    leftDiv.appendChild(checkbox);
+        console.log(labels);
+      }
 
-    const star = document.createElement('div');
+      function loadEmailContent(
+        senderNameContent,
+        previewTitleContent,
+        previewTextContent,
+        sendTimeContent
+      ) {
+        console.log("function running");
 
-    star.classList.add('list-star');
-    star.innerHTML = '<i class="bi bi-star check-star-flag"></i>';
+        // let senderNameContent = 'sender name';
+        // let previewTitleContent = 'this is preview title';
+        // let previewTextContent = 'this is preview of email body this is preview of email body this is preview of email body this is preview of email body this is preview of email body';
+        // let sendTimeContent = '09:23 pm';
 
-    leftDiv.appendChild(star);
+        // for (let i = 0; i < 30; i++) {
 
-    const important = document.createElement('div');
+        const emailPreviewBar = document.createElement("div");
+        emailPreviewBar.classList.add("preview-bar");
 
-    important.classList.add('list-important');
+        const centralLineDiv = document.createElement("div");
+        centralLineDiv.classList.add("row", "mt-1", "mb-1", "central-div");
 
-    important.innerHTML = '<i class="bi bi-flag check-star-flag"></i>';
+        //left section
 
-    leftDiv.appendChild(important);
+        const leftDiv = document.createElement("div");
 
-    const sender = document.createElement('div');
-    sender.classList.add('sender-div');
+        leftDiv.classList.add("left-div", "col-md-4");
 
+        const checkbox = document.createElement("div");
 
-    const sendertext = document.createElement('span');
-    sendertext.classList.add('sendertext');
+        checkbox.classList.add("list-check-box");
+        checkbox.innerHTML = '<i class="bi bi-square check-star-flag"></i>';
 
-    sendertext.innerText = senderNameContent
-    sender.appendChild(sendertext);
-    leftDiv.appendChild(sender);
+        leftDiv.appendChild(checkbox);
 
+        const star = document.createElement("div");
 
-    centralLineDiv.appendChild(leftDiv);
+        star.classList.add("list-star");
+        star.innerHTML = '<i class="bi bi-star check-star-flag"></i>';
 
+        leftDiv.appendChild(star);
 
+        const important = document.createElement("div");
 
-    const rightDiv = document.createElement('div');
-    rightDiv.classList.add('right-div','col-md-8','d-flex');
+        important.classList.add("list-important");
 
+        important.innerHTML = '<i class="bi bi-flag check-star-flag"></i>';
 
-    const preview = document.createElement('div');
-    preview.classList = ('preview','col','d-flex');
+        leftDiv.appendChild(important);
 
-    const previewTitle = document.createElement('div');
-    previewTitle.classList.add('previewTitle');
+        const sender = document.createElement("div");
+        sender.classList.add("sender-div");
 
-    previewTitle.innerText = previewTitleContent + ' - ';
+        const sendertext = document.createElement("span");
+        sendertext.classList.add("sendertext");
 
-    const previewText = document.createElement('div');
-    previewText.classList.add('previewText');
-    previewText.innerText = previewTextContent;
+        sendertext.innerText = senderNameContent;
+        sender.appendChild(sendertext);
+        leftDiv.appendChild(sender);
 
-    preview.appendChild(previewTitle);
-    preview.appendChild(previewText);
+        centralLineDiv.appendChild(leftDiv);
 
-    rightDiv.appendChild(preview);
+        const rightDiv = document.createElement("div");
+        rightDiv.classList.add("right-div", "col-md-8", "d-flex");
 
-    const sendTime = document.createElement('div');
-    sendTime.classList.add('preview-time','col-md-3','col-sm-3');
-    const sendTimeinside = document.createElement('span');
-    sendTimeinside.innerText = sendTimeContent;
+        const preview = document.createElement("div");
+        preview.classList = ("preview", "col", "d-flex");
 
-    sendTime.appendChild(sendTimeinside);
+        const previewTitle = document.createElement("div");
+        previewTitle.classList.add("previewTitle");
 
-    rightDiv.appendChild(sendTime);
+        previewTitle.innerText = previewTitleContent + " - ";
 
-    centralLineDiv.appendChild(rightDiv);
+        const previewText = document.createElement("div");
+        previewText.classList.add("previewText");
+        previewText.innerText = previewTextContent;
 
+        preview.appendChild(previewTitle);
+        preview.appendChild(previewText);
 
-emailPreviewBar.appendChild(centralLineDiv);
-return emailPreviewBar;
+        rightDiv.appendChild(preview);
 
-// }
+        const sendTime = document.createElement("div");
+        sendTime.classList.add("preview-time", "col-md-3", "col-sm-3");
+        const sendTimeinside = document.createElement("span");
+        sendTimeinside.innerText = sendTimeContent;
 
-}
-  
-      </script>
-        
-    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
-    <script async defer src="https://accounts.google.com/gsi/client"></script>
-    
-</body>
+        sendTime.appendChild(sendTimeinside);
+
+        rightDiv.appendChild(sendTime);
+
+        centralLineDiv.appendChild(rightDiv);
+
+        emailPreviewBar.appendChild(centralLineDiv);
+        return emailPreviewBar;
+
+        // }
+      }
+    </script>
+
+    <script
+      async
+      src="https://apis.google.com/js/api.js"
+      onload="gapiLoaded()"
+    ></script>
+    <script async src="https://accounts.google.com/gsi/client"></script>
+  </body>
 </html>
