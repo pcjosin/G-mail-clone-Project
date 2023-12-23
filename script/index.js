@@ -27,7 +27,7 @@ document.getElementById('authorize_button').style.visibility = 'hidden';
  */
 function gapiLoaded() {
   gapi.load('client', initializeGapiClient);
- 
+
 }
 
 
@@ -42,7 +42,7 @@ async function initializeGapiClient() {
   });
   gapiInited = true;
   maybeEnableButtons()
-  
+
 
 }
 
@@ -57,7 +57,7 @@ function gisLoaded() {
   });
   gisInited = true;
   maybeEnableButtons()
-  
+
 }
 
 /**
@@ -69,23 +69,23 @@ function maybeEnableButtons() {
   }
 }
 
-  /**
-   *  Sign in the user upon button click.
-   */
-  function handleAuthClick() {
-    tokenClient.callback = async (resp) => {
-      if (resp.error !== undefined) {
-        throw (resp);
-      }
-      
-      
-      localStorage.setItem('accessToken', resp.access_token);
-   
-      document.getElementById('authorize_button').innerText = 'Refresh';
-      await listLabels();
-      listLatestEmails(10);
-      window.location.href = 'home.html';
-    };
+/**
+ *  Sign in the user upon button click.
+ */
+function handleAuthClick() {
+  tokenClient.callback = async (resp) => {
+    if (resp.error !== undefined) {
+      throw (resp);
+    }
+
+
+    localStorage.setItem('accessToken', resp.access_token); //++++++++++++++++++++++++++++ encrypt and set
+
+    document.getElementById('authorize_button').innerText = 'Refresh';
+    // await listLabels();
+    // listLatestEmails(10);
+    window.location.href = 'home.html';
+  };
 
   if (gapi.client.getToken() === null) {
     // Prompt the user to select a Google Account and ask for consent to share their data
@@ -97,97 +97,7 @@ function maybeEnableButtons() {
   }
 }
 
-/**
- *  Sign out the user upon button click.
- */
-function handleSignoutClick() {
-  const token = gapi.client.getToken();
-  if (token !== null) {
-    google.accounts.oauth2.revoke(token.access_token);
-    gapi.client.setToken('');
-    document.getElementById('content').innerText = '';
-    document.getElementById('authorize_button').innerText = 'Authorize';
-    document.getElementById('signout_button').style.visibility = 'hidden';
-  }
-}
-
-  /**
-   * Print all Labels in the authorized user's inbox. If no labels
-   * are found an appropriate message is printed.
-   */
-  async function listLabels() {
-    let response;
-    try {
-      response = await gapi.client.gmail.users.labels.list({
-        'userId': 'me',
-      });
-    } catch (err) {
-      document.getElementById('content').innerText = err.message;
-      return;
-    }
-    const labels = response.result.labels;
-    if (!labels || labels.length == 0) {
-      document.getElementById('content').innerText = 'No labels found.';
-      return;
-    }
-    // Flatten to string to display
-    const output = labels.reduce(
-        (str, label) => `${str}${label.name}\n`,
-        'Labels:\n');
-    document.getElementById('content').innerText = output;
-  }
 
 
-  function listLatestEmails(numberOfEmails) {
-gapi.client.gmail.users.messages.list({
-'userId': 'me',
-'labelIds': ['INBOX'], // Specify the label ID for the inbox.
-'maxResults': numberOfEmails, // Specify the number of emails to retrieve.
-}).then(function(response) {
-// Handle the list of latest emails in the response.
-console.log(response.result.messages);
-// Now you can iterate over the messages and fetch more details if needed.
-response.result.messages.forEach(function(message) {
-  console.log(getEmailDetails(message.id));
-});
-}, function(error) {
-console.error('Error listing emails:', error);
-});
-}
-function getEmailDetails(messageId) {
-gapi.client.gmail.users.messages.get({
-'userId': 'me',
-'id': messageId,
-}).then(function(response) {
-
-const fromHeader = response.result.payload.headers.find(header => header.name === 'From');
-if (fromHeader) {
-  const senderInfo = parseSenderInfo(fromHeader.value);
-  console.log('Sender Email:', senderInfo.email);
-  console.log('Sender Name:', senderInfo.name);
-}
 
 
-// Handle the details of the email in the response.
-const snippet = response.result.snippet;
-console.log('Email Snippet:', snippet);
-}, function(error) {
-console.error('Error getting email details:', error);
-});
-}
-function parseSenderInfo(fromHeaderValue) {
-// Parse the "From" header value to extract email and name
-const match = fromHeaderValue.match(/^(.*) <(.+)>$/);
-if (match) {
-return {
-  name: match[1].trim(),
-  email: match[2].trim(),
-};
-} else {
-// If the format is not as expected, assume the whole string is the email
-return {
-  name: null,
-  email: fromHeaderValue.trim(),
-};
-}
-}
