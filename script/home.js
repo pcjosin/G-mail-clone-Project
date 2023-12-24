@@ -314,6 +314,7 @@ async function listLabels() {
     return;
   }
   const labels = response.result.labels;
+  console.log("labels are: ",labels)
   if (!labels || labels.length == 0) {
     document.getElementById("content").innerText = "No labels found.";
     return;
@@ -382,14 +383,133 @@ async function listLabels() {
 
     // labelDiv.innerHTML=labels[i].name;
     parentDiv.appendChild(labelDiv);
-  }
 
-  console.log(labels);
+    //Checking for spam emails
+    anchor.onclick = ()=>{
+      document.getElementById("main-list-content").innerHTML = ''
+      listLabels();
+      if(anchor.innerHTML === "Spam"){
+        listSpamEmails(20);
+      } else if(anchor.innerHTML === "Draft"){
+        listDraftEmails(20);
+      } else if(anchor.innerHTML === "Sent"){
+        listSentEmails(20);
+      } else if(anchor.innerHTML === "Trash"){
+        listTrashEmails(20);
+      }
+    }
+  }
+}
+
+//Function to list and display spam emails
+async function listSpamEmails(numberOfEmails) {
+  try {
+    const response = await gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: ["SPAM"],
+      maxResults: numberOfEmails,
+    });
+
+    console.log(response.result.messages);
+
+    for (const message of response.result.messages) {
+      const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+      console.log(messagePreview);
+
+      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+
+      emailListElement.setAttribute("id", message.id);
+      emailListElement.onclick = () => clickHandle(message.id);
+
+      emailListContainer.appendChild(emailListElement);
+    }
+  } catch (error) {
+    console.error("Error listing emails:", error);
+  }
+}
+
+//Function to list and display draft emails
+async function listDraftEmails(numberOfEmails) {
+  try {
+    const response = await gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: ["DRAFT"],
+      maxResults: numberOfEmails,
+    });
+
+    console.log(response.result.messages);
+
+    for (const message of response.result.messages) {
+      const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+      console.log(messagePreview);
+
+      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+
+      emailListElement.setAttribute("id", message.id);
+      emailListElement.onclick = () => clickHandle(message.id);
+
+      emailListContainer.appendChild(emailListElement);
+    }
+  } catch (error) {
+    console.error("Error listing emails:", error);
+  }
+}
+
+//Function to list and display sent emails
+async function listSentEmails(numberOfEmails) {
+  try {
+    const response = await gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: ["SENT"],
+      maxResults: numberOfEmails,
+    });
+
+    console.log(response.result.messages);
+
+    for (const message of response.result.messages) {
+      const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+      console.log(messagePreview);
+
+      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+
+      emailListElement.setAttribute("id", message.id);
+      emailListElement.onclick = () => clickHandle(message.id);
+
+      emailListContainer.appendChild(emailListElement);
+    }
+  } catch (error) {
+    console.error("Error listing emails:", error);
+  }
+}
+
+//Function to list and display trash emails
+async function listTrashEmails(numberOfEmails) {
+  try {
+    const response = await gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: ["TRASH"],
+      maxResults: numberOfEmails,
+    });
+
+    console.log(response.result.messages);
+
+    for (const message of response.result.messages) {
+      const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+      console.log(messagePreview);
+
+      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+
+      emailListElement.setAttribute("id", message.id);
+      emailListElement.onclick = () => clickHandle(message.id);
+
+      emailListContainer.appendChild(emailListElement);
+    }
+  } catch (error) {
+    console.error("Error listing emails:", error);
+  }
 }
 
 function loadEmailContent(response) {
-
-
   var shortMonthNames = [
 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'

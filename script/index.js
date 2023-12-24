@@ -7,8 +7,12 @@
 // TODO(developer): Set to client ID and API key from the Developer Console
 const CLIENT_ID = '280715447136-ejl9bcsuj842het5ifgbj7naj1jjqml3.apps.googleusercontent.com';
 const API_KEY = 'AIzaSyAGzP3_IUN8Ds05jBNckdYrFR6jyDeoeEo';
+// import { API_CONFIG } from '../config/keys.js';
 
-// Discovery doc URL for APIs used by the quickstart
+// // Destructure the named export to get CLIENT_ID and API_KEY
+// const { CLIENT_ID, API_KEY } = API_CONFIG;
+
+// Discovery doc URL for APIs used by the quick  start
 const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest';
 
 // Authorization scopes required by the API; multiple scopes can be
