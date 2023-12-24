@@ -148,7 +148,7 @@
             ></image>
           </svg>
           <div class="profile-picture col-1" id="profile-picture">
-            <img src="" alt="" />
+            <img src="" alt="" id="profile-picture-image"/>
           </div>
         </div>
       </header>
@@ -179,6 +179,32 @@
       </div>
     </div>
 
+
+    <div id="user-profile-expand">
+      <div id="user-profile-row1">
+        <div id="user-profile-expand-email"></div>
+        <div id="user-profile-expand-close"><i class="bi bi-x-lg p-1"></i></div>
+      </div>
+      <div id="user-profile-expand-row2">
+        <img id="user-profile-expand-image" src="">
+      </div>
+      <div id="user-profile-expand-row3">
+        <div id="user-profile-expand-hi">
+
+        </div>
+      </div>
+      <div id="user-profile-expand-row4">
+        <div id="user-profile-expand-signout" onclick="handleSignoutClick()">
+          <span class="mt-3"><i class="bi bi-box-arrow-right pe-1"></i> Sign out </span>
+
+        </div>
+      </div>
+      <div id="user-profile-expand-row5">
+        <span>&copy; 2023 web wizards </span>
+      </div>
+
+    </div>
+
   <script async src="script/home.js"></script>
      
     <script
@@ -187,4 +213,7 @@
       onload="gapiLoaded()"></script>
     <script async src="https://accounts.google.com/gsi/client"></script>
   </body>
+
+
+
 </html>

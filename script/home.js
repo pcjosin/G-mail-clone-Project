@@ -40,18 +40,46 @@ function gapiLoaded() {
           gapi.client.setToken({ access_token: accessToken });
 
           // Call the listLabels function
+          fetch('https://www.googleapis.com/gmail/v1/users/me/profile', {
+            headers: {
+              'Authorization': 'Bearer ' + accessToken,
+            },
+          })
+            .then(response => response.json())
+            .then(data => {
+              // Handle the user profile data
 
-          fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + accessToken)
+              let userProfileExpandEmail = document.getElementById('user-profile-expand-email');
+              userProfileExpandEmail.innerText = data.emailAddress;
+              console.log('User Email: ', data.emailAddress);
+            })
+            .catch(error => {
+              // Handle errors
+              console.error('Error fetching user profile:', error);
+            });
+
+
+          fetch('https://www.googleapis.com/oauth2/v2/userinfo?alt=json&access_token=' + accessToken)
             .then(response => response.json())
             .then(data => {
               // Handle the user profile data
               console.log('User Profile Data:', data);
 
               // Access specific profile information
-              var userId = data.id;
-              var userName = data.name;
-              var userEmail = data.email;
-              var userPictureUrl = data.picture;
+              let userName = data.given_name;
+              let userPictureUrl = data.picture;
+
+              let profilePictureImage = document.getElementById('profile-picture-image');
+              profilePictureImage.src = userPictureUrl;
+
+
+              let userProfileExpandImage = document.getElementById('user-profile-expand-image');
+              userProfileExpandImage.src = userPictureUrl;
+
+              let userProfileExpandHi = document.getElementById('user-profile-expand-hi');
+              userProfileExpandHi.innerText = 'Hi, '+userName+'!';
+
+              
 
               // Now you can use this information as needed
             })
@@ -701,3 +729,46 @@ function loadEmailContent(response) {
   // }
 }
 
+
+//profile view +++++++++++++++++++++++++++++++++++===
+
+let profiePictureDiv = document.getElementById('profile-picture');
+
+profiePictureDiv.onclick = () => {
+  let userProfile = document.getElementById('user-profile-expand');
+  userProfile.style = 'display:block';
+};
+
+let profileCloseButton = document.getElementById('user-profile-expand-close');
+
+
+profileCloseButton.onclick = () => {
+  let userProfile = document.getElementById('user-profile-expand');
+  userProfile.style = 'display:none';
+};
+
+
+function handleSignoutClick() {
+  const token = gapi.client.getToken();
+  if (token !== null) {
+    google.accounts.oauth2.revoke(token.access_token);
+    gapi.client.setToken('');
+    localStorage.removeItem('accessToken');
+    window.location.href = 'index.html';
+
+  }
+}
+
+
+let userProfileDiv = document.getElementById('user-profile-expand');
+let userProfileImage = document.getElementById('profile-picture-image');
+
+
+// Show the div when clicking a button or any other element
+document.addEventListener('click', function (event) {
+  // Check if the clicked element is NOT the div or a child of the div
+  if (event.target !== userProfileDiv && !userProfileDiv.contains(event.target) && event.target !== userProfileImage && !userProfileImage.contains(event.target)) {
+    // Hide the div
+    userProfileDiv.style.display = 'none';
+  }
+});
