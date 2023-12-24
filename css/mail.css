@@ -95,3 +95,8 @@
 .material-symbols-outlined{
     margin: 6px;
 }
+
+a{
+    text-decoration: none;
+    color: black !important;
+} 
