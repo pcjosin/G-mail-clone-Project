@@ -1,0 +1,92 @@
+.sender-div{
+    width: 200px !important;
+        margin-left: 7px;
+            margin-right: 7px;
+
+}
+.check-star-flag{
+    color:#999999;
+}
+.preview-bar{
+    width:100% !important;
+    border-bottom:0.5px solid #bbbbbb !important;
+    display: flex !important;
+    justify-content: space-between !important;
+
+}
+
+.central-div{
+    width: 100%;
+            box-shadow: none;
+}
+
+.preview-time{
+display:flex !important;
+justify-content: flex-end!important;
+    margin-left: 7px;
+        margin-right: 7px;
+        /* align-self: flex-end; */
+}
+.left-div{
+    display: flex;
+}
+.right-div{
+        display: flex;
+
+}
+.list-check-box{
+    margin-left: 15px;
+    margin-right: 7px;
+}
+.list-star{
+        margin-left: 7px;
+        margin-right: 7px;
+}
+.list-important{
+    margin-left: 7px;
+    margin-right: 7px;
+}
+.preview{
+    display: flex;
+}
+.previewTitle{
+        white-space: nowrap;
+            /* Prevents text from wrapping to the next line */
+            /* overflow: hidden; */
+            /* Hides any overflow */
+            /* text-overflow: ellipsis; */
+            /* Adds ellipsis (...) for overflow */
+            /* width: 10vw; */
+
+        margin-left: 7px;
+            margin-right: 7px;
+}
+.previewText{
+    white-space: nowrap;
+        /* Prevents text from wrapping to the next line */
+        overflow: hidden;
+        /* Hides any overflow */
+        text-overflow: ellipsis;
+        /* Adds ellipsis (...) for overflow */
+        width: 30vw;    
+        margin-left: 7px;
+        margin-right: 7px;
+}
+
+/* class to make something bold */
+.bold-text{
+    font-weight: 700;
+}
+
+#main-list-header{
+    background-color: white;
+    width:100vw;
+    z-index: 2;
+    position: fixed;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#main-list-content{
+    padding-top: 60px;
+
+}
