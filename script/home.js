@@ -40,6 +40,25 @@ function gapiLoaded() {
           gapi.client.setToken({ access_token: accessToken });
 
           // Call the listLabels function
+
+          fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + accessToken)
+            .then(response => response.json())
+            .then(data => {
+              // Handle the user profile data
+              console.log('User Profile Data:', data);
+
+              // Access specific profile information
+              var userId = data.id;
+              var userName = data.name;
+              var userEmail = data.email;
+              var userPictureUrl = data.picture;
+
+              // Now you can use this information as needed
+            })
+            .catch(error => {
+              // Handle errors
+              console.error('Error fetching user profile:', error);
+            });
           listLabels();
           listLatestEmails(50);
         } else {
