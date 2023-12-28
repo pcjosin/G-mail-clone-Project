@@ -126,7 +126,7 @@ function gapiLoaded() {
       apiKey: API_KEY,
       clientId: CLIENT_ID,
       discoveryDocs: [GMAIL_DISCOVERY_DOC],
-      scope: "https://www.googleapis.com/auth/gmail.send",
+      // scope: "https://www.googleapis.com/auth/gmail.send",
     }).then(() => {
       // Set the access token if available
       if (accessToken) {

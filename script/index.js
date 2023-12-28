@@ -17,7 +17,7 @@ const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/gmail/v1/res
 
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
-const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly';
+const SCOPES = ['https://mail.google.com/', 'https://www.googleapis.com/auth/gmail.settings.basic','https://www.googleapis.com/auth/userinfo.profile'];
 
 let tokenClient;
 let gapiInited = false;
@@ -56,7 +56,7 @@ async function initializeGapiClient() {
 function gisLoaded() {
   tokenClient = google.accounts.oauth2.initTokenClient({
     client_id: CLIENT_ID,
-    scope: SCOPES,
+    scope: SCOPES.join(' '),
     callback: '', // defined later
   });
   gisInited = true;
