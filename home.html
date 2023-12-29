@@ -4,10 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gmail</title>
-    <link rel="icon" href="img/Gmail_icon_(2020).svg.webp" />
-    <!-- themechange css -->
-    <link rel="stylesheet" href="./css/quickSettings.css">
-
+    <link rel="icon" href="./assets/icons/Gmail_icon.webp" />
     <link rel="stylesheet" href="css/home.css" />
     <!-- BootStrap 5 CDN link-->
     <script
@@ -53,8 +50,8 @@
                 />
               </svg>
             </div>
-            <div class="logo">
-              <img src="img/logo_gmail_lockup_default_1x_r5.png" alt="" id="logo-icon">
+            <div class="logo" id="logo-icon">
+              <img src="./assets/images/logo_gmail_lockup_default_1x_r5.png" alt="" />
             </div>
           </div>
           <div class="search-box mt-2 col-7" id="search-box">
@@ -151,7 +148,7 @@
             ></image>
           </svg>
           <div class="profile-picture col-1" id="profile-picture">
-            <img src="" alt="" />
+            <img src="" alt="" id="profile-picture-image"/>
           </div>
         </div>
       </header>
@@ -182,35 +179,31 @@
       </div>
     </div>
 
-    <!-- theme testing.................. -->
-    <script src="./script/changeTheme.js"></script>
-    <div>
-      <div>Theme</div>
-            <div id="themeSelection">
-                
-                    <input type="radio"  id="theme-default" name="themes" class="themes" checked onchange="changeThemeDeafult()"> 
-                    <label for="theme-default">
-                        <img src="./img/themes/theme-default.png">
-                    </label>
 
-                    <input type="radio"  id="theme-1" name="themes" class="themes" onchange="changeTheme(this.id)"> 
-                    <label for="theme-1">
-                        <img src="./img/themes/theme-1.jpg">
-                    </label>
+    <div id="user-profile-expand">
+      <div id="user-profile-row1">
+        <div id="user-profile-expand-email"></div>
+        <div id="user-profile-expand-close"><i class="bi bi-x-lg p-1"></i></div>
+      </div>
+      <div id="user-profile-expand-row2">
+        <img id="user-profile-expand-image" src="">
+      </div>
+      <div id="user-profile-expand-row3">
+        <div id="user-profile-expand-hi">
 
-                  <input type="radio"  id="theme-2" name="themes" class="themes" onchange="changeTheme(this.id)"> 
-                  <label for="theme-2">
-                      <img src="./img/themes/theme-2.jpg">
-                  </label>
+        </div>
+      </div>
+      <div id="user-profile-expand-row4">
+        <div id="user-profile-expand-signout" onclick="handleSignoutClick()">
+          <span class="mt-3"><i class="bi bi-box-arrow-right pe-1"></i> Sign out </span>
 
-                  <input type="radio"  id="theme-3" name="themes" class="themes" onchange="changeTheme(this.id)"> 
-                  <label for="theme-3">
-                      <img src="./img/themes/theme-3.jpg">
-                  </label>
-            </div>
+        </div>
+      </div>
+      <div id="user-profile-expand-row5">
+        <span>&copy; 2023 web wizards </span>
+      </div>
+
     </div>
-  
-    <!-- theme testing.................. -->
 
   <script async src="script/home.js"></script>
      
@@ -220,4 +213,7 @@
       onload="gapiLoaded()"></script>
     <script async src="https://accounts.google.com/gsi/client"></script>
   </body>
+
+
+
 </html>

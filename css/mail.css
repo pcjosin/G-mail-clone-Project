@@ -95,3 +95,12 @@
 .material-symbols-outlined{
     margin: 6px;
 }
+
+a{
+    text-decoration: none;
+    color: black !important;
+} 
+#mail-content{
+    overflow-y: scroll;
+    height: 75vh;
+}

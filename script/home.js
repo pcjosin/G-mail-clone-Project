@@ -40,8 +40,55 @@ function gapiLoaded() {
           gapi.client.setToken({ access_token: accessToken });
 
           // Call the listLabels function
+          fetch('https://www.googleapis.com/gmail/v1/users/me/profile', {
+            headers: {
+              'Authorization': 'Bearer ' + accessToken,
+            },
+          })
+            .then(response => response.json())
+            .then(data => {
+              // Handle the user profile data
+
+              let userProfileExpandEmail = document.getElementById('user-profile-expand-email');
+              userProfileExpandEmail.innerText = data.emailAddress;
+              console.log('User Email: ', data.emailAddress);
+            })
+            .catch(error => {
+              // Handle errors
+              console.error('Error fetching user profile:', error);
+            });
+
+
+          fetch('https://www.googleapis.com/oauth2/v2/userinfo?alt=json&access_token=' + accessToken)
+            .then(response => response.json())
+            .then(data => {
+              // Handle the user profile data
+              console.log('User Profile Data:', data);
+
+              // Access specific profile information
+              let userName = data.given_name;
+              let userPictureUrl = data.picture;
+
+              let profilePictureImage = document.getElementById('profile-picture-image');
+              profilePictureImage.src = userPictureUrl;
+
+
+              let userProfileExpandImage = document.getElementById('user-profile-expand-image');
+              userProfileExpandImage.src = userPictureUrl;
+
+              let userProfileExpandHi = document.getElementById('user-profile-expand-hi');
+              userProfileExpandHi.innerText = 'Hi, '+userName+'!';
+
+              
+
+              // Now you can use this information as needed
+            })
+            .catch(error => {
+              // Handle errors
+              console.error('Error fetching user profile:', error);
+            });
           listLabels();
-          listLatestEmails(20);
+          listLatestEmails(50);
         } else {
           document.getElementById("nextpage-content").innerText =
             "Access token not found.";
@@ -179,7 +226,6 @@ async function clickHandle(emailElementId) {
   // Update your HTML elements
   emailSubject.innerText = emailSubjectContent;
   emailBody.innerHTML = emailBodyContent;
-  emailBody.style.overflowY = "scroll";
 }
 
 async function getEmailBodyHtml(messageId) {
@@ -314,6 +360,7 @@ async function listLabels() {
     return;
   }
   const labels = response.result.labels;
+  console.log("labels are: ",labels)
   if (!labels || labels.length == 0) {
     document.getElementById("content").innerText = "No labels found.";
     return;
@@ -382,14 +429,133 @@ async function listLabels() {
 
     // labelDiv.innerHTML=labels[i].name;
     parentDiv.appendChild(labelDiv);
-  }
 
-  console.log(labels);
+    //Checking for spam emails
+    anchor.onclick = ()=>{
+      document.getElementById("main-list-content").innerHTML = ''
+      listLabels();
+      if(anchor.innerHTML === "Spam"){
+        listSpamEmails(20);
+      } else if(anchor.innerHTML === "Draft"){
+        listDraftEmails(20);
+      } else if(anchor.innerHTML === "Sent"){
+        listSentEmails(20);
+      } else if(anchor.innerHTML === "Trash"){
+        listTrashEmails(20);
+      }
+    }
+  }
+}
+
+//Function to list and display spam emails
+async function listSpamEmails(numberOfEmails) {
+  try {
+    const response = await gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: ["SPAM"],
+      maxResults: numberOfEmails,
+    });
+
+    console.log(response.result.messages);
+
+    for (const message of response.result.messages) {
+      const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+      console.log(messagePreview);
+
+      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+
+      emailListElement.setAttribute("id", message.id);
+      emailListElement.onclick = () => clickHandle(message.id);
+
+      emailListContainer.appendChild(emailListElement);
+    }
+  } catch (error) {
+    console.error("Error listing emails:", error);
+  }
+}
+
+//Function to list and display draft emails
+async function listDraftEmails(numberOfEmails) {
+  try {
+    const response = await gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: ["DRAFT"],
+      maxResults: numberOfEmails,
+    });
+
+    console.log(response.result.messages);
+
+    for (const message of response.result.messages) {
+      const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+      console.log(messagePreview);
+
+      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+
+      emailListElement.setAttribute("id", message.id);
+      emailListElement.onclick = () => clickHandle(message.id);
+
+      emailListContainer.appendChild(emailListElement);
+    }
+  } catch (error) {
+    console.error("Error listing emails:", error);
+  }
+}
+
+//Function to list and display sent emails
+async function listSentEmails(numberOfEmails) {
+  try {
+    const response = await gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: ["SENT"],
+      maxResults: numberOfEmails,
+    });
+
+    console.log(response.result.messages);
+
+    for (const message of response.result.messages) {
+      const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+      console.log(messagePreview);
+
+      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+
+      emailListElement.setAttribute("id", message.id);
+      emailListElement.onclick = () => clickHandle(message.id);
+
+      emailListContainer.appendChild(emailListElement);
+    }
+  } catch (error) {
+    console.error("Error listing emails:", error);
+  }
+}
+
+//Function to list and display trash emails
+async function listTrashEmails(numberOfEmails) {
+  try {
+    const response = await gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: ["TRASH"],
+      maxResults: numberOfEmails,
+    });
+
+    console.log(response.result.messages);
+
+    for (const message of response.result.messages) {
+      const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+      console.log(messagePreview);
+
+      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+
+      emailListElement.setAttribute("id", message.id);
+      emailListElement.onclick = () => clickHandle(message.id);
+
+      emailListContainer.appendChild(emailListElement);
+    }
+  } catch (error) {
+    console.error("Error listing emails:", error);
+  }
 }
 
 function loadEmailContent(response) {
-
-
   var shortMonthNames = [
 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -399,7 +565,7 @@ function loadEmailContent(response) {
   const previewTitleContent = response.result.payload.headers.find(
     (header) => header.name === "Subject"
   ).value;
-  const senderNameContent =
+  let senderNameContent =
     response.result.payload.headers
       .find((header) => header.name === "From")
       .value.split("<")[0] == ""
@@ -408,7 +574,10 @@ function loadEmailContent(response) {
         ).value
       : response.result.payload.headers
           .find((header) => header.name === "From")
-          .value.split("<")[0];
+        .value.split("<")[0];
+  if (senderNameContent.length > 19) {
+    senderNameContent = senderNameContent.slice(0, 19) + '.';
+  }
   const sndDateTime =new Date(response.result.payload.headers.find((header) => header.name === "Date").value);
   console.log('snddte:'+sndDateTime);
   let today = new Date();
@@ -559,3 +728,46 @@ function loadEmailContent(response) {
   // }
 }
 
+
+//profile view +++++++++++++++++++++++++++++++++++===
+
+let profiePictureDiv = document.getElementById('profile-picture');
+
+profiePictureDiv.onclick = () => {
+  let userProfile = document.getElementById('user-profile-expand');
+  userProfile.style = 'display:block';
+};
+
+let profileCloseButton = document.getElementById('user-profile-expand-close');
+
+
+profileCloseButton.onclick = () => {
+  let userProfile = document.getElementById('user-profile-expand');
+  userProfile.style = 'display:none';
+};
+
+
+function handleSignoutClick() {
+  const token = gapi.client.getToken();
+  if (token !== null) {
+    google.accounts.oauth2.revoke(token.access_token);
+    gapi.client.setToken('');
+    localStorage.removeItem('accessToken');
+    window.location.href = 'index.html';
+
+  }
+}
+
+
+let userProfileDiv = document.getElementById('user-profile-expand');
+let userProfileImage = document.getElementById('profile-picture-image');
+
+
+// Show the div when clicking a button or any other element
+document.addEventListener('click', function (event) {
+  // Check if the clicked element is NOT the div or a child of the div
+  if (event.target !== userProfileDiv && !userProfileDiv.contains(event.target) && event.target !== userProfileImage && !userProfileImage.contains(event.target)) {
+    // Hide the div
+    userProfileDiv.style.display = 'none';
+  }
+});
