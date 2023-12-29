@@ -16,3 +16,17 @@
     border: 0px;
     background-color: transparent;
 }
+
+input[type="radio"]{
+    display:none;
+}
+
+input[type=radio]:checked + label>img {
+    border: solid 3px rgb(0, 140, 255);
+  }
+
+#themeSelection label>img{
+    width: 160px;
+    height: 90px;
+    border-radius: 10px;
+}

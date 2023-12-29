@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="./css/quickSettings.css">
     </head>
 <body>
+    <script src="./script/changeTheme.js"></script>
     <section>
         <div class="sticky-top bg-white">
             <div class="row p-1">
@@ -23,28 +24,28 @@
             <hr>
         </div>
         <div>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
-            <p>ububjbjbbbjbbbbbbbjjjjjjjjjjjjjjjjjjj</p>
+            <div id="themeSelection">
+                
+                <input type="radio"  id="theme-default" name="themes" class="themes" checked onchange="changeThemeDeafult()"> 
+                <label for="theme-default">
+                    <img src="./img/themes/theme-default.png">
+                </label>
+
+                <input type="radio"  id="theme-1" name="themes" class="themes" onchange="changeTheme(this.id)"> 
+                <label for="theme-1">
+                    <img src="./img/themes/theme-1.jpg">
+                </label>
+
+              <input type="radio"  id="theme-2" name="themes" class="themes" onchange="changeTheme(this.id)"> 
+              <label for="theme-2">
+                  <img src="./img/themes/theme-2.jpg">
+              </label>
+
+              <input type="radio"  id="theme-3" name="themes" class="themes" onchange="changeTheme(this.id)"> 
+              <label for="theme-3">
+                  <img src="./img/themes/theme-3.jpg">
+              </label>
+        </div>
         </div>
     </section>
 </body>

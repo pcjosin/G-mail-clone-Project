@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gmail</title>
     <link rel="icon" href="img/Gmail_icon_(2020).svg.webp" />
+    <!-- themechange css -->
+    <link rel="stylesheet" href="./css/quickSettings.css">
+
     <link rel="stylesheet" href="css/home.css" />
     <!-- BootStrap 5 CDN link-->
     <script
@@ -30,7 +33,7 @@
       href="https://fonts.googleapis.com/css?family=Google+Sans:400,700"
     />
   </head>
-  <body style="background-color: #eef3fa">
+  <body>
     <div class="main-container">
       <header>
         <div class="top-bar col-12" id="top-bar">
@@ -50,8 +53,8 @@
                 />
               </svg>
             </div>
-            <div class="logo" id="logo-icon">
-              <img src="img/logo_gmail_lockup_default_1x_r5.png" alt="" />
+            <div class="logo">
+              <img src="img/logo_gmail_lockup_default_1x_r5.png" alt="" id="logo-icon">
             </div>
           </div>
           <div class="search-box mt-2 col-7" id="search-box">
@@ -93,7 +96,7 @@
                   width="24"
                   height="24"
                   viewBox="0 0 24 24"
-                  class="bi-filter"
+                  class=" bi bi-filter"
                 >
                   <path
                     d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"
@@ -169,7 +172,7 @@
       </div>
     </div>
     <div class="display container-fluid" id="display-content-body">
-      <div class="row">
+      <div class="row" id="main-body">
         <div class="col-md-2 p-0" id="main-sidebar">
           <!-- Content for the main sidebar goes here -->
         </div>
@@ -178,6 +181,36 @@
         </div>
       </div>
     </div>
+
+    <!-- theme testing.................. -->
+    <script src="./script/changeTheme.js"></script>
+    <div>
+      <div>Theme</div>
+            <div id="themeSelection">
+                
+                    <input type="radio"  id="theme-default" name="themes" class="themes" checked onchange="changeThemeDeafult()"> 
+                    <label for="theme-default">
+                        <img src="./img/themes/theme-default.png">
+                    </label>
+
+                    <input type="radio"  id="theme-1" name="themes" class="themes" onchange="changeTheme(this.id)"> 
+                    <label for="theme-1">
+                        <img src="./img/themes/theme-1.jpg">
+                    </label>
+
+                  <input type="radio"  id="theme-2" name="themes" class="themes" onchange="changeTheme(this.id)"> 
+                  <label for="theme-2">
+                      <img src="./img/themes/theme-2.jpg">
+                  </label>
+
+                  <input type="radio"  id="theme-3" name="themes" class="themes" onchange="changeTheme(this.id)"> 
+                  <label for="theme-3">
+                      <img src="./img/themes/theme-3.jpg">
+                  </label>
+            </div>
+    </div>
+  
+    <!-- theme testing.................. -->
 
   <script async src="script/home.js"></script>
      

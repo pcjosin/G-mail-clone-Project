@@ -63,8 +63,9 @@
     max-width: 720px;
     font-family: "Google Sans",Helvetica,Arial,sans-serif;
     border: none;
-    background-color: white;
+    background-color:transparent;
 }
+
 
 .bi-search{
     color: #5f6368;
@@ -143,6 +144,7 @@
     border-bottom:0.5px solid #bbbbbb !important;
     display: flex !important;
     justify-content: space-between !important;
+    background-color: transparent;
 
 }
 
@@ -220,7 +222,7 @@ justify-content: flex-end!important;
 #main-list-header{
     margin-left: 0.5px;
     padding-right: 10px;
-    background-color: white;
+    background-color:white;
     width:82% !important;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
@@ -236,6 +238,7 @@ justify-content: flex-end!important;
         border-top-right-radius: 20px;
             border-top-left-radius: 20px;
     height: 78vh !important;
+    background-color: transparent;
 
 }
 #main-list-container{
@@ -243,7 +246,8 @@ justify-content: flex-end!important;
         border-top-right-radius: 20px;
             border-top-left-radius: 20px;
             overflow: hidden;
-    background-color: white;
+            background-color:rgba(255, 255, 255, 0.61);
+    background-color:white;
 }
 
 
@@ -262,14 +266,14 @@ justify-content: flex-end!important;
 } */
 
 .labelDiv:hover:not(.iconDiv) {
-    background-color: rgb(223, 233, 235);
+    background-color: rgba(203, 203, 203, 0.308);
     border-radius: 20px;
 }
 .compose{
     padding-bottom: 15px;
 }
 body{
-    overflow: hidden;
+    overflow: scroll;
 }
 
 
@@ -282,14 +286,18 @@ body{
 
 }
 .preview-bar{
-    background-color: white;
+    background-color:transparent;
 }
 #display-content-body{
     background-color:aliceblue;
 }
 #main-sidebar{
     margin-top: 150px !important;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     height: 100%;
+}
+
+#mail-container{
+    background-color:rgb(255, 255, 255);
 }
