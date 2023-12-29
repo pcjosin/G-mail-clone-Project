@@ -226,7 +226,6 @@ async function clickHandle(emailElementId) {
   // Update your HTML elements
   emailSubject.innerText = emailSubjectContent;
   emailBody.innerHTML = emailBodyContent;
-  emailBody.style.overflowY = "scroll";
 }
 
 async function getEmailBodyHtml(messageId) {
