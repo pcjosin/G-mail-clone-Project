@@ -84,27 +84,38 @@
 }
 
 .bi-question-circle{
-    position: absolute;
+    /* position: absolute;
     top: 30px;
-    left: 78%;
+    left: 78%; */
     color: #5f6368;
 }
 
 .bi-gear{
-    position: absolute;
+    /* position: absolute;
     top: 30px;
-    left: 82%;
+    left: 82%; */
     color: #5f6368;  
 }
 
 .bi-icon-menu{
     height: 24px;
     width: 24px;
-    position: absolute;
+    /* position: absolute;
     top: 30px;
-    left: 86%;
+    left: 86%; */
     color: #5f6368;  
 }
+
+#right-icons{
+    width: 100%;
+    
+}
+#right-icons svg{
+    margin: 20px;
+    float: right;
+    
+}
+
 
 .profile-picture img{
     height: 32px;
@@ -128,6 +139,9 @@
     width: 135px;
     color: #001d35;
     padding: 0 24px 0 0;
+}
+.compose{
+    position: absolute;
 }
 #sender-div{
     width: 150px !important;
@@ -223,16 +237,16 @@ justify-content: flex-end!important;
     margin-left: 0.5px;
     padding-right: 10px;
     background-color:white;
-    width:82% !important;
+    /* width:82% !important; */
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
     z-index: 120;
-    position: absolute;
+    /* position: absolute; */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #main-list-content{
-    margin-top: 60px !important;
+    /* margin-top: 60px !important; */
     overflow-y: scroll !important;
     overflow-x: hidden;
         border-top-right-radius: 20px;
