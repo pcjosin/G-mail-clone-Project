@@ -1,6 +1,7 @@
 let emailListContainer;
 let emailBody;
 let emailSubject;
+let stopListEmails = false;
 
 function loadPage2Content() {
   fetch("html/emaillist.html")
@@ -88,6 +89,7 @@ function gapiLoaded() {
               console.error('Error fetching user profile:', error);
             });
           listLabels();
+          console.log("list latest emails:")
           listLatestEmails(50);
         } else {
           document.getElementById("nextpage-content").innerText =
@@ -108,6 +110,12 @@ async function listLatestEmails(numberOfEmails) {
     console.log(response.result.messages);
 
     for (const message of response.result.messages) {
+      if (stopListEmails) {
+        console.log("Function stopped by user");
+        return; // Stop the function
+      }
+
+      console.log("list latest emails: ", message)
       const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
       console.log(messagePreview);
 
@@ -442,6 +450,8 @@ async function listLabels() {
         listSentEmails(20);
       } else if(anchor.innerHTML === "Trash"){
         listTrashEmails(20);
+      } else if(anchor.innerHTML == "Inbox"){
+        listLatestEmails(20);
       }
     }
   }
@@ -771,3 +781,232 @@ document.addEventListener('click', function (event) {
     userProfileDiv.style.display = 'none';
   }
 });
+
+// function to dislay dropdrown list to change screen layout
+function displayLayoutDiv(){
+  let layoutDiv = document.getElementById('main-list-header-right-viewSelect');
+  let layoutOptionDiv = document.getElementById('layout-div-expand');
+  layoutOptionDiv.style.display = 'none';
+  layoutOptionDiv.style.flexDirection = 'column';
+  layoutOptionDiv.innerHTML = "";
+
+  let layoutOptionOne = document.createElement('button');
+  let layoutOptionTwo = document.createElement('button');
+  let layoutOptionThree = document.createElement('button');
+
+  layoutOptionOne.innerHTML = "No Split";
+  layoutOptionTwo.innerHTML = "Vertical Split";
+  layoutOptionThree.innerHTML = "Horizontal Split ";
+
+  layoutOptionDiv.appendChild(layoutOptionOne);
+  layoutOptionDiv.appendChild(layoutOptionTwo);
+  layoutOptionDiv.appendChild(layoutOptionThree);
+
+  document.addEventListener('click', function(event) {
+      // Toggling the visiblity of the dropdown menu
+      if(layoutOptionDiv.style.display=='none'){
+        layoutOptionDiv.style.display = 'flex';
+      } else if(layoutOptionDiv.style.display=='flex'){
+        layoutOptionDiv.style.display = 'none';
+      }
+
+      if (!layoutOptionDiv.contains(event.target)&&!layoutDiv.contains(event.target)) {
+          // Handle the click outside the div
+          layoutOptionDiv.style.display = 'none';
+      }
+  });
+  
+
+  //function to change layout into vertical split
+  function verticalSplit(){
+  document.addEventListener('click',async function(event){
+    if(layoutOptionTwo.contains(event.target)){
+      stopListEmails = true;
+      // Function to load HTML content into a target div
+      fetch('verticalsplit.html')
+          .then(response => response.text())
+          .then(async (data) => {
+              document.getElementById("display-area").innerHTML = data;
+              console.log("html loaded sucessfully");
+
+              //changing the icon to toggle views
+              let layoutIcon = document.getElementById('main-list-header-right-view');
+              let verticalSplitIcon = document.createElement('span');
+              verticalSplitIcon.innerHTML = '<span class="material-symbols-outlined">vertical_split</span>';
+              layoutIcon.innerHTML = '';
+              await layoutIcon.appendChild(verticalSplitIcon);
+              
+              stopListEmails = false;
+              console.log("latest emails in split view 1")
+              await listLabels();
+              await listVerticalSplitEmails(30);
+              console.log("latest emails in split view 2")  
+          })
+          .catch(error => console.error('Error loading HTML:', error));
+    }
+  });
+  }
+  verticalSplit();
+  
+  //Function to change layout into default view
+  function defaultView(){
+    document.addEventListener('click',async function(event){
+      if(layoutOptionOne.contains(event.target)){
+        stopListEmails = true;
+        fetch("./html/emaillist.html")
+        .then(response => response.text())
+        .then(async(data) => {
+          document.getElementById("display-area").innerHTML = data; 
+          console.log("email list html loaded sucessfully");
+          
+          stopListEmails = false;
+          await listLabels();
+          await listLatestEmails(30);
+        })
+      }
+      });
+  }
+  defaultView();
+ 
+  //function to chage layout to horizontal split
+  function horizontalSplit(){
+    document.addEventListener('click',async function(event){
+      if(layoutOptionThree.contains(event.target)){
+        stopListEmails = true;
+        // Function to load HTML content into a target div
+        fetch('horizontalsplit.html')
+            .then(response => response.text())
+            .then(async (data) => {
+                document.getElementById("display-area").innerHTML = data;
+                console.log("horizontalsplit html loaded sucessfully");
+
+                //changing the icon to toggle views
+                let layoutIcon = document.getElementById('main-list-header-right-view');
+                let verticalSplitIcon = document.createElement('span');
+                verticalSplitIcon.innerHTML = '<span class="material-symbols-outlined">horizontal_split</span>';
+                layoutIcon.innerHTML = '';
+                await layoutIcon.appendChild(verticalSplitIcon);
+                
+                stopListEmails = false;
+                console.log("latest emails in split view 1")
+                await listLabels();
+                await listHorizontalSplitEmails(30);
+                console.log("latest emails in split view 2")  
+            })
+            .catch(error => console.error('Error loading HTML:', error));
+      }
+    });
+  }
+  horizontalSplit()
+}
+
+//function to list emails in split view
+
+async function listVerticalSplitEmails(numberOfEmails) {
+  try {
+    const response = await gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: ["INBOX"],
+      maxResults: numberOfEmails,
+    });
+
+    console.log(response.result.messages);
+
+    for (const message of response.result.messages) {
+      if (stopListEmails) {
+        console.log("Function stopped by user");
+        return; // Stop the function
+      }
+
+      console.log("list latest emails: ", message)
+      const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+      console.log(messagePreview);
+
+      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+
+      emailListElement.setAttribute("id", message.id);
+      emailListElement.onclick = () => clickHandleSplit(message.id);
+      
+      document.getElementById('main-list-content').appendChild(emailListElement);
+    }
+  } catch (error) {
+    console.error("Error listing emails:", error);
+  }
+}
+
+//function to display emails in horizontal view
+async function listHorizontalSplitEmails(numberOfEmails) {
+  try {
+    const response = await gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: ["INBOX"],
+      maxResults: numberOfEmails,
+    });
+
+    console.log(response.result.messages);
+
+    for (const message of response.result.messages) {
+      if (stopListEmails) {
+        console.log("Function stopped by user");
+        return; // Stop the function
+      }
+
+      console.log("list latest emails: ", message)
+      const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+      console.log(messagePreview);
+
+      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+
+      emailListElement.setAttribute("id", message.id);
+      emailListElement.onclick = () => clickHandleSplit(message.id);
+      
+      document.getElementById('main-list-content').appendChild(emailListElement);
+      document.getElementById('main-list-content').style.maxHeight = '30vh'
+    }
+  } catch (error) {
+    console.error("Error listing emails:", error);
+  }
+}
+
+//function to handle the click in split view
+
+async function clickHandleSplit(emailElementId) {
+  fetch("mail.html")
+    .then((response) => response.text())
+    .then((data) => {
+      // Inject the loaded content into the container
+      document.getElementById("email-split-view").innerHTML = '';
+      document.getElementById("email-split-view").innerHTML = data;
+      document.getElementById("email-split-view").style.overflowX = 'scroll';      
+
+      emailBody = document.getElementById("body-content");
+      emailSubject = document.getElementById("email-subject");
+    })
+    .catch((error) => console.error("Error:", error));
+
+  emailSubjectContent = await getSendSubject(emailElementId);
+  emailBodyContent = await getEmailBodyHtml(emailElementId);
+
+  // Update your HTML elements
+  emailSubject.innerText = emailSubjectContent;
+  emailBody.innerHTML = emailBodyContent;
+}
+
+//toggle between views
+function toggleViews(){
+  document.addEventListener('DOMContentLoaded', function() {
+    let toggleDiv = document.getElementById('main-list-header-right-view');
+
+    if (toggleDiv) {
+      document.addEventListener('click', function(event) {
+        if (toggleDiv.contains(event.target)) {
+          console.log("toggle div clicked");
+        }
+      });
+    } else {
+      console.error("Element with ID 'main-list-header-right-view' not found");
+    }
+  });
+  
+}
+toggleViews();

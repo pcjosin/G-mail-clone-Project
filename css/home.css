@@ -50,7 +50,7 @@
 }
 
 .search-box form{
-    max-width: 720px;
+    max-width: 600px;
     min-height: 50px;
     background-color: white;
     border-radius: 40px;
@@ -59,11 +59,18 @@
 
 .search-bar-input input{
     height: 46px;
-    width: 470px;
+    width: 280px;
+    min-width: 100px;
     max-width: 720px;
     font-family: "Google Sans",Helvetica,Arial,sans-serif;
     border: none;
     background-color: white;
+}
+
+@media screen and (max-width: 800px) {
+    .search-bar-input input {
+        width: 80px;
+    }
 }
 
 .bi-search{
@@ -230,6 +237,7 @@ justify-content: flex-end!important;
 }
 
 #main-list-content{
+    width: 100%;
     margin-top: 60px !important;
     overflow-y: scroll !important;
     overflow-x: hidden;
@@ -244,6 +252,7 @@ justify-content: flex-end!important;
             border-top-left-radius: 20px;
             overflow: hidden;
     background-color: white;
+    width: 100%;
 }
 
 
@@ -381,4 +390,30 @@ justify-content: space-around;
         font-weight: 400;
 }
 
+#layout-div-expand{
+    z-index: 30;
+    position: absolute;
+    top: 24%;
+    right: 2%;
+    background-color: white;
+    width: 150px;
+}
+
+#layout-div-expand button{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: left;
+    border: none;
+    background-color: white;
+    font-family: "Google Sans",Helvetica,Arial,sans-serif;
+}
+
+#main-list-header-right-viewSelect{
+    text-align: right;
+    position: static;
+}
+
+#mail-content{
+    background-color: white !important;
+}
 
