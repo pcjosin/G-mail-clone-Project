@@ -27,6 +27,7 @@ function loadPage2Content() {
 const API_KEY = "AIzaSyAGzP3_IUN8Ds05jBNckdYrFR6jyDeoeEo";
 
 loadPage2Content();
+let userEmail;
 
 // Initialize the Gmail API client on the Next Page
 const accessToken = localStorage.getItem("accessToken"); //+++++++++++++++++++++++++++++++++++++++++++++++ change access token to session storage
@@ -56,6 +57,7 @@ function gapiLoaded() {
             .then(response => response.json())
             .then(data => {
               // Handle the user profile data
+              userEmail = data.emailAddress;
 
               let userProfileExpandEmail = document.getElementById('user-profile-expand-email');
               userProfileExpandEmail.innerText = data.emailAddress;
@@ -950,19 +952,23 @@ function loadCompose() {
 // Function to send an email using Gmail API
 function sendEmail() {
   const recipientEmail = document.getElementById("email-container").value;
-  const emailMessage = document.getElementById("message-container").value;
+  const emailMessage = document.getElementById("message-container").innerHTML;
+  const emailSubject = document.getElementById("subject-container").value;
+
 
   if (!recipientEmail || !emailMessage) {
     alert("Recipient email and message are required");
     return;
   }
 
-  const rawMessage = btoa(
-    `To: ${recipientEmail}\r\n` +
-    "Subject: Your Email Subject Here\r\n" +
-    'Content-Type: text/plain; charset="UTF-8"\r\n\r\n' +
-    emailMessage
-  );
+  // const rawMessage = btoa(
+  //   `To: ${recipientEmail}\r\n` +
+  //   `Subject: ${emailSubject}\r\n` +
+  //   'Content-Type: text/plain; charset="UTF-8"\r\n\r\n' +
+  //   emailMessage
+  // );
+
+  const rawMessage = makeEmail(userEmail, recipientEmail, emailSubject,emailMessage );
 
   const request = gapi.client.gmail.users.messages.send({
     userId: "me",
@@ -975,5 +981,19 @@ function sendEmail() {
     console.log(response);
     alert("Email sent successfully!");
   });
+}
+
+function makeEmail(sender, to, subject, body) {
+  const email_lines = [];
+
+  email_lines.push(`From: ${sender}`);
+  email_lines.push(`To: ${to}`);
+  email_lines.push(`Content-type: text/html;charset=iso-8859-1`);
+  email_lines.push(`Subject: ${subject}`);
+  email_lines.push('');
+  email_lines.push(body);
+
+  const raw = email_lines.join('\r\n');
+  return btoa(unescape(encodeURIComponent(raw)));
 }
 
