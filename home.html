@@ -10,6 +10,7 @@
     <!-- Quick settings link -->
     <script src="script/changeTheme.js"></script>
     <link rel="stylesheet" href="css/quickSettings.css" />
+    <link rel="stylesheet" href="css/folder.css" />
 
     <!-- BootStrap 5 CDN link-->
     <script
@@ -178,9 +179,16 @@
     </div>
     <div class="display container-fluid" id="display-content-body">
       <div class="row" id="main-body">
-        <div class="col-md-2 p-0" id="main-sidebar">
+        <div class="col-md-2 p-0" class="left-nav-bar">
+        <div  id="main-sidebar">
+          <!-- Content for the main sidebar goes here -->
+          
+        </div>
+        <div  id="main-folder-bar">
           <!-- Content for the main sidebar goes here -->
         </div>
+        
+      </div>
         <div class="col-md-10" id="display-area">
           <!-- Content for the display area goes here -->  
         </div>
@@ -213,7 +221,7 @@
       </div>
 
     </div>
-
+  <script src="script/folder.js"></script>
   <script async src="script/home.js"></script>
   <script src="script/quickSettings.js"></script>
      
