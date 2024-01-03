@@ -1,7 +1,7 @@
 function changeTheme(id){
 
     let displayBody=document.getElementById('main-body');
-    
+
     // changing background image
     displayBody.style.backgroundImage=`url('http://127.0.0.1:5500/assets/images/themes/${id}.jpg')`;
     displayBody.style.backgroundSize='cover';
@@ -9,9 +9,10 @@ function changeTheme(id){
     // setting containers to transparent
     document.getElementsByClassName('main-container')[0].style.backgroundColor='transparent';
     document.getElementById('top-bar').style.backgroundColor='transparent';
-    document.getElementById('compose').style.backgroundColor='transparent';
     document.getElementById('main-list-content').style.backgroundColor='transparent';
     document.getElementById('search-bar-input').style.backgroundColor='transparent';
+    
+    
     
     //semi-tranparent containers
     document.getElementById('main-list-container').style.backgroundColor='rgba(255, 255, 255, 0.75)';
@@ -41,8 +42,11 @@ function changeTheme(id){
         element.style.color='white';
     })
 
-      //commpose button
-    document.getElementById('compose-button').style.backgroundColor='white';
+    //commpose button
+    let composeButton= document.getElementById('compose-button');
+    composeButton.style.backgroundColor='white';
+    composeButton.style.color='black';
+    composeButton.getElementsByTagName('i')[0].style.color='black';
 
 }
 
@@ -74,6 +78,9 @@ function changeThemeDeafult(){
     })
 
     //commpose button
-    document.getElementById('compose-button').style.backgroundColor='#C2E7FF';
+    let composeButton= document.getElementById('compose-button');
+    composeButton.style.backgroundColor='#C2E7FF';
+    composeButton.style.color='black';
+    composeButton.getElementsByTagName('i')[0].style.color='black';
 
 }
