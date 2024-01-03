@@ -420,6 +420,7 @@ justify-content: space-around;
     background-color:rgba(168, 167, 158, 0.527) !important;
     border-radius: 20px;
     overflow-y: hidden;
+    display: none;
     
     height: 410px;
     width: 320px;

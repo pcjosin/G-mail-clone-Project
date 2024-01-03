@@ -801,8 +801,8 @@ document.addEventListener("click", function (event) {
 
 //app drawer display
 
-let appDiv = document.getElementById("menu-icon-container");
-let appDivOpen = document.getElementById("app-drawer-expand-container");
+let appDiv = document.getElementById("icon-menu");
+let appDivOpen;
 appDiv.onclick = () => {
   appDivOpen = document.getElementById("app-drawer-expand-container");
   appDivOpen.style.display = 'block';
