@@ -90,3 +90,7 @@ justify-content: flex-end!important;
     padding-top: 60px;
 
 }
+
+#main-list-header-right{
+    z-index: -1 !important;
+}

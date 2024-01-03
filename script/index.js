@@ -83,11 +83,9 @@ function handleAuthClick() {
     }
 
 
-    localStorage.setItem('accessToken', resp.access_token); //++++++++++++++++++++++++++++ encrypt and set
+    localStorage.setItem('accessToken', resp.access_token); 
 
     document.getElementById('authorize_button').innerText = 'Refresh';
-    // await listLabels();
-    // listLatestEmails(10);
     window.location.href = 'home.html';
   };
 

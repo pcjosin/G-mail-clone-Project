@@ -43,49 +43,56 @@ function gapiLoaded() {
           gapi.client.setToken({ access_token: accessToken });
 
           // Call the listLabels function
-          fetch('https://www.googleapis.com/gmail/v1/users/me/profile', {
+          fetch("https://www.googleapis.com/gmail/v1/users/me/profile", {
             headers: {
-              'Authorization': 'Bearer ' + accessToken,
+              Authorization: "Bearer " + accessToken,
             },
           })
-            .then(response => response.json())
-            .then(data => {
+            .then((response) => response.json())
+            .then((data) => {
               // Handle the user profile data
 
-              let userProfileExpandEmail = document.getElementById('user-profile-expand-email');
+              let userProfileExpandEmail = document.getElementById(
+                "user-profile-expand-email"
+              );
               userProfileExpandEmail.innerText = data.emailAddress;
-              console.log('User Email: ', data.emailAddress);
+              console.log("User Email: ", data.emailAddress);
             })
-            .catch(error => {
+            .catch((error) => {
               // Handle errors
-              console.error('Error fetching user profile:', error);
+              console.error("Error fetching user profile:", error);
             });
 
-
-          fetch('https://www.googleapis.com/oauth2/v2/userinfo?alt=json&access_token=' + accessToken)
-            .then(response => response.json())
-            .then(data => {
+          fetch(
+            "https://www.googleapis.com/oauth2/v2/userinfo?alt=json&access_token=" +
+              accessToken
+          )
+            .then((response) => response.json())
+            .then((data) => {
               // Handle the user profile data
-              console.log('User Profile Data:', data);
+              console.log("User Profile Data:", data);
 
               // Access specific profile information
               let userName = data.given_name;
               let userPictureUrl = data.picture;
 
-              let profilePictureImage = document.getElementById('profile-picture-image');
+              let profilePictureImage = document.getElementById(
+                "profile-picture-image"
+              );
               profilePictureImage.src = userPictureUrl;
 
-
-              let userProfileExpandImage = document.getElementById('user-profile-expand-image');
+              let userProfileExpandImage = document.getElementById(
+                "user-profile-expand-image"
+              );
               userProfileExpandImage.src = userPictureUrl;
 
               let userProfileExpandHi = document.getElementById('user-profile-expand-hi');
               userProfileExpandHi.innerText = 'Hi, '+userName+'!';
               // Now you can use this information as needed
             })
-            .catch(error => {
+            .catch((error) => {
               // Handle errors
-              console.error('Error fetching user profile:', error);
+              console.error("Error fetching user profile:", error);
             });
             createNonUserLabelElements();
          
@@ -134,7 +141,7 @@ async function getEmailPreview(messageId) {
       userId: "me",
       id: messageId,
       format: "metadata",
-      metadataHeaders: ["Subject", "From","Date"],
+      metadataHeaders: ["Subject", "From", "Date"],
     });
     console.log(response);
     return response;
@@ -255,15 +262,13 @@ async function getEmailBodyHtml(messageId) {
       // Iterate through parts
       for (const part of emailData.payload.parts) {
         // Check if the part is text/html (HTML content)
-        if (
-          part.mimeType === "text/html" &&
-          part.body &&
-          part.body.data
-        ) {
+        if (part.mimeType === "text/html" && part.body && part.body.data) {
           // Decode the base64-encoded data using custom function
-          console.log(part.body.data)
-          const htmlContent =  decodeURIComponent(escape(atob(part.body.data.replace(/\-/g, '+').replace(/\_/g, '/'))));
-          console.log(htmlContent)
+          console.log(part.body.data);
+          const htmlContent = decodeURIComponent(
+            escape(atob(part.body.data.replace(/\-/g, "+").replace(/\_/g, "/")))
+          );
+          console.log(htmlContent);
           // Return the decoded HTML content
           return htmlContent;
         }
@@ -282,7 +287,7 @@ function decodeBase64(encodedString) {
   const binaryString = atob(encodedString);
   const bytes = new Uint8Array(binaryString.length);
   for (let i = 0; i < binaryString.length; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
+    bytes[i] = binaryString.charCodeAt(i);
   }
   return String.fromCharCode.apply(null, bytes);
 }
@@ -568,10 +573,19 @@ async function listTrashEmails(numberOfEmails) {
 
 function loadEmailContent(response) {
   var shortMonthNames = [
-'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-];
-
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
 
   const previewTitleContent = response.result.payload.headers.find(
     (header) => header.name === "Subject"
@@ -580,41 +594,44 @@ function loadEmailContent(response) {
     response.result.payload.headers
       .find((header) => header.name === "From")
       .value.split("<")[0] == ""
-      ? response.result.payload.headers.find(
-          (header) => header.name === "From"
-        ).value
+      ? response.result.payload.headers.find((header) => header.name === "From")
+          .value
       : response.result.payload.headers
           .find((header) => header.name === "From")
-        .value.split("<")[0];
+          .value.split("<")[0];
   if (senderNameContent.length > 19) {
-    senderNameContent = senderNameContent.slice(0, 19) + '.';
+    senderNameContent = senderNameContent.slice(0, 19) + ".";
   }
-  const sndDateTime =new Date(response.result.payload.headers.find((header) => header.name === "Date").value);
-  console.log('snddte:'+sndDateTime);
+  const sndDateTime = new Date(
+    response.result.payload.headers.find(
+      (header) => header.name === "Date"
+    ).value
+  );
+  console.log("snddte:" + sndDateTime);
   let today = new Date();
-  console.log('snddte:'+today);
+  console.log("snddte:" + today);
 
-  if (today.getFullYear()===sndDateTime.getFullYear() &&
-      today.getMonth()===sndDateTime.getMonth() &&
-      today.getDate()===sndDateTime.getDate()){
-          var sendTimeContent=sndDateTime.toLocaleTimeString().replace(/:\d{2} /, ' ');
-                  console.log('snddte:'+sendTimeContent);
-      }
-  else if(today.getFullYear() ===sndDateTime.getFullYear()){
-      var sendTimeContent=   shortMonthNames[parseInt( sndDateTime.getMonth())] +' '+ sndDateTime.getDate();
-      console.log('snddte:'+sendTimeContent);
-
+  if (
+    today.getFullYear() === sndDateTime.getFullYear() &&
+    today.getMonth() === sndDateTime.getMonth() &&
+    today.getDate() === sndDateTime.getDate()
+  ) {
+    var sendTimeContent = sndDateTime
+      .toLocaleTimeString()
+      .replace(/:\d{2} /, " ");
+    console.log("snddte:" + sendTimeContent);
+  } else if (today.getFullYear() === sndDateTime.getFullYear()) {
+    var sendTimeContent =
+      shortMonthNames[parseInt(sndDateTime.getMonth())] +
+      " " +
+      sndDateTime.getDate();
+    console.log("snddte:" + sendTimeContent);
+  } else {
+    var sendTimeContent = sndDateTime.toLocaleDateString();
+    console.log("snddte:" + sendTimeContent);
   }
-  else{
-      var sendTimeContent=sndDateTime.toLocaleDateString();
-      console.log('snddte:'+sendTimeContent);
 
-  }
-
-  
-
- // const sendTimeContent 
-
+  // const sendTimeContent
 
   const previewTextContent = response.result.snippet;
   const labels = response.result.labelIds;
@@ -671,8 +688,7 @@ function loadEmailContent(response) {
     important.innerHTML =
       '<i class="bi bi-caret-right-fill check-star-flag" style="color:yellow"></i>';
   } else {
-    important.innerHTML =
-      '<i class="bi bi-caret-right check-star-flag"></i>';
+    important.innerHTML = '<i class="bi bi-caret-right check-star-flag"></i>';
   }
 
   leftDiv.appendChild(important);
@@ -719,11 +735,11 @@ function loadEmailContent(response) {
   rightDiv.appendChild(preview);
 
   const sendTime = document.createElement("div");
-  sendTime.classList.add("preview-time", "col-md-3", "col-sm-3","pe-4");
-  
+  sendTime.classList.add("preview-time", "col-md-3", "col-sm-3", "pe-4");
+
   const sendTimeinside = document.createElement("span");
-  if (labels.includes('UNREAD')){
-      sendTimeinside.classList.add("bold-text");
+  if (labels.includes("UNREAD")) {
+    sendTimeinside.classList.add("bold-text");
   }
   sendTimeinside.innerText = sendTimeContent;
 
@@ -739,49 +755,77 @@ function loadEmailContent(response) {
   // }
 }
 
-
 //profile view +++++++++++++++++++++++++++++++++++===
 
-let profiePictureDiv = document.getElementById('profile-picture');
+let profiePictureDiv = document.getElementById("profile-picture");
 
 profiePictureDiv.onclick = () => {
-  let userProfile = document.getElementById('user-profile-expand');
-  userProfile.style = 'display:block';
+  let userProfile = document.getElementById("user-profile-expand");
+  userProfile.style = "display:block";
 };
 
-let profileCloseButton = document.getElementById('user-profile-expand-close');
-
+let profileCloseButton = document.getElementById("user-profile-expand-close");
 
 profileCloseButton.onclick = () => {
-  let userProfile = document.getElementById('user-profile-expand');
-  userProfile.style = 'display:none';
+  let userProfile = document.getElementById("user-profile-expand");
+  userProfile.style = "display:none";
 };
-
 
 function handleSignoutClick() {
   const token = gapi.client.getToken();
   if (token !== null) {
     google.accounts.oauth2.revoke(token.access_token);
-    gapi.client.setToken('');
-    localStorage.removeItem('accessToken');
-    window.location.href = 'index.html';
-
+    gapi.client.setToken("");
+    localStorage.removeItem("accessToken");
+    window.location.href = "index.html";
   }
 }
 
-
-let userProfileDiv = document.getElementById('user-profile-expand');
-let userProfileImage = document.getElementById('profile-picture-image');
-
+let userProfileDiv = document.getElementById("user-profile-expand");
+let userProfileImage = document.getElementById("profile-picture-image");
 
 // Show the div when clicking a button or any other element
-document.addEventListener('click', function (event) {
+document.addEventListener("click", function (event) {
   // Check if the clicked element is NOT the div or a child of the div
-  if (event.target !== userProfileDiv && !userProfileDiv.contains(event.target) && event.target !== userProfileImage && !userProfileImage.contains(event.target)) {
+  if ( 
+    event.target !== userProfileDiv &&
+    !userProfileDiv.contains(event.target) &&
+    event.target !== userProfileImage &&
+    !userProfileImage.contains(event.target)
+  ) {
     // Hide the div
-    userProfileDiv.style.display = 'none';
+    userProfileDiv.style.display = "none";
+  }
+}); 
+
+//app drawer display
+
+let appDiv = document.getElementById("menu-icon-container");
+let appDivOpen = document.getElementById("app-drawer-expand-container");
+appDiv.onclick = () => {
+  appDivOpen = document.getElementById("app-drawer-expand-container");
+  appDivOpen.style.display = 'block';
+  console.log("App drawer clicked");
+};
+
+//hide the app drawer when clicked outside
+
+
+document.addEventListener("click", function (event) {
+  // Check if the clicked element is NOT the div or a child of the div
+  if (
+    event.target !== appDivOpen &&
+    !appDivOpen.contains(event.target)&&
+    appDiv.target !== appDiv &&
+    !appDiv.contains(event.target)
+  ) {
+    // Hide the div
+    appDivOpen.style.display = "none";
   }
 });
+
+
+
 
 
 function loadCompose() {
