@@ -2,6 +2,10 @@ let emailListContainer;
 let emailBody;
 let emailSubject;
 
+
+
+
+
 function loadPage2Content() {
   fetch("html/emaillist.html")
     .then((response) => response.text())
@@ -12,6 +16,10 @@ function loadPage2Content() {
     })
     .catch((error) => console.error("Error:", error));
 }
+
+
+
+
 
 // Call the function to load content on page load
 //loadPage2Content("mail.html");
@@ -94,7 +102,10 @@ function gapiLoaded() {
               // Handle errors
               console.error("Error fetching user profile:", error);
             });
-          listLabels();
+            createNonUserLabelElements();
+         
+
+        
           listLatestEmails(50);
         } else {
           document.getElementById("nextpage-content").innerText =
@@ -119,7 +130,10 @@ async function listLatestEmails(numberOfEmails) {
       console.log(messagePreview);
 
       const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
-
+      emailListElement.draggable = true;
+      emailListElement.addEventListener("dragstart", handleDragStart);
+      emailListElement.addEventListener("dragover", handleDragOver);
+    emailListElement.addEventListener("drop", handleDrop);
       emailListElement.setAttribute("id", message.id);
       emailListElement.onclick = () => clickHandle(message.id);
 
@@ -354,103 +368,103 @@ async function getSendSubject(messageId) {
 }
 
 // Function to list labels
-async function listLabels() {
-  let response;
-  try {
-    response = await gapi.client.gmail.users.labels.list({
-      userId: "me",
-    });
-  } catch (err) {
-    document.getElementById("content").innerText = err.message;
-    return;
-  }
-  const labels = response.result.labels;
-  console.log("labels are: ", labels);
-  if (!labels || labels.length == 0) {
-    document.getElementById("content").innerText = "No labels found.";
-    return;
-  }
-
+function createNonUserLabelElements() {
   let parentDiv = document.getElementById("main-sidebar");
-  for (let i = 0; i < labels.length; i++) {
-    let labelDiv = document.createElement("div"); //main label div
-    labelDiv.id = labels[i].id;
-    labelDiv.classList.add("labelDiv", "row", "ms-2", "me-1", "p-2");
 
-    let iconDiv = document.createElement("div"); //adding icon tag
-    iconDiv.classList.add("bi", "col-1", "fs-6", "me-2");
-    switch (labels[i].id.toLowerCase()) {
-      case "chat":
-        iconDiv.classList.add("bi-chat-left-text");
-        break;
-      case "sent":
-        iconDiv.classList.add("bi-send");
-        break;
-      case "inbox":
-        iconDiv.classList.add("bi-inbox");
-        break;
-      case "trash":
-        iconDiv.classList.add("bi-trash");
-        break;
-      case "snoozed":
-        iconDiv.classList.add("bi-clock");
-        break;
-      case "draft":
-        iconDiv.classList.add("bi-file-earmark");
-        break;
-      case "spam":
-        iconDiv.classList.add("bi-exclamation-octagon");
-        break;
-      case "starred":
-        iconDiv.classList.add("bi-star");
-        break;
-      case "important":
-        iconDiv.classList.add("bi-flag");
-        break;
-      case "unread":
-        iconDiv.classList.add("bi-flag");
-        break;
-      case "category_updates":
-        iconDiv.classList.add("bi-exclamation-circle");
-        break;
-      case "category_promotions":
-        iconDiv.classList.add("bi-tag");
-        break;
-      case "category_social":
-        iconDiv.classList.add("bi-person-lines-fill");
-        break;
+  gapi.client.gmail.users.labels.list({
+    'userId': 'me'
+  })
+  .then(response => {
+    const labelsData = response.result.labels.filter(label => !label.type || label.type !== 'user');
 
-      default:
-        iconDiv.classList.add("bi-inbox");
+    labelsData.forEach(label => {
+      const labelDiv = createLabelElement(label);
+      // Assuming you have a container div with the id 'label-container'
+      parentDiv.appendChild(labelDiv);
+    });
+    const generatedFoldersDiv = generateFoldersDiv();
+    parentDiv.appendChild(generatedFoldersDiv);
+  })
+  .catch(error => {
+    console.error('Error loading labels:', error);
+    // Handle the error, e.g., display an error message in the UI
+    const errorDiv = document.createElement('div');
+    errorDiv.innerText = 'Error loading labels. Please try again.';
+    // Assuming you have a container div with the id 'label-container'
+    document.getElementById('label-container').appendChild(errorDiv);
+  });
+}
+
+// Assuming createLabelElement and getIconClass functions remain unchanged
+function createLabelElement(label) {
+  const labelDiv = document.createElement('div');
+  labelDiv.classList.add('labelDiv', 'row', 'ms-2', 'me-1', 'p-2');
+
+  const iconDiv = document.createElement('div');
+  iconDiv.classList.add('bi', 'col-1', 'fs-6', 'me-2');
+  iconDiv.classList.add(getIconClass(label.id));
+
+  labelDiv.appendChild(iconDiv);
+
+  const anchor = document.createElement('a');
+  const labelName = label.name.toLowerCase();
+  anchor.innerHTML = labelName.charAt(0).toUpperCase() + labelName.slice(1);
+  anchor.classList.add('col-6', 'labelAnchor', 'fs-6');
+  labelDiv.appendChild(anchor);
+
+  // Checking for spam emails
+  anchor.onclick = () => {
+    document.getElementById('main-list-content').innerHTML = '';
+
+    if (anchor.innerHTML === 'Spam') {
+      listSpamEmails(20);
+    } else if (anchor.innerHTML === 'Draft') {
+      listDraftEmails(20);
+    } else if (anchor.innerHTML === 'Sent') {
+      listSentEmails(20);
+    } else if (anchor.innerHTML === 'Trash') {
+      listTrashEmails(20);
     }
-    labelDiv.append(iconDiv);
+  };
 
-    let anchor = document.createElement("a"); //adding anchor tag
-    let aName = labels[i].name.toLowerCase();
-    aName = aName.charAt(0).toUpperCase() + aName.slice(1);
-    anchor.innerHTML = aName;
-    anchor.classList.add("col-6", "labelAnchor", "fs-6");
-    labelDiv.append(anchor);
+  return labelDiv;
+}
 
-    // labelDiv.innerHTML=labels[i].name;
-    parentDiv.appendChild(labelDiv);
-
-    //Checking for spam emails
-    anchor.onclick = () => {
-      document.getElementById("main-list-content").innerHTML = "";
-      listLabels();
-      if (anchor.innerHTML === "Spam") {
-        listSpamEmails(20);
-      } else if (anchor.innerHTML === "Draft") {
-        listDraftEmails(20);
-      } else if (anchor.innerHTML === "Sent") {
-        listSentEmails(20);
-      } else if (anchor.innerHTML === "Trash") {
-        listTrashEmails(20);
-      }
-    };
+function getIconClass(labelId) {
+  switch (labelId.toLowerCase()) {
+    case 'chat':
+      return 'bi-chat-left-text';
+    case 'sent':
+      return 'bi-send';
+    case 'inbox':
+      return 'bi-inbox';
+    case 'trash':
+      return 'bi-trash';
+    case 'snoozed':
+      return 'bi-clock';
+    case 'draft':
+      return 'bi-file-earmark';
+    case 'spam':
+      return 'bi-exclamation-octagon';
+    case 'starred':
+      return 'bi-star';
+    case 'important':
+      return 'bi-flag';
+    case 'unread':
+      return 'bi-flag';
+    case 'category_updates':
+      return 'bi-exclamation-circle';
+    case 'category_promotions':
+      return 'bi-tag';
+    case 'category_social':
+      return 'bi-person-lines-fill';
+    default:
+      return 'bi-inbox';
   }
 }
+
+// Call the function to create non-user label elements
+
 
 //Function to list and display spam emails
 async function listSpamEmails(numberOfEmails) {
@@ -853,3 +867,200 @@ document.addEventListener("click", function (event) {
 //     appDivOpen.style.display = 'none';
 //   }
 // });
+
+function loadCompose() {
+  fetch("compose.html")
+    .then((response) => response.text())
+    .then((data) => {
+      // Inject the loaded content into the container
+      document.getElementById("display-area").innerHTML = data;
+      emailListContainer = document.getElementById("main-list-content");
+    })
+    .catch((error) => console.error("Error:", error));
+}
+
+
+
+
+
+//=================================================================================compose copy
+
+
+// const CLIENT_ID =
+//   "280715447136-ejl9bcsuj842het5ifgbj7naj1jjqml3.apps.googleusercontent.com";
+// const API_KEY = "AIzaSyAGzP3_IUN8Ds05jBNckdYrFR6jyDeoeEo";
+
+
+// const accessToken = localStorage.getItem("accessToken");
+
+// function gapiLoaded() {
+//     gapi.load("client", () => {
+//       gapi.client
+//         .init({
+//           apiKey: API_KEY,
+//           discoveryDocs: [
+//             "https://gmail.googleapis.com/gmail/v1/users/{userId}/messages/send",
+//           ],
+//         })
+//         .then(() => {
+//           // Set the access token in gapi.client
+//           if (accessToken) {
+//             gapi.client.setToken({ access_token: accessToken });
+
+//             // Call the listLabels function
+//             // listLabels();
+//             // listLatestEmails(50);
+//           } else {
+//             document.getElementById("nextpage-content").innerText =
+//               "Access token not found.";
+//           }
+//         });
+//     });
+//   }
+// async function initializeGapiClient() {
+//   await gapi.client.init({
+//     apiKey: API_KEY,
+//     discoveryDocs: [DISCOVERY_DOC],
+//   });
+//   gapiInited = true;
+//   maybeEnableButtons();
+// }
+
+// function gisLoaded() {
+//   tokenClient = google.accounts.oauth2.initTokenClient({
+//     client_id: CLIENT_ID,
+//     scope: SCOPES,
+//     callback: "", // defined later
+//   });
+//   gisInited = true;
+//   maybeEnableButtons();
+// }
+
+// function handleAuthClick() {
+
+//   gapi.auth2.getAuthInstance().signIn().then(() => {
+//     // User signed in. Now you can make API calls.
+//     sendEmail();
+//   });
+
+
+//   tokenClient.callback = async (resp) => {
+//     if (resp.error !== undefined) {
+//       throw (resp);
+//     }
+//     document.getElementById('signout_button').style.visibility = 'visible';
+//     document.getElementById('authorize_button').innerText = 'Refresh';
+//     await listLabels();
+//   };
+
+//   if (gapi.client.getToken() === null) {
+//     // Prompt the user to select a Google Account and ask for consent to share their data
+//     // when establishing a new session.
+//     tokenClient.requestAccessToken({ prompt: 'consent' });
+//   } else {
+//     // Skip display of account chooser and consent dialog for an existing session.
+//     tokenClient.requestAccessToken({ prompt: '' });
+//   }
+// }
+
+
+
+// function sendEmail() {
+//   const recipientEmail = document.getElementById("email-container").value;
+//   const emailMessage = document.getElementById("message-container").value;
+
+//   if (!recipientEmail || !emailMessage) {
+//     alert("Recipient email and message are required");
+//     return;
+//   }
+
+//   const rawMessage = btoa(
+//     `To: ${recipientEmail}\r\n` +
+//       "Subject: Your Email Subject Here\r\n" +
+//       'Content-Type: text/plain; charset="UTF-8"\r\n\r\n' +
+//       emailMessage
+//   );
+
+//   const request = gapi.client.gmail.users.messages.send({
+//     userId: "me",
+//     resource: {
+//       raw: rawMessage,
+//     },
+//   });
+
+//   request.execute((response) => {
+//     console.log(response);
+//     alert("Email sent successfully!");
+//   });
+// }
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+// Your API key and client ID
+// const CLIENT_ID = "280715447136-ejl9bcsuj842het5ifgbj7naj1jjqml3.apps.googleusercontent.com";
+// const API_KEY = "AIzaSyAGzP3_IUN8Ds05jBNckdYrFR6jyDeoeEo";
+
+// Define Gmail API discovery document
+// const GMAIL_DISCOVERY_DOC = "https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest";
+
+// Access token obtained during authentication
+// const accessToken = localStorage.getItem("accessToken");
+
+// Function to handle the loaded state of gapi
+// function gapiLoaded() {
+//   gapi.load("client:auth2", () => {
+//     gapi.client.init({
+//       apiKey: API_KEY,
+//       clientId: CLIENT_ID,
+//       discoveryDocs: [GMAIL_DISCOVERY_DOC],
+//       // scope: "https://www.googleapis.com/auth/gmail.send",
+//     }).then(() => {
+//       // Set the access token if available
+//       if (accessToken) {
+//         gapi.auth2.getAuthInstance().signIn();
+//       } else {
+//         console.error("Access token not found.");
+//       }
+//     });
+//   });
+// }
+
+// Function to handle user authentication
+// function handleAuthClick() {
+//   gapi.auth2.getAuthInstance().signIn().then(() => {
+//     // User signed in. Now you can make API calls.
+//     sendEmail();
+//   });
+// }
+
+// Function to send an email using Gmail API
+function sendEmail() {
+  const recipientEmail = document.getElementById("email-container").value;
+  const emailMessage = document.getElementById("message-container").value;
+
+  if (!recipientEmail || !emailMessage) {
+    alert("Recipient email and message are required");
+    return;
+  }
+
+  const rawMessage = btoa(
+    `To: ${recipientEmail}\r\n` +
+    "Subject: Your Email Subject Here\r\n" +
+    'Content-Type: text/plain; charset="UTF-8"\r\n\r\n' +
+    emailMessage
+  );
+
+  const request = gapi.client.gmail.users.messages.send({
+    userId: "me",
+    resource: {
+      raw: rawMessage,
+    },
+  });
+
+  request.execute((response) => {
+    console.log(response);
+    alert("Email sent successfully!");
+  });
+}
+
