@@ -417,3 +417,14 @@ justify-content: space-around;
     background-color: white !important;
 }
 
+#main-list-container{
+    height: 100vh !important;
+}  
+
+#main-list-content{
+    height: 100vh !important;
+}  
+
+#main-split-container{
+    background-color: none !important;
+}

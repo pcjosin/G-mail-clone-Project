@@ -1,7 +1,7 @@
 let emailListContainer;
 let emailBody;
 let emailSubject;
-let stopListEmails = false;
+// let stopListEmails = false;
 
 function loadPage2Content() {
   fetch("html/emaillist.html")
@@ -90,7 +90,7 @@ function gapiLoaded() {
             });
           listLabels();
           console.log("list latest emails:")
-          listLatestEmails(50);
+          listLatestEmails(30);
         } else {
           document.getElementById("nextpage-content").innerText =
             "Access token not found.";
@@ -107,19 +107,21 @@ async function listLatestEmails(numberOfEmails) {
       maxResults: numberOfEmails,
     });
 
-    console.log(response.result.messages);
+    console.log("response: ",response)
+    console.log("response messages ",response.result.messages);
 
     for (const message of response.result.messages) {
-      if (stopListEmails) {
-        console.log("Function stopped by user");
-        return; // Stop the function
-      }
+      // if (stopListEmails) {
+      //   console.log("Function stopped by user");
+      //   return; // Stop the function
+      // }
 
       console.log("list latest emails: ", message)
       const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
-      console.log(messagePreview);
+      console.log("messagePreview: ",messagePreview);
 
       const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+      console.log("emailListElement: ",emailListElement);
 
       emailListElement.setAttribute("id", message.id);
       emailListElement.onclick = () => clickHandle(message.id);
@@ -452,6 +454,10 @@ async function listLabels() {
         listTrashEmails(20);
       } else if(anchor.innerHTML == "Inbox"){
         listLatestEmails(20);
+      } else if(anchor.innerHTML == "Important"){
+        listImportantEmails(20);
+      } else if(anchor.innerHTML == "Starred"){
+        listStarredEmails(20);
       }
     }
   }
@@ -519,8 +525,7 @@ async function listSentEmails(numberOfEmails) {
       labelIds: ["SENT"],
       maxResults: numberOfEmails,
     });
-
-    console.log(response.result.messages);
+    
 
     for (const message of response.result.messages) {
       const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
@@ -544,6 +549,60 @@ async function listTrashEmails(numberOfEmails) {
     const response = await gapi.client.gmail.users.messages.list({
       userId: "me",
       labelIds: ["TRASH"],
+      maxResults: numberOfEmails,
+    });
+
+    console.log(response.result.messages);
+
+    for (const message of response.result.messages) {
+      const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+      console.log(messagePreview);
+
+      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+
+      emailListElement.setAttribute("id", message.id);
+      emailListElement.onclick = () => clickHandle(message.id);
+
+      emailListContainer.appendChild(emailListElement);
+    }
+  } catch (error) {
+    console.error("Error listing emails:", error);
+  }
+}
+
+//Function to list and display important emails
+async function listImportantEmails(numberOfEmails) {
+  try {
+    const response = await gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: ["IMPORTANT"],
+      maxResults: numberOfEmails,
+    });
+
+    console.log(response.result.messages);
+
+    for (const message of response.result.messages) {
+      const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+      console.log(messagePreview);
+
+      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+
+      emailListElement.setAttribute("id", message.id);
+      emailListElement.onclick = () => clickHandle(message.id);
+
+      emailListContainer.appendChild(emailListElement);
+    }
+  } catch (error) {
+    console.error("Error listing emails:", error);
+  }
+}
+
+//Function to list and display trash emails
+async function listStarredEmails(numberOfEmails) {
+  try {
+    const response = await gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: ["STARRED"],
       maxResults: numberOfEmails,
     });
 
@@ -821,7 +880,7 @@ function displayLayoutDiv(){
   function verticalSplit(){
   document.addEventListener('click',async function(event){
     if(layoutOptionTwo.contains(event.target)){
-      stopListEmails = true;
+      // stopListEmails = true;
       // Function to load HTML content into a target div
       fetch('verticalsplit.html')
           .then(response => response.text())
@@ -836,7 +895,7 @@ function displayLayoutDiv(){
               layoutIcon.innerHTML = '';
               await layoutIcon.appendChild(verticalSplitIcon);
               
-              stopListEmails = false;
+              // stopListEmails = false;
               console.log("latest emails in split view 1")
               await listLabels();
               await listVerticalSplitEmails(30);
@@ -852,23 +911,22 @@ function displayLayoutDiv(){
   function defaultView(){
     document.addEventListener('click',async function(event){
       if(layoutOptionOne.contains(event.target)){
-        stopListEmails = true;
+        // stopListEmails = true;
         fetch("./html/emaillist.html")
         .then(response => response.text())
         .then(async(data) => {
           document.getElementById("display-area").innerHTML = data; 
           console.log("email list html loaded sucessfully");
-          
-          stopListEmails = false;
+          // stopListEmails = false;
           await listLabels();
-          await listLatestEmails(30);
+          listDefaultSplitEmails(50);
         })
       }
       });
   }
   defaultView();
  
-  //function to chage layout to horizontal split
+  //function to change layout to horizontal split
   function horizontalSplit(){
     document.addEventListener('click',async function(event){
       if(layoutOptionThree.contains(event.target)){
@@ -897,7 +955,7 @@ function displayLayoutDiv(){
       }
     });
   }
-  horizontalSplit()
+  horizontalSplit();
 }
 
 //function to list emails in split view
@@ -911,12 +969,8 @@ async function listVerticalSplitEmails(numberOfEmails) {
     });
 
     console.log(response.result.messages);
-
+    document.getElementById('main-list-content').style.maxHeight = '100vh'
     for (const message of response.result.messages) {
-      if (stopListEmails) {
-        console.log("Function stopped by user");
-        return; // Stop the function
-      }
 
       console.log("list latest emails: ", message)
       const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
@@ -942,14 +996,10 @@ async function listHorizontalSplitEmails(numberOfEmails) {
       labelIds: ["INBOX"],
       maxResults: numberOfEmails,
     });
-
+    document.getElementById('main-list-content').style.maxHeight = '30vh'
     console.log(response.result.messages);
-
+    
     for (const message of response.result.messages) {
-      if (stopListEmails) {
-        console.log("Function stopped by user");
-        return; // Stop the function
-      }
 
       console.log("list latest emails: ", message)
       const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
@@ -961,7 +1011,40 @@ async function listHorizontalSplitEmails(numberOfEmails) {
       emailListElement.onclick = () => clickHandleSplit(message.id);
       
       document.getElementById('main-list-content').appendChild(emailListElement);
-      document.getElementById('main-list-content').style.maxHeight = '30vh'
+      
+    }
+  } catch (error) {
+    console.error("Error listing emails:", error);
+  }
+}
+
+//function to display emails in default view
+async function listDefaultSplitEmails(numberOfEmails) {
+  try {
+    const response = await gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: ["INBOX"],
+      maxResults: numberOfEmails,
+    });
+
+    console.log(response.result.messages);
+    document.getElementById('main-list-content').style.maxHeight = '100vh'
+    for (const message of response.result.messages) {
+      // if (stopListEmails) {
+      //   console.log("Function stopped by user");
+      //   return; // Stop the function
+      // }
+
+      console.log("list latest emails: ", message)
+      const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+      console.log(messagePreview);
+
+      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+
+      emailListElement.setAttribute("id", message.id);
+      emailListElement.onclick = () => clickHandle(message.id);
+      
+      document.getElementById('main-list-content').appendChild(emailListElement);
     }
   } catch (error) {
     console.error("Error listing emails:", error);
@@ -989,7 +1072,7 @@ async function clickHandleSplit(emailElementId) {
 
   // Update your HTML elements
   emailSubject.innerText = emailSubjectContent;
-  emailBody.innerHTML = emailBodyContent;
+  emailBody.innerHTML = emailBodyContent
 }
 
 //toggle between views

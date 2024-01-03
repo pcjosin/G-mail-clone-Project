@@ -90,3 +90,11 @@ justify-content: flex-end!important;
     padding-top: 60px;
     position: fixed;
 }
+
+#main-list-container{
+    height: 100vh !important;
+} 
+
+#display-area #main-list-content{
+    height: 100vh !important;
+}
