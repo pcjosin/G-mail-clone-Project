@@ -1,5 +1,5 @@
 window.onload=()=>{
-  fetch("html/Quicksettings.html")
+  fetch("../html/Quicksettings.html")
       .then((response) => response.text())
       .then((data) => {
         // Inject the loaded content into the container
