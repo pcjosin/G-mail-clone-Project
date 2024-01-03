@@ -441,7 +441,7 @@ async function listLabels() {
     //Checking for spam emails
     anchor.onclick = ()=>{
       document.getElementById("main-list-content").innerHTML = ''
-      listLabels();
+      
       if(anchor.innerHTML === "Spam"){
         listSpamEmails(20);
       } else if(anchor.innerHTML === "Draft"){

@@ -140,9 +140,9 @@
     color: #001d35;
     padding: 0 24px 0 0;
 }
-.compose{
+/* .compose{
     position: absolute;
-}
+} */
 #sender-div{
     width: 150px !important;
         margin-left: 7px;
@@ -306,7 +306,7 @@ body{
     background-color:aliceblue;
 }
 #main-sidebar{
-    margin-top: 150px !important;
+    margin-top: 100px !important;
     overflow-y: auto;
     overflow-x: hidden;
     height: 100%;
