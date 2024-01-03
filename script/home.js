@@ -123,11 +123,7 @@ async function listLatestEmails(numberOfEmails) {
       console.log(messagePreview);
 
       const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
-      emailListElement.draggable = true;
-      emailListElement.addEventListener("dragstart", handleDragStart);
-      emailListElement.addEventListener("dragover", handleDragOver);
-    emailListElement.addEventListener("drop", handleDrop);
-      emailListElement.setAttribute("id", message.id);
+     
       emailListElement.onclick = () => clickHandle(message.id);
 
       emailListContainer.appendChild(emailListElement);
