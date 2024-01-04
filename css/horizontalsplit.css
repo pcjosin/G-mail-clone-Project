@@ -1,4 +1,5 @@
 #main-split-container{
+        border-radius: 20px;
     background-color: white !important;
 }
 
@@ -30,4 +31,7 @@
 #footer-links a{
     text-decoration: none;
     color: rgb(78, 78, 78);
+}
+#main-list-content{
+        padding-top: 60px;
 }

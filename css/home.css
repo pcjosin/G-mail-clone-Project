@@ -171,7 +171,7 @@
     display: flex !important;
     justify-content: space-between !important;
     background-color: transparent;
-
+    overflow-x: hidden;
 }
 
 .central-div{
@@ -246,13 +246,17 @@ justify-content: flex-end!important;
 }
 
 #main-list-header{
+    position:absolute;
+    top:100px;
+    right:16px;
+
     margin-left: 0.5px;
     padding-right: 10px;
     background-color:white;
-    /* width:82% !important; */
+    width:82% !important;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
-    z-index: 120;
+    z-index: 15 !important;
     /* position: absolute; */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -303,16 +307,14 @@ body{
 
 
 #display-area{
-    overflow-y: hidden;
+    overflow: hidden;
     height: 100%;
     margin-top: 100px;
     
     z-index: 12;
 
 }
-.preview-bar{
-    background-color:transparent;
-}
+
 #display-content-body{
     background-color:#f6f8fc;
 }

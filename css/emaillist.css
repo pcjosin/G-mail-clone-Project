@@ -89,6 +89,7 @@ justify-content: flex-end!important;
 #main-list-content{
     padding-top: 60px;
     position: fixed;
+    overflow-x: hidden;
 }
 
 #main-list-header-right{

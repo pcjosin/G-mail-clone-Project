@@ -6,20 +6,23 @@
 #main-split-container{
     display: flex;
     width: 100%;
+        border-radius: 20px;
     background-color: white !important;
 }
 
 #main-list-container{
-    width: 50%;
+    width: 40%;
 }
 
 #main-list-content{
+        padding-top: 60px;
     width: 100% ;
     overflow-x: scroll;
 }
 
 #email-split-list{
     width: 50% ;
+    border-radius: 20px;
 }
 
 #email-split-view{

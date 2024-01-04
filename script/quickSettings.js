@@ -22,7 +22,9 @@ let loadQuickSettings=()=> {
       document.getElementById("quick-settings").style.display="block";
       let displayArea=document.getElementById('display-area') ;
       displayArea.classList.remove('col-md-10');
-      displayArea.classList.add('col-md-7');
+  displayArea.classList.add('col-md-7');
+  // document.getElementById("main-list-header").style.width='60%';
+  
 
       let quickSettings=document.getElementById('quick-settings');
       quickSettings.classList.add('col-md-3');
