@@ -1,0 +1,33 @@
+#main-split-container{
+    background-color: white !important;
+}
+
+#email-split-list{
+    height: 30vh;
+    margin-bottom: 10vh;
+}
+
+#email-split-view{
+    height: 70vh;
+    text-align: center;
+    font-family: "Google Sans",Helvetica,Arial,sans-serif;
+}
+
+#email-split-view p{
+    margin-top:150px;
+    font-weight: 600;
+    font-size: 25px;
+}
+
+#footer{
+    margin-top: -70px;
+}
+#footer p{
+    font-weight: 300;
+    font-size: 15px;
+}
+
+#footer-links a{
+    text-decoration: none;
+    color: rgb(78, 78, 78);
+}

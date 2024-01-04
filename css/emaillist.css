@@ -88,9 +88,16 @@ justify-content: flex-end!important;
 
 #main-list-content{
     padding-top: 60px;
-
+    position: fixed;
 }
 
 #main-list-header-right{
     z-index: -1 !important;
+}
+#main-list-container{
+    height: 100vh !important;
+} 
+
+#display-area #main-list-content{
+    height: 100vh !important;
 }

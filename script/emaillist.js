@@ -13,7 +13,7 @@ function loadEmailContent(senderNameContent, previewTitleContent, previewTextCon
 
     // for (let i = 0; i < 30; i++) {
 
-        console.log(i);
+        
 
         const emailPreviewBar = document.createElement('div');
         emailPreviewBar.classList.add('preview-bar',);
@@ -59,7 +59,7 @@ function loadEmailContent(senderNameContent, previewTitleContent, previewTextCon
         const sendertext = document.createElement('span');
         sendertext.classList.add('sendertext');
 
-        sendertext.innerText = senderNameContent+i;
+        sendertext.innerText = senderNameContent;
         sender.appendChild(sendertext);
         leftDiv.appendChild(sender);
 
@@ -108,5 +108,3 @@ function loadEmailContent(senderNameContent, previewTitleContent, previewTextCon
 
 }
 
-
-// window.onload = loadEmailContent();

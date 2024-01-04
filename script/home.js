@@ -125,11 +125,18 @@ async function listLatestEmails(numberOfEmails) {
       maxResults: numberOfEmails,
     });
 
-    console.log(response.result.messages);
+    console.log("response: ",response)
+    console.log("response messages ",response.result.messages);
 
     for (const message of response.result.messages) {
+      // if (stopListEmails) {
+      //   console.log("Function stopped by user");
+      //   return; // Stop the function
+      // }
+
+      console.log("list latest emails: ", message)
       const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
-      console.log(messagePreview);
+      console.log("messagePreview: ",messagePreview);
 
       const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
      
@@ -422,6 +429,12 @@ function createLabelElement(label) {
       listSentEmails(20);
     } else if (anchor.innerHTML === 'Trash') {
       listTrashEmails(20);
+      } else if(anchor.innerHTML == "Inbox"){
+        listLatestEmails(20);
+      } else if(anchor.innerHTML == "Important"){
+        listImportantEmails(20);
+      } else if(anchor.innerHTML == "Starred"){
+        listStarredEmails(20);
     }
   };
 
@@ -526,8 +539,7 @@ async function listSentEmails(numberOfEmails) {
       labelIds: ["SENT"],
       maxResults: numberOfEmails,
     });
-
-    console.log(response.result.messages);
+    
 
     for (const message of response.result.messages) {
       const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
@@ -551,6 +563,60 @@ async function listTrashEmails(numberOfEmails) {
     const response = await gapi.client.gmail.users.messages.list({
       userId: "me",
       labelIds: ["TRASH"],
+      maxResults: numberOfEmails,
+    });
+
+    console.log(response.result.messages);
+
+    for (const message of response.result.messages) {
+      const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+      console.log(messagePreview);
+
+      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+
+      emailListElement.setAttribute("id", message.id);
+      emailListElement.onclick = () => clickHandle(message.id);
+
+      emailListContainer.appendChild(emailListElement);
+    }
+  } catch (error) {
+    console.error("Error listing emails:", error);
+  }
+}
+
+//Function to list and display important emails
+async function listImportantEmails(numberOfEmails) {
+  try {
+    const response = await gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: ["IMPORTANT"],
+      maxResults: numberOfEmails,
+    });
+
+    console.log(response.result.messages);
+
+    for (const message of response.result.messages) {
+      const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+      console.log(messagePreview);
+
+      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+
+      emailListElement.setAttribute("id", message.id);
+      emailListElement.onclick = () => clickHandle(message.id);
+
+      emailListContainer.appendChild(emailListElement);
+    }
+  } catch (error) {
+    console.error("Error listing emails:", error);
+  }
+}
+
+//Function to list and display trash emails
+async function listStarredEmails(numberOfEmails) {
+  try {
+    const response = await gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: ["STARRED"],
       maxResults: numberOfEmails,
     });
 
@@ -821,225 +887,259 @@ document.addEventListener("click", function (event) {
     !appDiv.contains(event.target)
   ) {
     // Hide the div
-    appDivOpen.style.display = "none";
-  }
+    userProfileDiv.style.display = 'none';
+  } 
 });
 
+// function to dislay dropdrown list to change screen layout
+function displayLayoutDiv(){
+  let layoutDiv = document.getElementById('main-list-header-right-viewSelect');
+  let layoutOptionDiv = document.getElementById('layout-div-expand');
+  layoutOptionDiv.style.display = 'none';
+  layoutOptionDiv.style.flexDirection = 'column';
+  layoutOptionDiv.innerHTML = "";
 
+  let layoutOptionOne = document.createElement('button');
+  let layoutOptionTwo = document.createElement('button');
+  let layoutOptionThree = document.createElement('button');
 
+  layoutOptionOne.innerHTML = "No Split";
+  layoutOptionTwo.innerHTML = "Vertical Split";
+  layoutOptionThree.innerHTML = "Horizontal Split ";
 
+  layoutOptionDiv.appendChild(layoutOptionOne);
+  layoutOptionDiv.appendChild(layoutOptionTwo);
+  layoutOptionDiv.appendChild(layoutOptionThree);
 
-function loadCompose() {
-  fetch("compose.html")
+  document.addEventListener('click', function(event) {
+      // Toggling the visiblity of the dropdown menu
+      if(layoutOptionDiv.style.display=='none'){
+        layoutOptionDiv.style.display = 'flex';
+      } else if(layoutOptionDiv.style.display=='flex'){
+        layoutOptionDiv.style.display = 'none';
+      }
+
+      if (!layoutOptionDiv.contains(event.target)&&!layoutDiv.contains(event.target)) {
+          // Handle the click outside the div
+          layoutOptionDiv.style.display = 'none';
+      }
+  });
+  
+
+  //function to change layout into vertical split
+  function verticalSplit(){
+  document.addEventListener('click',async function(event){
+    if(layoutOptionTwo.contains(event.target)){
+      // stopListEmails = true;
+      // Function to load HTML content into a target div
+      fetch('verticalsplit.html')
+          .then(response => response.text())
+          .then(async (data) => {
+              document.getElementById("display-area").innerHTML = data;
+              console.log("html loaded sucessfully");
+
+              //changing the icon to toggle views
+              let layoutIcon = document.getElementById('main-list-header-right-view');
+              let verticalSplitIcon = document.createElement('span');
+              verticalSplitIcon.innerHTML = '<span class="material-symbols-outlined">vertical_split</span>';
+              layoutIcon.innerHTML = '';
+              await layoutIcon.appendChild(verticalSplitIcon);
+              
+              // stopListEmails = false;
+              console.log("latest emails in split view 1")
+              await listLabels();
+              await listVerticalSplitEmails(30);
+              console.log("latest emails in split view 2")  
+          })
+          .catch(error => console.error('Error loading HTML:', error));
+    }
+  });
+  }
+  verticalSplit();
+  
+  //Function to change layout into default view
+  function defaultView(){
+    document.addEventListener('click',async function(event){
+      if(layoutOptionOne.contains(event.target)){
+        // stopListEmails = true;
+        fetch("./html/emaillist.html")
+        .then(response => response.text())
+        .then(async(data) => {
+          document.getElementById("display-area").innerHTML = data; 
+          console.log("email list html loaded sucessfully");
+          // stopListEmails = false;
+          await listLabels();
+          listDefaultSplitEmails(50);
+        })
+      }
+      });
+  }
+  defaultView();
+ 
+  //function to change layout to horizontal split
+  function horizontalSplit(){
+    document.addEventListener('click',async function(event){
+      if(layoutOptionThree.contains(event.target)){
+        stopListEmails = true;
+        // Function to load HTML content into a target div
+        fetch('horizontalsplit.html')
+            .then(response => response.text())
+            .then(async (data) => {
+                document.getElementById("display-area").innerHTML = data;
+                console.log("horizontalsplit html loaded sucessfully");
+
+                //changing the icon to toggle views
+                let layoutIcon = document.getElementById('main-list-header-right-view');
+                let verticalSplitIcon = document.createElement('span');
+                verticalSplitIcon.innerHTML = '<span class="material-symbols-outlined">horizontal_split</span>';
+                layoutIcon.innerHTML = '';
+                await layoutIcon.appendChild(verticalSplitIcon);
+                
+                stopListEmails = false;
+                console.log("latest emails in split view 1")
+                await listLabels();
+                await listHorizontalSplitEmails(30);
+                console.log("latest emails in split view 2")  
+            })
+            .catch(error => console.error('Error loading HTML:', error));
+      }
+    });
+  }
+  horizontalSplit();
+}
+
+//function to list emails in split view
+
+async function listVerticalSplitEmails(numberOfEmails) {
+  try {
+    const response = await gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: ["INBOX"],
+      maxResults: numberOfEmails,
+    });
+
+    console.log(response.result.messages);
+    document.getElementById('main-list-content').style.maxHeight = '100vh'
+    for (const message of response.result.messages) {
+
+      console.log("list latest emails: ", message)
+      const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+      console.log(messagePreview);
+
+      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+
+      emailListElement.setAttribute("id", message.id);
+      emailListElement.onclick = () => clickHandleSplit(message.id);
+      
+      document.getElementById('main-list-content').appendChild(emailListElement);
+    }
+  } catch (error) {
+    console.error("Error listing emails:", error);
+  }
+}
+
+//function to display emails in horizontal view
+async function listHorizontalSplitEmails(numberOfEmails) {
+  try {
+    const response = await gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: ["INBOX"],
+      maxResults: numberOfEmails,
+    });
+    document.getElementById('main-list-content').style.maxHeight = '30vh'
+    console.log(response.result.messages);
+    
+    for (const message of response.result.messages) {
+
+      console.log("list latest emails: ", message)
+      const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+      console.log(messagePreview);
+
+      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+
+      emailListElement.setAttribute("id", message.id);
+      emailListElement.onclick = () => clickHandleSplit(message.id);
+      
+      document.getElementById('main-list-content').appendChild(emailListElement);
+      
+    }
+  } catch (error) {
+    console.error("Error listing emails:", error);
+  }
+}
+
+//function to display emails in default view
+async function listDefaultSplitEmails(numberOfEmails) {
+  try {
+    const response = await gapi.client.gmail.users.messages.list({
+      userId: "me",
+      labelIds: ["INBOX"],
+      maxResults: numberOfEmails,
+    });
+
+    console.log(response.result.messages);
+    document.getElementById('main-list-content').style.maxHeight = '100vh'
+    for (const message of response.result.messages) {
+      // if (stopListEmails) {
+      //   console.log("Function stopped by user");
+      //   return; // Stop the function
+      // }
+
+      console.log("list latest emails: ", message)
+      const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+      console.log(messagePreview);
+
+      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+
+      emailListElement.setAttribute("id", message.id);
+      emailListElement.onclick = () => clickHandle(message.id);
+      
+      document.getElementById('main-list-content').appendChild(emailListElement);
+    }
+  } catch (error) {
+    console.error("Error listing emails:", error);
+  }
+}
+
+//function to handle the click in split view
+
+async function clickHandleSplit(emailElementId) {
+  fetch("mail.html")
     .then((response) => response.text())
     .then((data) => {
       // Inject the loaded content into the container
-      document.getElementById("display-area").innerHTML = data;
-      emailListContainer = document.getElementById("main-list-content");
+      document.getElementById("email-split-view").innerHTML = '';
+      document.getElementById("email-split-view").innerHTML = data;
+      document.getElementById("email-split-view").style.overflowX = 'scroll';      
+
+      emailBody = document.getElementById("body-content");
+      emailSubject = document.getElementById("email-subject");
     })
     .catch((error) => console.error("Error:", error));
+
+  emailSubjectContent = await getSendSubject(emailElementId);
+  emailBodyContent = await getEmailBodyHtml(emailElementId);
+
+  // Update your HTML elements
+  emailSubject.innerText = emailSubjectContent;
+  emailBody.innerHTML = emailBodyContent
 }
 
+//toggle between views
+function toggleViews(){
+  document.addEventListener('DOMContentLoaded', function() {
+    let toggleDiv = document.getElementById('main-list-header-right-view');
 
-
-
-
-//=================================================================================compose copy
-
-
-// const CLIENT_ID =
-//   "280715447136-ejl9bcsuj842het5ifgbj7naj1jjqml3.apps.googleusercontent.com";
-// const API_KEY = "AIzaSyAGzP3_IUN8Ds05jBNckdYrFR6jyDeoeEo";
-
-
-// const accessToken = localStorage.getItem("accessToken");
-
-// function gapiLoaded() {
-//     gapi.load("client", () => {
-//       gapi.client
-//         .init({
-//           apiKey: API_KEY,
-//           discoveryDocs: [
-//             "https://gmail.googleapis.com/gmail/v1/users/{userId}/messages/send",
-//           ],
-//         })
-//         .then(() => {
-//           // Set the access token in gapi.client
-//           if (accessToken) {
-//             gapi.client.setToken({ access_token: accessToken });
-
-//             // Call the listLabels function
-//             // listLabels();
-//             // listLatestEmails(50);
-//           } else {
-//             document.getElementById("nextpage-content").innerText =
-//               "Access token not found.";
-//           }
-//         });
-//     });
-//   }
-// async function initializeGapiClient() {
-//   await gapi.client.init({
-//     apiKey: API_KEY,
-//     discoveryDocs: [DISCOVERY_DOC],
-//   });
-//   gapiInited = true;
-//   maybeEnableButtons();
-// }
-
-// function gisLoaded() {
-//   tokenClient = google.accounts.oauth2.initTokenClient({
-//     client_id: CLIENT_ID,
-//     scope: SCOPES,
-//     callback: "", // defined later
-//   });
-//   gisInited = true;
-//   maybeEnableButtons();
-// }
-
-// function handleAuthClick() {
-
-//   gapi.auth2.getAuthInstance().signIn().then(() => {
-//     // User signed in. Now you can make API calls.
-//     sendEmail();
-//   });
-
-
-//   tokenClient.callback = async (resp) => {
-//     if (resp.error !== undefined) {
-//       throw (resp);
-//     }
-//     document.getElementById('signout_button').style.visibility = 'visible';
-//     document.getElementById('authorize_button').innerText = 'Refresh';
-//     await listLabels();
-//   };
-
-//   if (gapi.client.getToken() === null) {
-//     // Prompt the user to select a Google Account and ask for consent to share their data
-//     // when establishing a new session.
-//     tokenClient.requestAccessToken({ prompt: 'consent' });
-//   } else {
-//     // Skip display of account chooser and consent dialog for an existing session.
-//     tokenClient.requestAccessToken({ prompt: '' });
-//   }
-// }
-
-
-
-// function sendEmail() {
-//   const recipientEmail = document.getElementById("email-container").value;
-//   const emailMessage = document.getElementById("message-container").value;
-
-//   if (!recipientEmail || !emailMessage) {
-//     alert("Recipient email and message are required");
-//     return;
-//   }
-
-//   const rawMessage = btoa(
-//     `To: ${recipientEmail}\r\n` +
-//       "Subject: Your Email Subject Here\r\n" +
-//       'Content-Type: text/plain; charset="UTF-8"\r\n\r\n' +
-//       emailMessage
-//   );
-
-//   const request = gapi.client.gmail.users.messages.send({
-//     userId: "me",
-//     resource: {
-//       raw: rawMessage,
-//     },
-//   });
-
-//   request.execute((response) => {
-//     console.log(response);
-//     alert("Email sent successfully!");
-//   });
-// }
-
-
-/////////////////////////////////////////////////////////////////////////////////////
-
-// Your API key and client ID
-// const CLIENT_ID = "280715447136-ejl9bcsuj842het5ifgbj7naj1jjqml3.apps.googleusercontent.com";
-// const API_KEY = "AIzaSyAGzP3_IUN8Ds05jBNckdYrFR6jyDeoeEo";
-
-// Define Gmail API discovery document
-// const GMAIL_DISCOVERY_DOC = "https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest";
-
-// Access token obtained during authentication
-// const accessToken = localStorage.getItem("accessToken");
-
-// Function to handle the loaded state of gapi
-// function gapiLoaded() {
-//   gapi.load("client:auth2", () => {
-//     gapi.client.init({
-//       apiKey: API_KEY,
-//       clientId: CLIENT_ID,
-//       discoveryDocs: [GMAIL_DISCOVERY_DOC],
-//       // scope: "https://www.googleapis.com/auth/gmail.send",
-//     }).then(() => {
-//       // Set the access token if available
-//       if (accessToken) {
-//         gapi.auth2.getAuthInstance().signIn();
-//       } else {
-//         console.error("Access token not found.");
-//       }
-//     });
-//   });
-// }
-
-// Function to handle user authentication
-// function handleAuthClick() {
-//   gapi.auth2.getAuthInstance().signIn().then(() => {
-//     // User signed in. Now you can make API calls.
-//     sendEmail();
-//   });
-// }
-
-// Function to send an email using Gmail API
-function sendEmail() {
-  const recipientEmail = document.getElementById("email-container").value;
-  const emailMessage = document.getElementById("message-container").innerHTML;
-  const emailSubject = document.getElementById("subject-container").value;
-
-
-  if (!recipientEmail || !emailMessage) {
-    alert("Recipient email and message are required");
-    return;
-  }
-
-  // const rawMessage = btoa(
-  //   `To: ${recipientEmail}\r\n` +
-  //   `Subject: ${emailSubject}\r\n` +
-  //   'Content-Type: text/plain; charset="UTF-8"\r\n\r\n' +
-  //   emailMessage
-  // );
-
-  const rawMessage = makeEmail(userEmail, recipientEmail, emailSubject,emailMessage );
-
-  const request = gapi.client.gmail.users.messages.send({
-    userId: "me",
-    resource: {
-      raw: rawMessage,
-    },
+    if (toggleDiv) {
+      document.addEventListener('click', function(event) {
+        if (toggleDiv.contains(event.target)) {
+          console.log("toggle div clicked");
+        }
+      });
+    } else {
+      console.error("Element with ID 'main-list-header-right-view' not found");
+    }
   });
-
-  request.execute((response) => {
-    console.log(response);
-    alert("Email sent successfully!");
-  });
+  
 }
-
-function makeEmail(sender, to, subject, body) {
-  const email_lines = [];
-
-  email_lines.push(`From: ${sender}`);
-  email_lines.push(`To: ${to}`);
-  email_lines.push(`Content-type: text/html;charset=iso-8859-1`);
-  email_lines.push(`Subject: ${subject}`);
-  email_lines.push('');
-  email_lines.push(body);
-
-  const raw = email_lines.join('\r\n');
-  return btoa(unescape(encodeURIComponent(raw)));
-}
-
+toggleViews();
