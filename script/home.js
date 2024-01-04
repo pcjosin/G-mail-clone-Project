@@ -1100,7 +1100,7 @@ toggleViews();
 async function searchMessages() {
   // Specify your search query
   let searchBoxInput = document.getElementById('search-input-box');
-  document.addEventListener('input', function(event){
+  document.addEventListener('change', function(event){
     if(event.target.contains(searchBoxInput)){
       console.log("search box changed");
       isSearchActive = true;
