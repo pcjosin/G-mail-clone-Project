@@ -16,7 +16,7 @@
     display: flex;
 }
 .main-container{
-    background-color :aliceblue;
+    background-color :#f6f8fc;
     z-index: 5;
     position: fixed;
     width:100vw;
@@ -38,6 +38,8 @@
 
 .search-bar{
     display: flex;
+    background-color: #eaf1fb;
+
 }
 
 .search-box{
@@ -53,9 +55,12 @@
 .search-box form{
     max-width: 720px;
     min-height: 50px;
-    background-color: white;
+    background-color: #eaf1fb;
     border-radius: 40px;
     box-shadow: 0 2px 2px 0 #0000, 0 1px 3px 1px #0000;
+}
+#search-bar-input{
+        background-color: #eaf1fb;
 }
 
 .search-bar-input input{
@@ -64,8 +69,7 @@
     max-width: 720px;
     font-family: "Google Sans",Helvetica,Arial,sans-serif;
     border: none;
-    background-color:transparent;
-}
+    background-color: #eaf1fb;}
 
 
 .bi-search{
@@ -250,16 +254,15 @@ justify-content: flex-end!important;
     /* margin-top: 60px !important; */
     overflow-y: scroll !important;
     overflow-x: hidden;
-        border-top-right-radius: 20px;
-            border-top-left-radius: 20px;
-    height: 78vh !important;
+    border-radius: 20px;
+        
+    height: 74vh !important;
     background-color: transparent;
 
 }
 #main-list-container{
     z-index: 7;
-        border-top-right-radius: 20px;
-            border-top-left-radius: 20px;
+        border-radius: 20px;
             overflow: hidden;
             background-color:rgba(255, 255, 255, 0.61);
     background-color:white;
@@ -294,7 +297,7 @@ body{
 
 #display-area{
     overflow-y: hidden;
-    height: 80vh;
+    height: 100%;
     margin-top: 100px;
     
     z-index: 12;
@@ -304,7 +307,7 @@ body{
     background-color:transparent;
 }
 #display-content-body{
-    background-color:aliceblue;
+    background-color:#f6f8fc;
 }
 #main-sidebar{
     margin-top: 150px !important;
