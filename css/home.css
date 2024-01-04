@@ -50,7 +50,7 @@
 }
 
 .search-box form{
-    max-width: 600px;
+    max-width: 670px;
     min-height: 50px;
     background-color: white;
     border-radius: 40px;
@@ -59,12 +59,17 @@
 
 .search-bar-input input{
     height: 46px;
-    width: 280px;
+    width: 450px;
     min-width: 100px;
     max-width: 720px;
     font-family: "Google Sans",Helvetica,Arial,sans-serif;
     border: none;
     background-color: white;
+}
+
+.search-bar-input input:focus {
+    outline: none; 
+    border: none; 
 }
 
 @media screen and (max-width: 800px) {
@@ -87,6 +92,8 @@
 
 .cancel-button svg{
     visibility: hidden;
+    margin-left: 90px;
+    color: #5f6368;
 }
 
 .bi-question-circle{
@@ -150,7 +157,9 @@
     border-bottom:0.5px solid #bbbbbb !important;
     display: flex !important;
     justify-content: space-between !important;
-
+    transition: transform 0.3s ease-in-out;
+    background-color: white;
+    padding : 5px 0;
 }
 
 .central-div{
@@ -290,9 +299,7 @@ body{
     z-index: 12;
 
 }
-.preview-bar{
-    background-color: white;
-}
+
 #display-content-body{
     background-color:aliceblue;
 }
@@ -427,4 +434,9 @@ justify-content: space-around;
 
 #main-split-container{
     background-color: none !important;
+}
+
+.preview-bar:hover{
+    transform: scaleY(1.02);
+    box-shadow: 5px 5px 10px rgba(68, 68, 68, 0.5);
 }
