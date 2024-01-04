@@ -19,7 +19,7 @@ function changeTheme(id){
     
     searchBar=document.getElementById('search-bar');
     searchBar.style.backgroundColor='rgba(255, 255, 255, 0.30)';
-    document.getElementById('main-list-header').style.backgroundColor='rgba(255, 255, 255, 0.85)';
+    document.getElementById('main-list-header').style.backgroundColor='rgba(255, 255, 255, 1)';
 
     //icons color change
     let icons=document.getElementsByClassName('bi');

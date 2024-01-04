@@ -70,7 +70,7 @@
     max-width: 720px;
     font-family: "Google Sans",Helvetica,Arial,sans-serif;
     border: none;
-    background-color: #eaf1fb;}
+    background-color: transparent;}
 
 
 @media screen and (max-width: 800px) {
@@ -246,14 +246,15 @@ justify-content: flex-end!important;
 }
 
 #main-list-header{
+    
     position:absolute;
     top:100px;
-    right:16px;
+
 
     margin-left: 0.5px;
     padding-right: 10px;
-    background-color:white;
-    width:82% !important;
+    background-color:rgb(255, 255, 255);
+    width:82%;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
     z-index: 15 !important;
@@ -453,13 +454,11 @@ justify-content: space-around;
 
 #mail-container{
     background-color:rgb(255, 255, 255);
+    border-radius: 20px !important;
+    overflow: hidden;
 }
 
 
-
-#mail-container{
-    background-color:rgb(255, 255, 255);
-}
 
 #app-drawer-expand-container{
     position: absolute;

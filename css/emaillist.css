@@ -80,15 +80,13 @@ justify-content: flex-end!important;
 
 #main-list-header{
     background-color: white;
-    width:100vw;
     z-index: 2;
-    position: fixed;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #main-list-content{
     padding-top: 60px;
-    position: fixed;
+    position: relative;
     overflow-x: hidden;
 }
 

@@ -246,6 +246,22 @@ async function clickHandle(emailElementId) {
     .catch((error) => console.error("Error:", error));
 
   emailSubjectContent = await getSendSubject(emailElementId);
+
+
+  gapi.client.gmail.users.messages.modify({
+    userId: 'me',
+    id: emailElementId,
+    resource: {
+      removeLabelIds: ['UNREAD'] // Remove the 'UNREAD' label to mark the message as read
+    }
+  }, (err, response) => {
+    if (err) {
+      console.error('Error marking message as read:', err);
+    } else {
+      console.log('Message marked as read:', response);
+    }
+  });
+
   emailBodyContent = await getEmailBodyHtml(emailElementId);
   console.log(emailBodyContent + "))))))))");
 
@@ -253,6 +269,10 @@ async function clickHandle(emailElementId) {
   emailSubject.innerText = emailSubjectContent;
   emailBody.innerHTML = emailBodyContent;
 }
+
+
+
+
 
 async function getEmailBodyHtml(messageId) {
   try {
@@ -411,7 +431,7 @@ function createLabelElement(label) {
 
   labelDiv.appendChild(iconDiv);
 
-  const anchor = document.createElement('a');
+  const anchor = document.createElement('span');
   const labelName = label.name.toLowerCase();
   anchor.innerHTML = labelName.charAt(0).toUpperCase() + labelName.slice(1);
   anchor.classList.add('col-6', 'labelAnchor', 'fs-6');
@@ -1143,3 +1163,65 @@ function toggleViews(){
   
 }
 toggleViews();
+
+
+
+
+function loadCompose() {
+  fetch("compose.html")
+    .then((response) => response.text())
+    .then((data) => {
+      // Inject the loaded content into the container
+      document.getElementById("display-area").innerHTML = data;
+      emailListContainer = document.getElementById("main-list-content");
+    })
+    .catch((error) => console.error("Error:", error));
+}
+
+// Function to send an email using Gmail API
+function sendEmail() {
+  const recipientEmail = document.getElementById("email-container").value;
+  const emailMessage = document.getElementById("message-container").innerHTML;
+  const emailSubject = document.getElementById("subject-container").value;
+
+
+  if (!recipientEmail || !emailMessage) {
+    alert("Recipient email and message are required");
+    return;
+  }
+
+  // const rawMessage = btoa(
+  //   `To: ${recipientEmail}\r\n` +
+  //   `Subject: ${emailSubject}\r\n` +
+  //   'Content-Type: text/plain; charset="UTF-8"\r\n\r\n' +
+  //   emailMessage
+  // );
+
+  const rawMessage = makeEmail(userEmail, recipientEmail, emailSubject, emailMessage);
+
+  const request = gapi.client.gmail.users.messages.send({
+    userId: "me",
+    resource: {
+      raw: rawMessage,
+    },
+  });
+
+  request.execute((response) => {
+    console.log(response);
+    alert("Email sent successfully!");
+  });
+}
+
+function makeEmail(sender, to, subject, body) {
+  const email_lines = [];
+
+  email_lines.push(`From: ${sender}`);
+  email_lines.push(`To: ${to}`);
+  email_lines.push(`Content-type: text/html;charset=iso-8859-1`);
+  email_lines.push(`Subject: ${subject}`);
+  email_lines.push('');
+  email_lines.push(body);
+
+  const raw = email_lines.join('\r\n');
+  return btoa(unescape(encodeURIComponent(raw)));
+}

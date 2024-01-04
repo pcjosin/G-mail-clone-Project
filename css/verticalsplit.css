@@ -26,10 +26,8 @@
 }
 
 #email-split-view{
-    width: 50%;
-    position: fixed;
-    top: 30%;
-    left: 55%;
+    width: 60%;
+    position: relative;
     text-align: center;
     font-family: "Google Sans",Helvetica,Arial,sans-serif;
 }
