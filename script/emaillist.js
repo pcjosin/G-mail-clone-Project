@@ -213,29 +213,29 @@ function loadEmailContent(response) {
   }
 
 
-  async function listEmailsByLabel(labelId, numberOfEmails) {
+
+  async function listEmailsByLabel(label, numberOfEmails) {
     try {
       const response = await gapi.client.gmail.users.messages.list({
         userId: "me",
-        labelIds: [labelId],
+        labelIds: [label],
         maxResults: numberOfEmails,
       });
   
       console.log(response.result.messages);
   
       for (const message of response.result.messages) {
-        const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+        const messagePreview = await getEmailPreview(message.id);
         console.log(messagePreview);
   
-        const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
-  
+        const emailListElement = loadEmailContent(messagePreview);
         emailListElement.setAttribute("id", message.id);
         emailListElement.onclick = () => clickHandle(message.id);
   
         emailListContainer.appendChild(emailListElement);
       }
     } catch (error) {
-      console.error("Error listing emails:", error);
+      console.error(`Error listing ${label} emails:`, error);
     }
   }
 

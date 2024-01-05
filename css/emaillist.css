@@ -100,3 +100,21 @@ justify-content: flex-end!important;
 #display-area #main-list-content{
     height: 100vh !important;
 }
+
+
+
+.moreLabelList{
+    display: none;
+}
+ 
+.more{
+    display: block;
+}
+ 
+.categoryList{
+    display:none;
+}
+ 
+.categoryShow{
+    display: block;
+}
