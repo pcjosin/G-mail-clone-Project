@@ -121,6 +121,11 @@ function createFolderElement(folderData) {
   folderElementDiv.appendChild(iconElement);
   folderElementDiv.appendChild(folderText);
   folderElementDiv.appendChild(deleteButton);
+  folderElementDiv.draggable = true;
+  
+  folderElementDiv.addEventListener('dragover', handleDragOver);
+  folderElementDiv.addEventListener('drop', handleDrop);
+  
 
   // Clicking the folder element will trigger the listEmailsByCustomFolder function
   folderElementDiv.onclick = () => listEmailsByCustomFolder(folderData.id);
@@ -282,4 +287,49 @@ function loadFoldersFromAPI(containerDiv) {
   }).catch(error => {
     console.error('Error loading folders:', error);
   });
+}
+
+function handleDragOver(event) {
+  event.preventDefault();
+
+
+}
+
+
+function addEmailToLabel(messageId, labelId) {
+  
+  const request = gapi.client.gmail.users.messages.modify({
+    userId: 'me', 
+    id: messageId,
+    resource: {
+      addLabelIds: [labelId]
+    }
+  });
+
+  // Execute the request
+  request.execute(function(response) {
+    console.log('Email added to label:', response);
+  });
+}
+
+function handleDrop(event) {
+  // Get the dragged data
+  const data = event.dataTransfer.getData('text');
+
+  // Get the target element's ID and text content
+  const targetId = event.target.id;
+  const textContent = event.dataTransfer.getData('text/plain');
+
+  
+  addEmailToLabel(textContent, targetId);
+  displayBanner(`email added to the folder: ${event.target.textContent}`, 'success');
+
+
+  setTimeout(() => {
+    removeBanner();
+  }, 2000);
+
+
+  // Prevent the default behavior
+  event.preventDefault();
 }

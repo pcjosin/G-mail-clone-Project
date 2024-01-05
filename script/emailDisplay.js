@@ -1,3 +1,6 @@
+
+
+
 async function getSenderName(messageId) {
     try {
       const emailData = await getEmailContent(messageId);
@@ -52,11 +55,12 @@ async function getSenderName(messageId) {
       .then((data) => {
         // Inject the loaded content into the container
         document.getElementById("display-area").innerHTML = data;
-  
+        summaryButton=document.getElementById("summarize-button");
         emailBody = document.getElementById("body-content");
         emailSubject = document.getElementById("email-subject");
         emailDate = document.getElementById("send-date");
         senderEmailAdress=document.getElementById("sender-adress")
+        
       })
       .catch((error) => console.error("Error:", error));
   
@@ -64,6 +68,8 @@ async function getSenderName(messageId) {
     emailBodyContent = await getEmailBodyHtml(emailElementId);
     emailDateContent= await getSendTime(emailElementId)
     console.log(emailBodyContent)
+    summaryButton.id = emailElementId;
+
     senderEmailAdressContent= await getSenderEmail(emailElementId) 
     // Assume senderEmail contains the email address of the sender
   
@@ -72,14 +78,17 @@ async function getSenderName(messageId) {
   
   
     // Update your HTML elements
+
     emailSubject.innerText = emailSubjectContent;
     emailBody.innerHTML = emailBodyContent;
     const formattedTimestamp = formatTimestamp(emailDateContent);
     emailDate.innerText=formattedTimestamp;
     senderEmailAdress.innerText=senderEmailAdressContent
+    console.log(generateSummary(emailBody))
     
   
   }
+  
   
   async function getEmailBodyHtml(messageId) {
     try {
@@ -236,4 +245,95 @@ function formatTimestamp(timestampString) {
       const options = { year: 'numeric', month: 'short', day: 'numeric' };
       return mailDate.toLocaleDateString('en-US', options);
     }
+  }
+
+async function summarizeEmailContent(emailElementId){
+    
+    fetch("mail.html")
+      .then((response) => response.text())
+      .then((data) => {
+        // Inject the loaded content into the container
+        document.getElementById("display-area").innerHTML = data;
+  
+        emailBody = document.getElementById("body-content");
+        emailSubject = document.getElementById("email-subject");
+        emailDate = document.getElementById("send-date");
+        senderEmailAdress=document.getElementById("sender-adress")
+      })
+      .catch((error) => console.error("Error:", error));
+  
+    emailSubjectContent = await getSendSubject(emailElementId);
+    emailBodyContent = await getEmailBodyHtml(emailElementId);
+    emailDateContent= await getSendTime(emailElementId)
+    console.log(emailBodyContent)
+
+    senderEmailAdressContent= await getSenderEmail(emailElementId) 
+    // Assume senderEmail contains the email address of the sender
+  
+  
+  // Fetch the sender's profile information
+  
+  
+    // Update your HTML elements
+    emailSubject.innerText = emailSubjectContent;
+    emailBody.innerHTML = emailBodyContent;
+    const formattedTimestamp = formatTimestamp(emailDateContent);
+    emailDate.innerText=formattedTimestamp;
+    senderEmailAdress.innerText=senderEmailAdressContent
+    
+    try {
+      const summaryText = await generateSummary(emailBody);
+      emailBody.innerHTML = "";
+      emailBody.innerText = summaryText;
+      console.log(summaryText)
+  } catch (error) {
+      console.error('Error generating summary:', error);
+      // Handle the error as needed
+  }
+    
+
+  }
+
+
+
+  function archiveEmail(messageId) {
+    // Use Gmail API to archive the email
+    gapi.client.gmail.users.messages.modify({
+      'userId': 'me',
+      'id': messageId,
+      'resource': {
+        'removeLabelIds': ['INBOX']
+      }
+    }).then(response => {
+      console.log('Email archived:', response.result);
+    }, error => {
+      console.error('Error archiving email:', error);
+    });
+  }
+
+  function deleteEmail(messageId) {
+    // Use Gmail API to delete the email
+    gapi.client.gmail.users.messages.delete({
+      'userId': 'me',
+      'id': messageId
+    }).then(response => {
+      console.log('Email deleted:', response.result);
+    }, error => {
+      console.error('Error deleting email:', error);
+    });
+  }
+
+  function markAsUnread(messageId) {
+    // Use Gmail API to mark the email as unread
+    gapi.client.gmail.users.messages.modify({
+      'userId': 'me',
+      'id': messageId,
+      'resource': {
+        'removeLabelIds': ['UNREAD']
+      }
+    }).then(response => {
+      console.log('Email marked as unread:', response.result);
+    }, error => {
+      console.error('Error marking email as unread:', error);
+    });
   }

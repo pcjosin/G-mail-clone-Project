@@ -183,6 +183,9 @@ function loadEmailContent(response) {
   
         const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
         
+        emailListElement.setAttribute("id", message.id);
+        emailListElement.draggable=true
+        emailListElement.addEventListener('dragstart', handleDragStart);
         emailListElement.onclick = () =>clickHandle(message.id)
         emailListContainer.appendChild(emailListElement);
       }
@@ -234,4 +237,10 @@ function loadEmailContent(response) {
     } catch (error) {
       console.error("Error listing emails:", error);
     }
+  }
+
+  function handleDragStart(event) {
+    // Set the dragged data and provide a visual feedback
+    event.dataTransfer.setData('text', event.target.id);
+  
   }
