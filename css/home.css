@@ -511,3 +511,19 @@ td{
     align-items: center;
     
 }
+
+.moreLabelList{
+    display: none;
+}
+
+.more{
+    display: block;
+}
+
+.categoryList{
+    display:none;
+}
+
+.categoryShow{
+    display: block;
+}
