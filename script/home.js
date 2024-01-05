@@ -402,11 +402,65 @@ function createNonUserLabelElements() {
   .then(response => {
     const labelsData = response.result.labels.filter(label => !label.type || label.type !== 'user');
 
-    labelsData.forEach(label => {
-      const labelDiv = createLabelElement(label);
-      // Assuming you have a container div with the id 'label-container'
-      parentDiv.appendChild(labelDiv);
+    labelsData.forEach((label,index) => {
+      if(index<=4){
+        const labelDiv = createLabelElement(label);
+        // Assuming you have a container div with the id 'label-container'
+        parentDiv.appendChild(labelDiv);
+      }  
     });
+    let labelMore=document.createElement('div');
+    labelMore.innerHTML="more";
+    labelMore.id='Labelmore';
+
+    let labelcategory=document.createElement('div');
+    labelcategory.innerHTML="Category";
+    labelcategory.classList.add('ms-3','p-2');
+
+    let categoryIcon=document.createElement('i');
+    categoryIcon.classList.add('bi','bi-caret-right-fill','fs-5','p-2')
+    labelcategory.appendChild(categoryIcon);
+    labelcategory.classList.add('ms-3','p-2');
+    
+
+    let moreIcon=document.createElement('i');
+    moreIcon.classList.add('bi','bi-chevron-compact-down','fs-5','p-2')
+    labelMore.appendChild(moreIcon);
+    labelMore.classList.add('ms-3','p-2');
+    parentDiv.appendChild(labelMore);
+  
+    let moreLabelList=document.createElement('div');
+    moreLabelList.classList.add('moreLabelList');
+
+    let categoryList=document.createElement('div');
+    categoryList.classList.add('categoryList','ms-3');
+    
+    labelsData.forEach((label,index) => {
+      const type=label.name.toLowerCase().split('_')[0];
+      if(index>4 && type!=='category'){
+        const labelDiv = createLabelElement(label);
+        // Assuming you have a container div with the id 'label-container'
+        moreLabelList.appendChild(labelDiv);
+      }  
+      else if(index>4 && type=='category'){
+        const labelDiv = createLabelElement(label);
+        categoryList.appendChild(labelDiv);
+      }
+    });
+
+    moreLabelList.appendChild(labelcategory);
+    moreLabelList.appendChild(categoryList);
+    parentDiv.appendChild(moreLabelList);
+    
+    labelMore.onclick=()=>{
+        moreLabelList.classList.toggle('more');
+        moreIcon.classList.toggle('bi-chevron-compact-up');
+    }
+    labelcategory.onclick=()=>{
+      categoryList.classList.toggle('categoryShow');
+      categoryIcon.classList.toggle('bi-caret-right');
+    }
+
     const generatedFoldersDiv = generateFoldersDiv();
     parentDiv.appendChild(generatedFoldersDiv);
   })
@@ -432,7 +486,7 @@ function createLabelElement(label) {
   labelDiv.appendChild(iconDiv);
 
   const anchor = document.createElement('span');
-  const labelName = label.name.toLowerCase();
+  const labelName = label.name.toLowerCase().split('_').reverse()[0];
   anchor.innerHTML = labelName.charAt(0).toUpperCase() + labelName.slice(1);
   anchor.classList.add('col-6', 'labelAnchor', 'fs-6');
   labelDiv.appendChild(anchor);
