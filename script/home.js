@@ -1185,7 +1185,11 @@ function sendEmail() {
 
 
   if (!recipientEmail || !emailMessage) {
-    alert("Recipient email and message are required");
+
+    let messageDiv = document.getElementById('message-display-div');
+    messageDiv.style.display = 'block';
+    messageDiv.innerText = "Recipient email and message are required";
+    hideMessageDiv();
     return;
   }
 
@@ -1207,7 +1211,27 @@ function sendEmail() {
 
   request.execute((response) => {
     console.log(response);
+
+    let messageDiv = document.getElementById('message-display-div');
+    messageDiv.style.display = 'block';
+    if (response.error) {
+
+      messageDiv.innerText = response.error.message;
+    }
+    else {
+      messageDiv.innerText = "Email sent Successfully!";
+    }
+    hideMessageDiv();
   });
+}
+
+
+function hideMessageDiv() { //hide message after 5 seconds
+  setTimeout(function () {
+    let messageDiv = document.getElementById('message-display-div');
+    messageDiv.style.display = 'none';
+    
+  }, 5000);
 }
 
 function makeEmail(sender, to, subject, body) {
@@ -1228,7 +1252,6 @@ let composeCloseButton = document.getElementById("compose-close");
 let composeDiv = document.getElementById("compose-container");
 
 composeCloseButton.onclick = () => {
-  let composeDiv = document.getElementById("compose-container");
   composeDiv.style = "display:none";
   console.log("close compose clicked");
 };

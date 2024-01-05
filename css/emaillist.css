@@ -8,11 +8,20 @@
     color:#999999;
 }
 .preview-bar{
+    cursor: pointer;
     width:100% !important;
     border-bottom:0.5px solid #bbbbbb !important;
     display: flex !important;
     justify-content: space-between !important;
+    transition: transform 0.3s ease-in-out;
+    background-color: white;
+    padding: 5px 0;
 
+}
+
+.preview-bar:hover {
+    transform: scaleY(1.02);
+    box-shadow: 5px 5px 10px rgba(68, 68, 68, 0.5);
 }
 
 .central-div{

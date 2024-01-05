@@ -105,3 +105,9 @@ a{
     overflow-y: scroll;
     height: 75vh;
 }
+
+#mail-container {
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px !important;
+    overflow: hidden;
+}

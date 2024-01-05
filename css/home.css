@@ -549,3 +549,18 @@ td{
 
 }
 
+/* message display */
+#message-display-div {
+    padding: 10px;
+    border-radius: 7px;
+    position: absolute;
+    bottom: 10px;
+    left:10px;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    height: auto;
+    width:300px;
+    z-index: 200;
+    display:none;
+}
+
