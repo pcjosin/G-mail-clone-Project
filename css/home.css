@@ -511,3 +511,41 @@ td{
     align-items: center;
     
 }
+/* compose */
+#compose-container{
+    position: absolute;
+    height:80vh;
+    width: 70vw;
+    background-color: rgb(255, 255, 255);
+    top:10%;
+    right:12%;
+    z-index: 150;
+    border-radius: 20px ;
+    overflow: hidden;
+    box-shadow: 0px 0px 10000px 0px rgba(0,0,0,0.4);
+    display:none;
+}
+
+
+#compose-top-bar {
+    padding-left: 20px;
+    width: 70vw;
+    height: 40px;
+    display: flex;
+    background-color: aliceblue;
+
+}
+
+#compose-top-bar-right {
+    padding-top: 10px;
+    padding-right: 5px;
+}
+
+#compose-top-bar-left {
+    flex: 1;
+    font-weight: 600;
+    margin: 10px;
+    margin-left: 0px !important;
+
+}
+

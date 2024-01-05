@@ -887,10 +887,9 @@ document.addEventListener("click", function (event) {
 
 //app drawer display
 
-let appDiv = document.getElementById("icon-menu");
-let appDivOpen;
-appDiv.onclick = () => {
-  appDivOpen = document.getElementById("app-drawer-expand-container");
+let menuIcon = document.getElementById("icon-menu");
+let appDivOpen = document.getElementById("app-drawer-expand-container");
+menuIcon.onclick = () => {
   appDivOpen.style.display = 'block';
   console.log("App drawer clicked");
 };
@@ -902,12 +901,12 @@ document.addEventListener("click", function (event) {
   // Check if the clicked element is NOT the div or a child of the div
   if (
     event.target !== appDivOpen &&
-    !appDivOpen.contains(event.target)&&
-    appDiv.target !== appDiv &&
-    !appDiv.contains(event.target)
+    !appDivOpen.contains(event.target) &&
+    event.target !== menuIcon &&
+    !menuIcon.contains(event.target)
   ) {
     // Hide the div
-    userProfileDiv.style.display = 'none';
+    appDivOpen.style.display = 'none';
   } 
 });
 
@@ -1168,12 +1167,12 @@ toggleViews();
 
 
 function loadCompose() {
+  composeDiv.style.display = 'block';
   fetch("compose.html")
     .then((response) => response.text())
     .then((data) => {
       // Inject the loaded content into the container
-      document.getElementById("display-area").innerHTML = data;
-      emailListContainer = document.getElementById("main-list-content");
+      document.getElementById("compose-html-container").innerHTML = data;
     })
     .catch((error) => console.error("Error:", error));
 }
@@ -1208,7 +1207,6 @@ function sendEmail() {
 
   request.execute((response) => {
     console.log(response);
-    alert("Email sent successfully!");
   });
 }
 
@@ -1225,3 +1223,14 @@ function makeEmail(sender, to, subject, body) {
   const raw = email_lines.join('\r\n');
   return btoa(unescape(encodeURIComponent(raw)));
 }
+
+let composeCloseButton = document.getElementById("compose-close");
+let composeDiv = document.getElementById("compose-container");
+
+composeCloseButton.onclick = () => {
+  let composeDiv = document.getElementById("compose-container");
+  composeDiv.style = "display:none";
+  console.log("close compose clicked");
+};
+
+

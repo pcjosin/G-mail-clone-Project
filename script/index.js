@@ -17,7 +17,7 @@ const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/gmail/v1/res
 
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
-const SCOPES = ['https://mail.google.com/', 'https://www.googleapis.com/auth/gmail.settings.basic','https://www.googleapis.com/auth/userinfo.profile'];
+const SCOPES = ['https://mail.google.com/', 'https://www.googleapis.com/auth/gmail.settings.basic', 'https://www.googleapis.com/auth/userinfo.profile','https://www.googleapis.com/auth/gmail.modify'];
 
 let tokenClient;
 let gapiInited = false;

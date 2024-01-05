@@ -28,35 +28,19 @@
 </head>
 
 <body>
-    <div class="main-container">
-        <div class="top-bar">
-            <div class="top-bar-left">
-                <p>New Message</p>
-            </div>
+    <div id="outer-compose-container">
 
-            <div class="">
-                <span class="material-symbols-outlined symbol-topbar">
-                    minimize
-                </span>
-                <span class="material-symbols-outlined symbol-topbar">
-                    expand_content
-                </span>
-                <span class="material-symbols-outlined symbol-topbar">
-                    close
-                </span>
-            </div>
-        </div>
-        <div class="to-area">
+        <div id="to-area">
             <input type="email" placeholder="Receipents" id="email-container" onselect="emailSelected()">
         </div>
-        <div class="subject-area">
+        <div id="subject-area">
             <input type="text" placeholder="Subject" id="subject-container">
         </div>
-        <div class="message-area" id="message-container"  onkeydown="handleKeyPress(event)" contenteditable="true">
+        <div  id="message-container"  onkeydown="handleKeyPress(event)" contenteditable="true">
 
 
         </div>
-        <div class="send-button-row">
+        <div id="send-button-row">
             <button type="button" class="btn btn-primary send-button" onclick="sendEmail()">Send</button>
         </div>
     </div>
@@ -93,6 +77,7 @@
             document.execCommand('insertHTML', false, '<br>');
         }
     }
+
 </script>
 </body>
 
