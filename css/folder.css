@@ -11,6 +11,13 @@
   margin-right: 8px;
   margin-bottom: 8px;
   transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.folder-header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .text-folder:hover {
@@ -26,16 +33,90 @@
   margin-left: 10px;
   font-size: 20px;
   cursor: pointer;
-  border: none; /* Remove border */
-  border-radius: 50%; /* Make it a circle */
-  transition: background-color 0.3s; /* Add transition for smooth color change */
+  border: none; 
+  border-radius: 50%; 
+  transition: background-color 0.3s; 
 
-  /* Initial background color */
+  
   background-color: transparent;
 }
 
 .plus-button:hover {
-  background-color: #ccc; /* Change color to grey on hover */
+  background-color: #ccc; 
 }
 
 
+.parent-folder-container {
+  padding: 25px;
+}
+
+.parent-folder-container > div > h5 {
+  margin: 5px;
+}
+
+
+
+.plus-button {
+  border-radius: 50%;
+}
+
+
+
+.text-folder {
+  position: relative;
+}
+
+
+.delete-button {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  cursor: pointer;
+  border: none;
+  background: none;
+  visibility: hidden;
+}
+
+.text-folder:hover .delete-button {
+  visibility: visible;
+}
+
+.form-div {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+.banner {
+  position: fixed;
+  bottom: 5%;
+  left: 10%;
+  padding: 10px;
+  z-index: 9999;
+  color: #fff;
+}
+
+.banner.success {
+  background-color: green;
+}
+
+.banner.error {
+  background-color: red;
+}
+
+.folder-create-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+}

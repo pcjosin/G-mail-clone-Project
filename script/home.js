@@ -6,8 +6,9 @@ let emailSubject;
 
 
 
+
 function loadPage2Content() {
-  fetch("html/emaillist.html")
+  fetch("emaillist.html")
     .then((response) => response.text())
     .then((data) => {
       // Inject the loaded content into the container
@@ -24,7 +25,7 @@ function loadPage2Content() {
 // Call the function to load content on page load
 //loadPage2Content("mail.html");
 
-const API_KEY = "AIzaSyAGzP3_IUN8Ds05jBNckdYrFR6jyDeoeEo";
+const API_KEY = API_CONFIG.API_KEY
 
 loadPage2Content();
 let userEmail;
@@ -108,7 +109,7 @@ function gapiLoaded() {
          
 
         
-          listLatestEmails(50);
+          listLatestEmails(20);
         } else {
           document.getElementById("nextpage-content").innerText =
             "Access token not found.";
@@ -1232,5 +1233,6 @@ composeCloseButton.onclick = () => {
   composeDiv.style = "display:none";
   console.log("close compose clicked");
 };
+
 
 
