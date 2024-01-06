@@ -490,13 +490,9 @@ justify-content: space-around;
     padding-bottom: 2px;
 }
 
-td{
-    
+#app-table-td{ 
     text-align: center;
     padding: 20px;
-
-    
-
 }
 
 .app-table{
@@ -524,6 +520,7 @@ td{
     overflow: hidden;
     box-shadow: 0px 0px 10000px 0px rgba(0,0,0,0.4);
     display:none;
+    /* change to none */
 }
 
 
@@ -561,7 +558,7 @@ td{
     height: auto;
     width:300px;
     z-index: 200;
-    display:none;
+    display:none; 
 }
 
 

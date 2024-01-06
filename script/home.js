@@ -1217,18 +1217,18 @@ function toggleViews(){
 }
 toggleViews();
 
-
-
-
 function loadCompose() {
-  composeDiv.style.display = 'block';
   fetch("compose.html")
     .then((response) => response.text())
     .then((data) => {
       // Inject the loaded content into the container
       document.getElementById("compose-html-container").innerHTML = data;
+
     })
     .catch((error) => console.error("Error:", error));
+  setTimeout(function () {
+    composeDiv.style.display = 'block';
+  }, 400);
 }
 
 // Function to send an email using Gmail API

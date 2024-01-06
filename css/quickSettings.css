@@ -17,11 +17,11 @@
     background-color: transparent;
 }
 
-input[type="radio"]{
+#themeSelection input[type="radio"]{
     display:none;
 }
 
-input[type=radio]:checked + label>img {
+#themeSelection input[type=radio]:checked + label>img {
     border: solid 3px rgb(0, 140, 255);
   }
 
