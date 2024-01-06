@@ -24,24 +24,24 @@ function loadEmailContent(response) {
       senderNameContent = senderNameContent.slice(0, 19) + '.';
     }
     const sndDateTime =new Date(response.result.payload.headers.find((header) => header.name === "Date").value);
-    console.log('snddte:'+sndDateTime);
+    
     let today = new Date();
-    console.log('snddte:'+today);
+   
   
     if (today.getFullYear()===sndDateTime.getFullYear() &&
         today.getMonth()===sndDateTime.getMonth() &&
         today.getDate()===sndDateTime.getDate()){
             var sendTimeContent=sndDateTime.toLocaleTimeString().replace(/:\d{2} /, ' ');
-                    console.log('snddte:'+sendTimeContent);
+                   
         }
     else if(today.getFullYear() ===sndDateTime.getFullYear()){
         var sendTimeContent=   shortMonthNames[parseInt( sndDateTime.getMonth())] +' '+ sndDateTime.getDate();
-        console.log('snddte:'+sendTimeContent);
+      
   
     }
     else{
         var sendTimeContent=sndDateTime.toLocaleDateString();
-        console.log('snddte:'+sendTimeContent);
+      
   
     }
   
@@ -53,7 +53,7 @@ function loadEmailContent(response) {
     const previewTextContent = response.result.snippet;
     const labels = response.result.labelIds;
   
-    console.log("function running");
+    
   
   
   
@@ -175,11 +175,14 @@ function loadEmailContent(response) {
         maxResults: numberOfEmails,
       });
   
-      console.log(response.result.messages);
+      if(isSearchActive){
+        console.log("in a search")
+        return ;
+      }
   
       for (const message of response.result.messages) {
         const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
-        console.log(messagePreview);
+       
   
         const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
         
@@ -197,7 +200,7 @@ function loadEmailContent(response) {
   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // function to return a preview of email
   async function getEmailPreview(messageId) {
-    console.log("inside preview");
+    
     try {
       const response = gapi.client.gmail.users.messages.get({
         userId: "me",
@@ -205,7 +208,7 @@ function loadEmailContent(response) {
         format: "metadata",
         metadataHeaders: ["Subject", "From","Date"],
       });
-      console.log(response);
+      
       return response;
     } catch (error) {
       console.error("Error getting email preview:", error);
@@ -221,12 +224,9 @@ function loadEmailContent(response) {
         labelIds: [label],
         maxResults: numberOfEmails,
       });
-  
-      console.log(response.result.messages);
-  
-      for (const message of response.result.messages) {
+  for (const message of response.result.messages) {
         const messagePreview = await getEmailPreview(message.id);
-        console.log(messagePreview);
+        
   
         const emailListElement = loadEmailContent(messagePreview);
         emailListElement.setAttribute("id", message.id);
@@ -244,3 +244,39 @@ function loadEmailContent(response) {
     event.dataTransfer.setData('text', event.target.id);
   
   }
+
+
+
+
+  function handleBackButton() {
+ // Assuming this function is defined to load the content on page 2
+  
+    switch (source) {
+      case "Spam":
+        listEmailsByLabel('SPAM', 20);
+        console.log("Spam back Clicked");
+        break;
+  
+      case "Draft":
+        listEmailsByLabel('DRAFT', 20);
+        console.log("Draft back clicked");
+        break;
+  
+      case "Sent":
+        listEmailsByLabel('SENT', 20);
+        console.log("Sent back clicked");
+        break;
+  
+      case "Trash":
+        listEmailsByLabel('TRASH', 20);
+        console.log("Trash back clicked");
+        break;
+  
+      // Add more cases if needed
+  
+      default:
+        // Handle default case or do nothing
+        break;
+    }
+  }
+  

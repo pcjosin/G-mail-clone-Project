@@ -1,6 +1,7 @@
 /* Fonts imports */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.cdnfonts.com/css/google-sans');
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;700&display=swap');
+
 
 /* CSS for top bar */
 .top-bar{
@@ -575,3 +576,17 @@ td{
     margin-top: 10px;
   }
   
+
+  #message-display-div {
+    padding: 10px;
+    border-radius: 7px;
+    position: absolute;
+    bottom: 10px;
+    left:10px;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    height: auto;
+    width:300px;
+    z-index: 200;
+    display:none;
+}

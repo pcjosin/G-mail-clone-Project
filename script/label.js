@@ -46,7 +46,7 @@ function createNonUserLabelElements() {
     categoryList.classList.add('categoryList','ms-3');
    
     labelsData.forEach((label,index) => {
-      const type=label.name.toLowerCase().split('_')[0];
+      const type=label.name.toLowerCase().split('_')[0]
       if(index>4 && type!=='category'){
         const labelDiv = createLabelElement(label);
         // Assuming you have a container div with the id 'label-container'
@@ -95,8 +95,10 @@ function createLabelElement(label) {
   labelDiv.appendChild(iconDiv);
 
   const anchor = document.createElement('span');
-  const labelName = label.name.toLowerCase().split("_").reverse(0);
+  const labelName = label.name.toLowerCase().split("_").reverse()[0];
+  console.log(labelName)
   anchor.innerHTML = labelName.charAt(0).toUpperCase() + labelName.slice(1);
+  
   anchor.classList.add('col-6', 'labelAnchor', 'fs-6');
   labelDiv.appendChild(anchor);
 
@@ -119,6 +121,7 @@ function createLabelElement(label) {
     } else if (anchor.innerHTML === 'Starred') {
       listEmailsByLabel('STARRED', 20);
     }
+    anchor.style.cursor="pointer"
     
   };
 

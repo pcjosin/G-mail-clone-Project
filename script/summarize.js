@@ -38,9 +38,7 @@ function extractTextAndTokenize(element, chunkSize) {
 
 
 
-const element = document.getElementById('yourElementId'); // Replace with the actual ID of your element
-const chunkSize = 2000;
-const chunkedTokens = extractTextAndTokenize(element, chunkSize);
+
 async function generateSummary(element, chunkSize = 3000) {
     const textChunks = extractTextAndTokenize(element, chunkSize);
     console.log(textChunks);
