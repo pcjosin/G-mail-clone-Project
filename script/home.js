@@ -904,6 +904,7 @@ function displayLayoutDiv(){
               console.log("latest emails in split view 1")
               await listLabels();
               await listVerticalSplitEmails(30);
+              // await searchMessages();
               console.log("latest emails in split view 2")  
           })
           .catch(error => console.error('Error loading HTML:', error));
@@ -924,7 +925,8 @@ function displayLayoutDiv(){
           console.log("email list html loaded sucessfully");
           // stopListEmails = false;
           await listLabels();
-          listDefaultSplitEmails(50);
+          await listDefaultSplitEmails(50);
+          // await searchMessages();
         })
       }
       });
@@ -954,6 +956,7 @@ function displayLayoutDiv(){
                 console.log("latest emails in split view 1")
                 await listLabels();
                 await listHorizontalSplitEmails(30);
+                // await searchMessages();
                 console.log("latest emails in split view 2")  
             })
             .catch(error => console.error('Error loading HTML:', error));
@@ -1100,7 +1103,7 @@ toggleViews();
 async function searchMessages() {
   // Specify your search query
   let searchBoxInput = document.getElementById('search-input-box');
-  document.addEventListener('change', function(event){
+  document.addEventListener('input', function(event){
     if(event.target.contains(searchBoxInput)){
       console.log("search box changed");
       isSearchActive = true;
@@ -1123,6 +1126,7 @@ async function searchMessages() {
       'q': query,
       maxResults: 30,
       }).then(function(response) {
+        console.log("response: ", response)
       let messages = response.result.messages;
       console.log("Search messages: ", messages)
       if (messages && messages.length > 0) {
@@ -1159,3 +1163,41 @@ async function listSearchedEmails(message) {
   }
 }
 
+//Filter function
+function filterMails(){
+  let filterDiv = document.getElementById('filter-button-svg');
+  let filterExpandDiv = document.getElementById('filter-div-expand'); 
+  filterExpandDiv.style.display = 'none';
+  filterExpandDiv.innerHTML = "";
+}
+let layoutDiv = document.getElementById('main-list-header-right-viewSelect');
+  let layoutOptionDiv = document.getElementById('layout-div-expand');
+  layoutOptionDiv.style.display = 'none';
+  layoutOptionDiv.style.flexDirection = 'column';
+  
+
+  let layoutOptionOne = document.createElement('button');
+  let layoutOptionTwo = document.createElement('button');
+  let layoutOptionThree = document.createElement('button');
+
+  layoutOptionOne.innerHTML = "No Split";
+  layoutOptionTwo.innerHTML = "Vertical Split";
+  layoutOptionThree.innerHTML = "Horizontal Split ";
+
+  layoutOptionDiv.appendChild(layoutOptionOne);
+  layoutOptionDiv.appendChild(layoutOptionTwo);
+  layoutOptionDiv.appendChild(layoutOptionThree);
+
+  document.addEventListener('click', function(event) {
+      // Toggling the visiblity of the dropdown menu
+      if(layoutOptionDiv.style.display=='none'){
+        layoutOptionDiv.style.display = 'flex';
+      } else if(layoutOptionDiv.style.display=='flex'){
+        layoutOptionDiv.style.display = 'none';
+      }
+
+      if (!layoutOptionDiv.contains(event.target)&&!layoutDiv.contains(event.target)) {
+          // Handle the click outside the div
+          layoutOptionDiv.style.display = 'none';
+      }
+  });

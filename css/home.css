@@ -157,9 +157,6 @@
     border-bottom:0.5px solid #bbbbbb !important;
     display: flex !important;
     justify-content: space-between !important;
-    transition: transform 0.3s ease-in-out;
-    background-color: white;
-    padding : 5px 0;
 }
 
 .central-div{
