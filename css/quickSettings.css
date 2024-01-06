@@ -16,3 +16,31 @@
     border: 0px;
     background-color: transparent;
 }
+
+input[type="radio"]{
+    display:none;
+}
+
+input[type=radio]:checked + label>img {
+    border: solid 3px rgb(0, 140, 255);
+  }
+
+#themeSelection label>img{
+    width: 160px;
+    height: 90px;
+    border-radius: 10px;
+    margin: 2px;
+}
+
+#quick-settings-main{
+    margin-top: 100px;
+    background-color:rgba(255, 255, 255, 0.831);
+    border-radius: 20px;
+    padding: 10px;
+    height: 85vh;
+    overflow-y:scroll ;
+    overflow-x: hidden;
+    margin-right: 5px;
+    z-index:20;
+    position:absolute;
+}

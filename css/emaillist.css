@@ -12,14 +12,7 @@
     border-bottom:0.5px solid #bbbbbb !important;
     display: flex !important;
     justify-content: space-between !important;
-    transition: transform 0.3s ease-in-out;
-    background-color: white;
-    padding : 5px 0;
-}
 
-.preview-bar:hover{
-    transform: scaleY(1.02);
-    box-shadow: 5px 5px 10px rgba(68, 68, 68, 0.5);
 }
 
 .central-div{
@@ -87,21 +80,41 @@ justify-content: flex-end!important;
 
 #main-list-header{
     background-color: white;
-    width:100vw;
     z-index: 2;
-    position: fixed;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #main-list-content{
     padding-top: 60px;
-    position: fixed;
+    position: relative;
+    overflow-x: hidden;
 }
 
+#main-list-header-right{
+    z-index: -1 !important;
+}
 #main-list-container{
     height: 100vh !important;
 } 
 
 #display-area #main-list-content{
     height: 100vh !important;
+}
+
+
+
+.moreLabelList{
+    display: none;
+}
+ 
+.more{
+    display: block;
+}
+ 
+.categoryList{
+    display:none;
+}
+ 
+.categoryShow{
+    display: block;
 }

@@ -1,12 +1,9 @@
 
-/* exported gapiLoaded */
-/* exported gisLoaded */
-/* exported handleAuthClick */
-/* exported handleSignoutClick */
+
 
 // TODO(developer): Set to client ID and API key from the Developer Console
-const CLIENT_ID = '280715447136-ejl9bcsuj842het5ifgbj7naj1jjqml3.apps.googleusercontent.com';
-const API_KEY = 'AIzaSyAGzP3_IUN8Ds05jBNckdYrFR6jyDeoeEo';
+const CLIENT_ID = API_CONFIG.CLIENT_ID;
+const API_KEY = API_CONFIG.API_KEY
 // import { API_CONFIG } from '../config/keys.js';
 
 // // Destructure the named export to get CLIENT_ID and API_KEY
@@ -17,7 +14,7 @@ const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/gmail/v1/res
 
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
-const SCOPES = ['https://mail.google.com/', 'https://www.googleapis.com/auth/gmail.settings.basic','https://www.googleapis.com/auth/userinfo.profile'];
+const SCOPES = ['https://mail.google.com/', 'https://www.googleapis.com/auth/gmail.settings.basic', 'https://www.googleapis.com/auth/userinfo.profile','https://www.googleapis.com/auth/gmail.modify'];
 
 let tokenClient;
 let gapiInited = false;
@@ -83,12 +80,12 @@ function handleAuthClick() {
     }
 
 
-    localStorage.setItem('accessToken', resp.access_token); //++++++++++++++++++++++++++++ encrypt and set
+    localStorage.setItem('accessToken', resp.access_token); 
 
     document.getElementById('authorize_button').innerText = 'Refresh';
     // await listLabels();
     // listLatestEmails(10);
-    window.location.href = 'home.html';
+    window.location.href = 'html/home.html';
   };
 
   if (gapi.client.getToken() === null) {
@@ -100,8 +97,3 @@ function handleAuthClick() {
     tokenClient.requestAccessToken({ prompt: '' });
   }
 }
-
-
-
-
-
