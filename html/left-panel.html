@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+        integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+
+  <body>
+   
+
+
+    <pre id="content" style="white-space: pre-wrap;"></pre>
+
+    <script type="text/javascript">
+
+
+
+
+
+
+     
+
+      async function listLabels() {
+        let response;
+        try {
+          response = await gapi.client.gmail.users.labels.list({
+            'userId': 'me',
+          });
+        } catch (err) {
+          document.getElementById('content').innerText = err.message;
+          return;
+        }
+        const labels = response.result.labels;
+        if (!labels || labels.length == 0) {
+          document.getElementById('content').innerText = 'No labels found.';
+          return;
+        }
+
+        let parentDiv=document.getElementById('main-sidebar');
+        for(let i=0;i<labels.length;i++){
+            let labelDiv=document.createElement('div');//main label div
+            labelDiv.id=labels[i].id;
+            labelDiv.classList.add('labelDiv','row','ms-2','me-1','p-2');
+            
+
+            
+            let iconDiv=document.getElementById('div');//adding icon tag
+            iconDiv.classList.add('bi','col-1','fs-3');
+            switch(labels[i].id.toLowerCase()){
+              case 'chat':iconDiv.classList.add('bi-chat-left-text');
+              break;
+              case 'sent':iconDiv.classList.add('bi-send');
+              break;
+              case 'inbox':iconDiv.classList.add('bi-inbox');
+              break;
+              case 'trash':iconDiv.classList.add('bi-trash');
+              break;
+              case 'snoozed':iconDiv.classList.add('bi-clock');
+              break;
+              case 'draft':iconDiv.classList.add('bi-file-earmark');
+              break;
+              case 'spam':iconDiv.classList.add('bi-exclamation-octagon');
+              break;
+              case 'starred':iconDiv.classList.add('bi-star');
+              break;
+              case 'important':iconDiv.classList.add('bi-flag');
+              break;
+              case 'unread':iconDiv.classList.add('bi-flag');
+              break;
+              case 'category_updates':iconDiv.classList.add('bi-exclamation-circle');
+              break;
+              case 'category_promotions':iconDiv.classList.add('bi-tag');
+              break;
+              case 'category_social':iconDiv.classList.add('bi-person-lines-fill');
+              break;
+
+              
+              default:iconDiv.classList.add('bi-inbox');
+            }
+            labelDiv.append(iconDiv);
+
+            let anchor=document.createElement('a');//adding anchor tag
+            let aName=labels[i].name.toLowerCase();
+            aName=aName.charAt(0).toUpperCase()+aName.slice(1);
+            anchor.innerHTML=aName;
+            anchor.classList.add('col-6','labelAnchor','fs-4');
+            labelDiv.append(anchor);
+            
+            // labelDiv.innerHTML=labels[i].name;
+            parentDiv.appendChild(labelDiv);
+
+        }
+
+        console.log(labels);
+      }
+    </script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+  </body>
+</html>
