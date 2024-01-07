@@ -62,13 +62,14 @@
     border-radius: 40px;
     box-shadow: 0 2px 2px 0 #0000, 0 1px 3px 1px #0000;
 }
-#search-bar-input{
-    background-color: #eaf1fb;
+.search-box form:focus-within{
+    background-color: white;
 }
 
 .search-bar-input input:focus {
     outline: none; 
     border: none; 
+    background-color: white;
 }
 
 .search-bar-input input{
@@ -96,12 +97,17 @@
     color: #5f6368; 
     margin-left: 80px;
 }
-
+.bi-x:hover{
+    background-color: #ededed;
+    border-radius: 90%;
+}
 .bi-filter{
     color: #5f6368;
+    width: 25px;
+    height: 25px;
 }
 .bi-filter:hover{
-    background-color: #868686;
+    background-color: #ededed;
     border-radius: 90%;
 }
 
@@ -114,20 +120,24 @@
     top: 30px;
     left: 78%; */
     color: #5f6368;
+    width: 25px;
+    height: 25px;
 }
 .bi-question-circle:hover{
-    background-color: #868686;
+    background-color: #ededed;
     border-radius: 90%;
 }
 .bi-gear:hover{
-    background-color: #868686;
+    background-color: #ededed;
     border-radius: 90%;
 }
 .bi-gear{
     /* position: absolute;
     top: 30px;
     left: 82%; */
-    color: #5f6368;  
+    color: #5f6368;
+    width: 25px;
+    height: 25px;  
 }
 
 .bi-icon-menu{
@@ -137,9 +147,11 @@
     top: 30px;
     left: 86%; */
     color: #5f6368;  
+    width: 25px;
+    height: 25px;
 }
 .bi-icon-menu:hover{
-    background-color: #868686;
+    background-color: #ededed;
     border-radius: 90%;
 }
 #right-icons{
@@ -175,6 +187,9 @@
     width: 135px;
     color: #001d35;
     padding: 0 24px 0 0;
+}
+.compose button:hover{
+    box-shadow: 5px 5px 5px rgba(81, 81, 81, 0.5);
 }
 /* .compose{
     position: absolute;
