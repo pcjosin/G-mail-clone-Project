@@ -39,22 +39,21 @@
     height : 45vh;
     width: 66vw;
     border: 1px solid #ccc;
-        padding: 8px;
-        min-height: 30px;
-        outline: none;
-        cursor: text;
-        overflow-y: scroll;
-            overflow-x: scroll;
+    padding: 8px;
+    min-height: 30px;
+    outline: none;
+    cursor: text;
+    overflow-y: scroll;
+    overflow-x: scroll;
 
 }
 
 .send-button{
     margin-left: 20px;
-    padding-left: 50px;
-    padding-right: 50px;
-    margin-top: 10px;
+    padding-left: 50px !important;
+    padding-right: 50px !important;
     font-family: 'Poppins', sans-serif;
-    margin-bottom: 30px;
+    border-radius: 20px !important;
 
 }
 
@@ -70,3 +69,279 @@ body{
     width: 70vw;
 }
 
+#compose-space {
+    height: 10px;
+    width: 10px;
+}
+
+#compose-footer {
+    margin-top: 20px;
+    align-items: center;
+    display: flex;
+}
+
+#compose-vr {
+    height: 25px;
+    background-color: #c7c7c7;
+    Width: 1px;
+}
+
+/* change text size */
+
+#compose-text-list {
+    padding: 10px;
+    border-radius: 10px;
+    position: absolute;
+    top: 52%;
+    left: 20%;
+    z-index: 300;
+    width: 170px;
+    background-color: white;
+    box-shadow: 0 0 7px 0 #444444;
+    display: none;
+    /* display changed using js */
+}
+
+#comspose-list-small {
+    font-size: small;
+}
+
+#compose-list-normal {
+    font-size: medium;
+}
+
+#compose-list-large {
+    font-size: x-large;
+}
+
+#compose-list-Huge {
+    font-size: xx-large;
+}
+
+.compose-list-size {
+    padding: 3px;
+    padding-left: 10px;
+    border-radius: 5px;
+}
+
+.compose-list-size:hover {
+    background-color: #c7c7c7;
+    transition: 300ms;
+
+}
+
+/* color picker popup */
+
+#compose-color-picker {
+    box-shadow: 0 0 7px 0 #444444;
+    border-radius: 10px;
+    position: absolute;
+    background-color: white;
+    width: 220px;
+    height: 250px;
+    z-index: 300;
+    top: 38%;
+    left: 15%;
+    padding: 10px;
+    display: none;
+}
+
+#color-fb-div {
+    padding: 5px;
+    border: 0.5px solid #444444;
+    border-radius: 7px;
+}
+
+#compose-color-table {
+    margin-top: 10px;
+}
+
+.color-pick-div {
+    border: 0.5px solid #444444;
+    border-radius: 3px;
+    height: 30px;
+    width: 30px;
+    margin: 4px;
+}
+
+.color-pick-div:hover {
+    box-shadow: 0 3px 3px 0 #6c6c6c;
+}
+
+#x000000 {
+    background-color: #000000;
+}
+
+#x808080 {
+    background-color: #808080
+}
+
+#xc0c0c0 {
+    background-color: #c0c0c0
+}
+
+#xffffff {
+    background-color: #ffffff
+}
+
+#x800080 {
+    background-color: #800080
+}
+
+#xff0000 {
+    background-color: #ff0000
+}
+
+#xffa500 {
+    background-color: #ffa500
+}
+
+#xa52a2a {
+    background-color: #a52a2a
+}
+
+#x800000 {
+    background-color: #800000
+}
+
+#xff00ff {
+    background-color: #ff00ff
+}
+
+#xffff00 {
+    background-color: #ffff00
+}
+
+#x00ff00 {
+    background-color: #00ff00
+}
+
+#x008000 {
+    background-color: #008000
+}
+
+#x808000 {
+    background-color: #808000
+}
+
+#xffc0cb {
+    background-color: #ffc0cb
+}
+
+#x00008b {
+    background-color: #00008b
+}
+
+#x0000ff {
+    background-color: #0000ff
+}
+
+#xadd8e6 {
+    background-color: #add8e6
+}
+
+#x00ffff {
+    background-color: #00ffff
+}
+
+#x7fffd4 {
+    background-color: #7fffd4
+}
+
+
+/* insert div link */
+
+#compose-insert-link-div {
+    position: absolute;
+    height: 340px;
+    width: 600px;
+    top: 17%;
+    left: 15%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10000px 0 #ababab;
+    padding: 20px;
+    display: none;
+}
+
+#insert-link-header {
+    font-size: x-large;
+}
+
+#insert-link-row1 {
+    margin-top: 10px;
+    display: flex;
+}
+
+#link-text-todisplay {
+    align-items: center;
+    color: #333333;
+    font-size: small;
+
+}
+
+#compose-link-text-todisplay {
+    width: 454px;
+    margin-left: 10px;
+}
+
+#insert-link-row2 {
+    margin-top: 15px;
+    font-size: small;
+    font-weight: 600;
+    color: #333333;
+}
+
+#insert-link-row3 {
+    margin-top: 5px;
+}
+
+#compose-link-url {
+    width: 100%;
+}
+
+#insert-link-row4 {
+    color: blue;
+    text-decoration: underline;
+    font-size: small;
+    margin-top: 10px;
+}
+
+#insert-link-row5 {
+    margin-top: 15px;
+    font-size: x-small;
+}
+
+#insert-link-row5-span {
+    font-weight: 600;
+}
+
+#insert-link-footer {
+    margin-top: 20px;
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    height: auto;
+}
+
+.compose-link-button {
+    margin-left: 10px;
+    width: 100px;
+    border-radius: 20px;
+}
+
+.button-to-right-of-send{
+    height: 31px;
+    width:31px;
+    padding:3px;
+    cursor: pointer;
+    border-radius: 3px;
+
+}
+.button-to-right-of-send:hover{
+    background-color: #dbdbdb;
+}
+
+#cssvaluetest{
+text-decoration:dashed;}
