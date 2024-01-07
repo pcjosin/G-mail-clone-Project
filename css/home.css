@@ -100,6 +100,10 @@
 .bi-filter{
     color: #5f6368;
 }
+.bi-filter:hover{
+    background-color: #868686;
+    border-radius: 90%;
+}
 
 .cancel-button svg{
     visibility: hidden;
@@ -111,7 +115,14 @@
     left: 78%; */
     color: #5f6368;
 }
-
+.bi-question-circle:hover{
+    background-color: #868686;
+    border-radius: 90%;
+}
+.bi-gear:hover{
+    background-color: #868686;
+    border-radius: 90%;
+}
 .bi-gear{
     /* position: absolute;
     top: 30px;
@@ -127,7 +138,10 @@
     left: 86%; */
     color: #5f6368;  
 }
-
+.bi-icon-menu:hover{
+    background-color: #868686;
+    border-radius: 90%;
+}
 #right-icons{
     width: 100%;
     
@@ -614,22 +628,62 @@ td{
 #from-input{
     width: 77%;
     margin: 10px 0px 10px 0px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #a8a7a7;
+}
+#from-input:focus {
+    outline: none;
+    border-bottom: 2px solid #1a73e8; 
 }
 #to-input{
     width: 77%;
     margin: 10px 0px 10px 0px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #a8a7a7;
+}
+#to-input:focus {
+    outline: none;
+    border-bottom: 2px solid #1a73e8; 
 }
 #subject-input{
     width: 77%;
     margin: 10px 0px 10px 0px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #a8a7a7;
+}
+#subject-input:focus {
+    outline: none;
+    border-bottom: 2px solid #1a73e8; 
 }
 #has-input{
     width: 77%;
     margin: 10px 0px 10px 0px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #a8a7a7;
+}
+#has-input:focus {
+    outline: none;
+    border-bottom: 2px solid #1a73e8; 
 }
 #donot-input{
     width: 77%;
     margin: 10px 0px 10px 0px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #a8a7a7;
+}
+#donot-input:focus {
+    outline: none;
+    border-bottom: 2px solid #1a73e8; 
 }
 
 #from-label{
