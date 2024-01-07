@@ -145,6 +145,9 @@ body{
     padding: 10px;
     display: none;
 }
+#color-picker-form{
+    margin:0px !important;
+}
 
 #color-fb-div {
     padding: 5px;
@@ -344,4 +347,8 @@ body{
 }
 
 #cssvaluetest{
+
+
+
+
 text-decoration:dashed;}

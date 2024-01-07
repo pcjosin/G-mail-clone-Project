@@ -14,49 +14,134 @@ function loadCompose() {
       console.log("fetching on the go")
       document.getElementById("compose-html-container").innerHTML = data;
 
-      let sizeTextButton = document.getElementById('compose-font-size');//initialise event listeners
-      sizeTextButton.addEventListener('mousedown', function () {
-        let fontSizeList = document.getElementById('compose-text-list');
-        fontSizeList.style.display = 'block';
+      let isTextSelected = false;
+      //keep text inside div selected when clicked outside div
+
+      let messaggeContainer = document.getElementById('message-container');
+      messaggeContainer.addEventListener('mouseup', function () {
+        var selection = window.getSelection();
+        if (selection.toString().length > 0) {
+          isTextSelected = true;
+        } else {
+          isTextSelected = false;
+        }
       });
+
+      document.addEventListener('mousedown', function (event) {
+        if (isTextSelected && !messaggeContainer.contains(event.target)) {
+          event.preventDefault();
+        }
+        console.log('Clicked inside the div');
+      });
+
+
+
+      let fontSizeList = document.getElementById('compose-text-list');
+
+      let sizeTextButton = document.getElementById('compose-font-size');//initialise event listeners
+      sizeTextButton.addEventListener('click', function () {
+        fontSizeList.style.display = 'block';
+
+        let smallTextButton = document.getElementById('compose-list-small');//initialise event listeners
+        smallTextButton.addEventListener('mousedown', function () {
+          stylise(5); //small size
+          fontSizeList.style.display = 'none';
+        });
+
+        let normalTextButton = document.getElementById('compose-list-normal');//initialise event listeners
+        normalTextButton.addEventListener('mousedown', function () {
+          stylise(6); //normal size
+          fontSizeList.style.display = 'none';
+        });
+
+        let largeTextButton = document.getElementById('compose-list-large');//initialise event listeners
+        largeTextButton.addEventListener('mousedown', function () {
+          stylise(7); //large size
+          fontSizeList.style.display = 'none';
+        });
+
+        let hugeTextButton = document.getElementById('compose-list-huge');//initialise event listeners
+        hugeTextButton.addEventListener('mousedown', function () {
+          stylise(8); //huge size
+          fontSizeList.style.display = 'none';
+        });
+
+
+      });
+
+      document.addEventListener('click', function (event) {
+        if (event.target !== fontSizeList && !fontSizeList.contains(event.target)
+          && event.target !== sizeTextButton && !sizeTextButton.contains(event.target)) {
+          fontSizeList.style.display = 'none';
+        }
+      });
+
 
       let boldTextButton = document.getElementById('compose-bold');//initialise event listeners
       boldTextButton.addEventListener('mousedown', function () {
         // window.alert("bold clicked");
-        Stylise(1);
+        stylise(1);
       });
 
       let italicTextButton = document.getElementById('compose-italic');//initialise event listeners
       italicTextButton.addEventListener('mousedown', function () {
         // window.alert("bold clicked");
-        Stylise(2);
+        stylise(2);
       });
 
       let underlineTextButton = document.getElementById('compose-underline');//initialise event listeners
       underlineTextButton.addEventListener('mousedown', function () {
         // window.alert("bold clicked");
-        Stylise(3);
+        stylise(3);
       });
+
+      let colorPickerDiv = document.getElementById('compose-color-picker');
 
       let colorTextButton = document.getElementById('compose-font-color');//initialise event listeners
       colorTextButton.addEventListener('mousedown', function () {
         // window.alert("bold clicked");
+        colorPickerDiv.style.display = 'block';
+
+        colorPickerDiv.addEventListener('click', function (event) {
+          let elementClicked = event.target.id;
+          console.log(elementClicked);
+
+
+          if (elementClicked.length == 7) {
+            let fBChoice;
+            if (document.getElementById('text-color-choice').checked) {
+              fBChoice = 1;
+            }
+            else if (document.getElementById('background-color-choice').checked) {
+              fBChoice = 2;
+            }
+            else {
+              console.log('Error occoured at radio button selection');
+            }
+
+            colorPicker(elementClicked, fBChoice);
+          }
+        })
+
+      });
+
+      document.addEventListener('click', function (event) {
+        if (event.target !== colorPickerDiv && !colorPickerDiv.contains(event.target)
+          && event.target !== colorTextButton && !colorTextButton.contains(event.target)) {
+          colorPickerDiv.style.display = 'none';
+        }
       });
 
       let resetTextButton = document.getElementById('compose-reset');//initialise event listeners
       resetTextButton.addEventListener('mousedown', function () {
         // window.alert("bold clicked");
-        Stylise(4);
+        stylise(4);
       });
 
       let insertLinkButton = document.getElementById('compose-insert-link');//initialise event listeners
       insertLinkButton.addEventListener('mousedown', function () {
         // window.alert("bold clicked");
       });
-
-
-
-
     })
     .catch((error) => console.error("Error:", error));
 }
@@ -64,7 +149,7 @@ function loadCompose() {
 
 
 
-function Stylise(textStyle) {
+function stylise(textStyle) {
   const selectedText = getSelectedText();
 
   if (selectedText) {
@@ -81,8 +166,14 @@ function Stylise(textStyle) {
         divElement.style.fontWeight = 'normal';
         divElement.style.fontStyle = 'normal';
         break;
-        
-
+      case 5: divElement.style.fontSize = 'small';
+        break;
+      case 6: divElement.style.fontSize = 'medium';
+        break;
+      case 7: divElement.style.fontSize = 'x-large';
+        break;
+      case 8: divElement.style.fontSize = 'xx-large';
+        break;
     }
 
     // Create a range and surround the selected text with the div
@@ -94,9 +185,42 @@ function Stylise(textStyle) {
     range.deleteContents();
     range.insertNode(divElement);
   } else {
-    alert('Please select some text before clicking the button.');
+    console.log("no text selected!");
   }
 }
+
+function colorPicker(elementClicked, fBChoice) {
+  elementClicked = "#" + elementClicked.substring(1);
+
+  const selectedText = getSelectedText();
+
+  if (selectedText) {
+    const divElement = document.createElement('span');
+
+    if (fBChoice == 1) {
+      divElement.style.color = elementClicked;
+    }
+    else if (fBChoice == 2) {
+      divElement.style.backgroundColor = elementClicked;
+    }
+    else {
+      console.log("error occoured due to choice number passed");
+      return;
+    }
+    const range = window.getSelection().getRangeAt(0);
+
+    let tempContainer = document.createElement("span");
+    tempContainer.appendChild(range.cloneContents());
+    divElement.innerHTML = tempContainer.innerHTML;
+    range.deleteContents();
+    range.insertNode(divElement);
+  } else {
+    console.log("no text selected!");
+  }
+
+}
+
+
 
 function getSelectedText() {
   if (window.getSelection) {
