@@ -25,16 +25,34 @@ body{
     display:none;
 }
 
+
 #themeSelection input[type=radio]:checked + label>img {
     border: solid 3px rgb(0, 140, 255);
-  }
+} 
+
+#themeSelection{
+    display: flex;
+    height: 10%;
+    width: 100%;
+}
 
 #themeSelection label>img{
-    width: 160px;
-    height: 90px;
+    width: 90%;
+    height: 100%;
     border-radius: 10px;
     margin: 2px;
+    margin-top: 20px;
 }
+
+/* #theme-default-img{
+    width: 100px;
+    height: 100px;
+}
+
+#theme-theme1-img{
+    width: 100px;
+    height: 100px;
+} */
 
 #quick-settings-main{
     margin-top: 100px;
@@ -57,8 +75,9 @@ body{
 
 #themes-heading{
     font-weight: 400;
-    font-size: 15px; 
-    margin-top: 20px;  
+    font-size: 15px;  
+    margin-left: 20px;
+    margin-top: 20px;
 }
 
 #density-header{
@@ -68,9 +87,10 @@ body{
 }
 
 #comfortable{
-    display: flex !important;
-    flex-direction: row !important;    
-    padding: 5px;
+    margin-top: 20px;
+    display: flex; 
+    width:50%;
+    height:auto;
 }
 
 #comfortable .row{
@@ -79,9 +99,9 @@ body{
 }
 
 #comfortable-input{
+    display: flex;
     margin-left: 20px;
     font-size: 15px;
-    padding: 5px;
 }
 
 #comfortable-input label{
@@ -89,9 +109,10 @@ body{
 }
 
 #compact{
-    display: flex !important;
-    flex-direction: row !important;
-    padding: 5px;
+    margin-top: 20px;
+    display:flex;
+    width:50%;
+    height:auto;
         
 }
 
@@ -101,9 +122,10 @@ body{
 }
 
 #compact-input{
+    display: flex;
+
     margin-left: 20px;
     font-size: 15px;
-    padding: 5px;
 }
 
 #compact-input label{
@@ -111,11 +133,11 @@ body{
 }
 
 #comfortable-image img{
-    margin-left: 15px;
+    margin-left: 20px;
 }
 
 #compact-image img{
-    margin-left: 15px;
+    margin-left: 44px;
 }
 
 .bi-x{
@@ -126,4 +148,56 @@ body{
 .close{
     color: black !important;
     font-size: 15px !important;
+}
+
+#compact{
+    margin-top: 20px;
+    display:flex;
+    width:50%;
+    height:auto;
+        
+}
+
+#default{
+    margin-top: 20px;
+    display: flex; 
+    width:50%;
+    height:auto;
+}
+
+#default .row{
+    display: flex !important;
+    flex-direction: row !important;
+}
+
+#default-input{
+    display: flex;
+    margin-left: 20px;
+    font-size: 15px;
+}
+
+#default-input label{
+    margin-left: 5px;
+}
+
+#default-image img{
+    margin-left: 56px;
+}
+
+#default-radio-button{
+    margin-top: -10px;
+    width: 18px;
+    height: auto;
+}
+
+#comfortable-radio-button{
+    margin-top: -10px;
+    width: 18px;
+    height: auto;
+}
+
+#compact-radio-button{
+    margin-top: -10px;
+    width: 18px;
+    height: auto;
 }

@@ -38,10 +38,16 @@ let closeQuickSettings = () => {
 
 //change density of email layout
 function densityInput(id){
+  if(id == "default-radio-button"){
+    for(let index = 0;index<30;index++){
+      let previewBar = document.getElementsByClassName('preview-bar')[index];
+      previewBar.style.padding = '9px'
+    }
+  }
   if(id == "comfortable-radio-button"){
     for(let index = 0;index<30;index++){
       let previewBar = document.getElementsByClassName('preview-bar')[index];
-      previewBar.style.padding = '10px'
+      previewBar.style.padding = '15px'
     }
   }
   if(id == "compact-radio-button"){

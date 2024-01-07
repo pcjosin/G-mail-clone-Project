@@ -58,7 +58,7 @@ function changeThemeDeafult(){
     displayBody.style.backgroundImage=`none`;
     displayBody.style.backgroundSize='cover';
 
-    document.getElementById("logo-icon").getElementsByTagName('img')[0].src=".../assets/images/logo_gmail_lockup_default_1x_r5.png";
+    document.getElementById("logo-icon").getElementsByTagName('img')[0].src="../assets/images/logo_gmail_lockup_default_1x_r5.png";
 
     document.getElementsByClassName('main-container')[0].style.backgroundColor='aliceblue';
     document.getElementById('search-bar-input').style.backgroundColor='white';

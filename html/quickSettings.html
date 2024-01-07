@@ -26,31 +26,35 @@
         </div>
         <div id="density">
             <div id="density-header">Density</div>
-
+            <div id="density-options-container">
+                <div id="default">
+                    <div id="default-input">
+                        <input type="radio" name="density" value="default" id="default-radio-button" onclick="densityInput(this.id)"><label for="default-radio-button">Default</label>
+                    </div>
+                    <div id="default-image">
+                        <img src="//ssl.gstatic.com/ui/v1/icons/mail/quicksettings/displaydensity/Comfortable.png" srcset="//ssl.gstatic.com/ui/v1/icons/mail/quicksettings/displaydensity/Comfortable_2x.png 2x" class="QZ" aria-hidden="true" alt="">
+                    </div>
+            </div>
             <div id="comfortable">
-                <div class="row">
                     <div id="comfortable-input">
                         <input type="radio" name="density" value="comfortable" id="comfortable-radio-button" onclick="densityInput(this.id)"><label for="comfortable-radio-button">Comfortable</label>
                     </div>
                     <div id="comfortable-image">
                         <img src="//ssl.gstatic.com/ui/v1/icons/mail/quicksettings/displaydensity/Comfortable.png" srcset="//ssl.gstatic.com/ui/v1/icons/mail/quicksettings/displaydensity/Comfortable_2x.png 2x" class="QZ" aria-hidden="true" alt="">
                     </div>
-                </div>
             </div>
             <div id="compact">
-                <div class="row">
                     <div id="compact-input">
                         <input type="radio" name="density" value="compact" id="compact-radio-button" onclick="densityInput(this.id)"><label for="compact-radio-button">Compact</label>
                     </div>
                     <div id="compact-image">
                         <img src="//ssl.gstatic.com/ui/v1/icons/mail/quicksettings/displaydensity/Compact.png" srcset="//ssl.gstatic.com/ui/v1/icons/mail/quicksettings/displaydensity/Compact_2x.png 2x" class="QZ" aria-hidden="true" alt="">
                     </div>
-                </div>
             </div>
         </div>
         <div>
             <div id="themes-heading"> 
-                Themes
+                Theme
             </div>
             <div id="themeSelection">
                 
