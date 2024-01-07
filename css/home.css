@@ -597,3 +597,91 @@ td{
     z-index: 200;
     display:none;
 }
+
+#filter-expand-div{
+    position: absolute;
+    top: 70px;
+    left: 270px;
+    z-index: 150 !important;
+    background-color:white !important;
+    overflow-y: hidden;
+    display: none;
+    height: auto;
+    width: 550px;
+    font-family: "Google Sans",Helvetica,Arial,sans-serif;
+}
+
+#from-input{
+    width: 77%;
+    margin: 10px 0px 10px 0px;
+}
+#to-input{
+    width: 77%;
+    margin: 10px 0px 10px 0px;
+}
+#subject-input{
+    width: 77%;
+    margin: 10px 0px 10px 0px;
+}
+#has-input{
+    width: 77%;
+    margin: 10px 0px 10px 0px;
+}
+#donot-input{
+    width: 77%;
+    margin: 10px 0px 10px 0px;
+}
+
+#from-label{
+    font-family: "Google Sans",Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    color: #5f6368;
+    margin-right: 65px;
+    margin-left: 10px;
+}
+#to-label{
+    font-family: "Google Sans",Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    color: #5f6368;
+    margin-right: 89px;
+    margin-left: 10px;
+}
+#subject-label{
+    font-family: "Google Sans",Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    color: #5f6368;
+    margin-right: 50px;
+    margin-left: 10px;
+}
+#has-label{
+    font-family: "Google Sans",Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    color: #5f6368;
+    margin-right: 5px;
+    margin-left: 10px;
+}
+#donot-label{
+    font-family: "Google Sans",Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    color: #5f6368;
+    margin-right: 16px;
+    margin-left: 10px;  
+}
+
+#filter-apply{
+    text-align: right;
+    margin-right: 15px;
+}
+
+#filter-apply button{
+    font-family: "Google Sans",Roboto,RobotoDraft,Helvetica,Arial,sans-serif;   
+    align-items: center;
+    outline: none;
+    background: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #444746;
+    cursor: pointer;
+    font-weight: 500;
+    height: 36px;
+    min-width: 80px;
+    padding: 0 16px;
+    background-color: #1a73e8;
+    color: #fff;
+    border: none;
+}
