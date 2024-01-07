@@ -4,6 +4,15 @@ let composeDiv
 function loadCompose() {
   console.log("hi yeaah reached compose")
   let composeHtmlContainer = document.getElementById("compose-container");
+
+  document.addEventListener('mousedown', function (event) {
+    if (composeHtmlContainer.style.display == 'block') {
+      if (event.target !== composeHtmlContainer && !composeHtmlContainer.contains(event.target)) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    }
+  });
   
   composeHtmlContainer.style.display = "block";
 
@@ -120,6 +129,8 @@ function loadCompose() {
             }
 
             colorPicker(elementClicked, fBChoice);
+            colorPickerDiv.style.display = 'none';
+
           }
         })
 
@@ -138,10 +149,25 @@ function loadCompose() {
         stylise(4);
       });
 
-      let insertLinkButton = document.getElementById('compose-insert-link');//initialise event listeners
+
+      let insertLinkDiv = document.getElementById('compose-insert-link-div');
+      let insertLinkButton = document.getElementById('compose-insert-link');
+      
+      document.addEventListener('mousedown', function (event) {
+        if (insertLinkDiv.style.display =='block') {
+          if (event.target !== insertLinkDiv && !insertLinkDiv.contains(event.target)) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+        }
+      });
+      
+      //initialise event listeners
       insertLinkButton.addEventListener('mousedown', function () {
         // window.alert("bold clicked");
+        insertLinkDiv.style.display = 'block';
       });
+
     })
     .catch((error) => console.error("Error:", error));
 }
@@ -217,6 +243,16 @@ function colorPicker(elementClicked, fBChoice) {
   } else {
     console.log("no text selected!");
   }
+
+}
+
+function cancelInsertLink() {
+  let insertLinkDiv = document.getElementById('compose-insert-link-div');
+  let composeLinkTextToDisp = document.getElementById('compose-link-text-todisplay');
+  let composeLinkUrl = document.getElementById('compose-link-url');
+  composeLinkTextToDisp.value = '';
+  composeLinkUrl.value = '';
+  insertLinkDiv.style.display = 'none';
 
 }
 
