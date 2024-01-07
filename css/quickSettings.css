@@ -1,3 +1,7 @@
+body{
+    font-family: "Google Sans",Helvetica,Arial,sans-serif;
+}
+
 .allSettings{
     border-radius: 20px;
     border:solid 1px rgb(189, 189, 189);
@@ -17,11 +21,11 @@
     background-color: transparent;
 }
 
-input[type="radio"]{
+#themeSelection input[type="radio"]{
     display:none;
 }
 
-input[type=radio]:checked + label>img {
+#themeSelection input[type=radio]:checked + label>img {
     border: solid 3px rgb(0, 140, 255);
   }
 
@@ -43,4 +47,83 @@ input[type=radio]:checked + label>img {
     margin-right: 5px;
     z-index:20;
     position:absolute;
+    flex-direction: column;
+}
+
+#quick-settings-header .row .col-10{
+    font-weight: 500;
+    font-size: 20px;
+}
+
+#themes-heading{
+    font-weight: 400;
+    font-size: 15px; 
+    margin-top: 20px;  
+}
+
+#density-header{
+    font-weight: 400;
+    font-size: 15px;  
+    margin-left: 20px;
+}
+
+#comfortable{
+    display: flex !important;
+    flex-direction: row !important;    
+    padding: 5px;
+}
+
+#comfortable .row{
+    display: flex !important;
+    flex-direction: row !important;
+}
+
+#comfortable-input{
+    margin-left: 20px;
+    font-size: 15px;
+    padding: 5px;
+}
+
+#comfortable-input label{
+    margin-left: 5px;
+}
+
+#compact{
+    display: flex !important;
+    flex-direction: row !important;
+    padding: 5px;
+        
+}
+
+#compact .row{
+    display: flex !important;
+    flex-direction: row !important;
+}
+
+#compact-input{
+    margin-left: 20px;
+    font-size: 15px;
+    padding: 5px;
+}
+
+#compact-input label{
+    margin-left: 5px;
+}
+
+#comfortable-image img{
+    margin-left: 15px;
+}
+
+#compact-image img{
+    margin-left: 15px;
+}
+
+.bi-x{
+    color: black !important;
+    font-size: 15px;
+}
+
+.close{
+    color: black !important;
+    font-size: 15px !important;
 }

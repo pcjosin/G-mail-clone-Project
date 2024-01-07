@@ -63,7 +63,12 @@
     box-shadow: 0 2px 2px 0 #0000, 0 1px 3px 1px #0000;
 }
 #search-bar-input{
-        background-color: #eaf1fb;
+    background-color: #eaf1fb;
+}
+
+.search-bar-input input:focus {
+    outline: none; 
+    border: none; 
 }
 
 .search-bar-input input{
@@ -73,7 +78,8 @@
     max-width: 720px;
     font-family: "Google Sans",Helvetica,Arial,sans-serif;
     border: none;
-    background-color: transparent;}
+    background-color: transparent;
+}
 
 
 @media screen and (max-width: 800px) {
@@ -88,6 +94,7 @@
 
 .bi-x{
     color: #5f6368; 
+    margin-left: 80px;
 }
 
 .bi-filter{

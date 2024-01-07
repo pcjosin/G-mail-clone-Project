@@ -108,18 +108,28 @@ function createNonUserLabelElements() {
   
       if (anchor.innerHTML === 'Spam') {
         listEmailsByLabel('SPAM', 20);
+        source = "Spam";
       } else if (anchor.innerHTML === 'Draft') {
         listEmailsByLabel('DRAFT', 20);
+        source = "Draft";
       } else if (anchor.innerHTML === 'Sent') {
         listEmailsByLabel('SENT', 20);
+        source = "Sent";
       } else if (anchor.innerHTML === 'Trash') {
         listEmailsByLabel('TRASH', 20);
+        source = "Trash";
       } else if (anchor.innerHTML === 'Inbox') {
-        listLatestEmails(20); // Assuming listLatestEmails function still exists
+        listLatestEmails(20);
+        source = "Inbox";
       } else if (anchor.innerHTML === 'Important') {
         listEmailsByLabel('IMPORTANT', 20);
+        source = "Important";
       } else if (anchor.innerHTML === 'Starred') {
         listEmailsByLabel('STARRED', 20);
+        source = "Starred";
+      } else if (anchor.innerHTML === 'Unread') {
+        listEmailsByLabel('UNREAD', 20);
+        source = "Unread";
       }
       anchor.style.cursor="pointer"
       

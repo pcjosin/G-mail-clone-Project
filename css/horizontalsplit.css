@@ -4,14 +4,16 @@ background-color: white !important;
 }
 
 #email-split-list{
-height: 30vh;
-margin-bottom: 10vh;
+    margin-top: 10px;
+    height: 30vh;
+    margin-bottom: 10vh;
 }
 
 #email-split-view{
 height: 70vh;
 text-align: center;
 font-family: "Google Sans",Helvetica,Arial,sans-serif;
+margin-top: -60px;
 }
 
 #email-split-view p{

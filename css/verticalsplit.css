@@ -1,46 +1,58 @@
-.allSettings{
+#email-split-list{
+    display: flex !important;
+    width: 100% !important;
+}
+
+#main-split-container{
+    display: flex;
+    width: 100%;
+        border-radius: 20px;
+    background-color: white !important;
+}
+
+#main-list-container{
+    width: 50%;
+}
+
+#main-list-content{
+        padding-top: 60px;
+    width: 100% ;
+    overflow-x: scroll;
+}
+
+#email-split-list{
+    width: 50% ;
     border-radius: 20px;
-    border:solid 1px rgb(189, 189, 189);
-    font-family: sans-serif;
-    color:#1a73e8;
-    font-weight: bolder;
-    background-color: transparent;
-    z-index: 2;
 }
 
-.allSettings:hover{
-    background-color:rgb(245, 251, 255);
+#email-split-view{
+    width: 60%;
+    position: relative;
+    text-align: center;
+    font-family: "Google Sans",Helvetica,Arial,sans-serif;
 }
 
-.close{
-    border: 0px;
-    background-color: transparent;
+#email-split-view p{
+    margin-top: 20%;
+    font-size: 25px;
+    font-weight: 600;
 }
 
-input[type="radio"]{
-    display:none;
+#footer{
+    margin-top: 180px;
 }
 
-input[type=radio]:checked + label>img {
-    border: solid 3px rgb(0, 140, 255);
-  }
-
-#themeSelection label>img{
-    width: 160px;
-    height: 90px;
-    border-radius: 10px;
-    margin: 2px;
+#footer p{
+    font-size: 15px;
+    font-weight: 300;
 }
 
-#quick-settings-main{
-    margin-top: 100px;
-    background-color:rgba(255, 255, 255, 0.831);
-    border-radius: 20px;
-    padding: 10px;
-    height: 85vh;
-    overflow-y:scroll ;
-    overflow-x: hidden;
-    margin-right: 5px;
-    z-index:20;
-    position:absolute;
+#footer-links{
+    display: flex !important;
+    margin-left: 28%;
+}
+
+#footer-links a{
+    text-decoration: none;
+    color: rgb(78, 78, 78);
 }
