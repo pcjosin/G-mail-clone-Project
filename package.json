@@ -1,0 +1,12 @@
+{
+  "name": "G-MAIL-CLONE-PROJECT",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "node-sass -o css css/indexpage.css -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

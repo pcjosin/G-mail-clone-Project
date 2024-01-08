@@ -1,0 +1,98 @@
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,500&family=Silkscreen:wght@400;700&display=swap");
+@import url("https://fonts.cdnfonts.com/css/google-sans");
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
+
+.top-bar {
+  width: 100%;
+  height: 90px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+}
+
+.image-side {
+  width: 50%;
+  flex: 1;
+}
+
+.button-side {
+  flex: 1;
+}
+
+.create-account {
+  margin-right: 50px;
+  font-family: 'Poppins', sans-serif;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+img {
+  margin-left: 60px;
+}
+
+.image-side img{
+  height: 50px;
+  width: 150px;
+}
+
+.google-image {
+  width: 100%;
+  padding-left: 100px;
+  padding-top: 10px;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.sub-container {
+  width: 100%;
+  display: flex;
+}
+
+.left-side {
+  flex: 1;
+  padding-left: 80px;
+  padding-top: 80px;
+}
+
+.right-side {
+  flex: 1;
+}
+.gmailright {
+  width: 100%;
+  height: 100%;
+}
+
+.login-form {
+  width: 100%;
+  height: auto;
+}
+
+.secure {
+  font-weight: bold;
+  font-size: 60px;
+  line-height: 70px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.getmore {
+  font-size: 25px;
+}
+
+.signin {
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.gmail{
+  height: 80px;
+  width: 100px;
+}
+
