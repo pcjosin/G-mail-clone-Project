@@ -1,9 +1,12 @@
+$bg-w : white;
+$bg-g : rgba(203, 203, 203, 0.308);
+
 #support-expand-div {
     position: absolute;
     top: 60px;
     right: 120px;
     z-index: 150 !important;
-    background-color: white !important;
+    background-color: $bg-w !important;
     overflow-y: hidden;
     height: 200px;
     width: 250px;
@@ -20,10 +23,10 @@
       margin-top: 5px;
       margin-bottom: 5px;
       border: none;
-      background-color: white;
+      background-color: $bg-w;
   
       &:hover {
-        background-color: rgba(203, 203, 203, 0.308);
+        background-color: $bg-g;
         width: 100%;
       }
     }
