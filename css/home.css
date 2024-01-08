@@ -638,6 +638,9 @@ td{
     height: auto;
     width: 550px;
     font-family: "Google Sans",Helvetica,Arial,sans-serif;
+    padding: 15px;
+    border: solid 2px #a8a7a7 ;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
 #from-input{
