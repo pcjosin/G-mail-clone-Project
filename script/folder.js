@@ -296,7 +296,8 @@ function createNewFolder() {
   }
   
   
-  function addEmailToLabel(messageId, labelId) {
+function addEmailToLabel(messageId, labelId) {
+    
     
     const request = gapi.client.gmail.users.messages.modify({
       userId: 'me', 
@@ -320,7 +321,7 @@ function createNewFolder() {
     const targetId = event.target.id;
     const textContent = event.dataTransfer.getData('text/plain');
   
-    
+    console.log(targetId,textContent)
     addEmailToLabel(textContent, targetId);
     displayBanner(`email added to the folder: ${event.target.textContent}`, 'success');
   

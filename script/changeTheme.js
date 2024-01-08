@@ -3,7 +3,7 @@ function changeTheme(id){
     let displayBody=document.getElementById('main-body');
 
     // changing background image
-    displayBody.style.backgroundImage=`url('http://127.0.0.1:5500/gmail-clone/assets/images/themes/${id}.jpg')`;
+    displayBody.style.backgroundImage=`url('../assets/images/themes/${id}.jpg')`;
     displayBody.style.backgroundSize='cover';
 
     // setting containers to transparent
@@ -61,7 +61,7 @@ function changeThemeDeafult(){
     document.getElementById("logo-icon").getElementsByTagName('img')[0].src="../assets/images/logo_gmail_lockup_default_1x_r5.png";
 
     document.getElementsByClassName('main-container')[0].style.backgroundColor='aliceblue';
-    document.getElementById('search-bar-input').style.backgroundColor='white';
+    document.getElementById('search-bar-input').style.backgroundColor='transparant';
 
     //left-bar
     let mainSidebar=document.getElementById('main-sidebar');

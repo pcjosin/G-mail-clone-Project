@@ -89,8 +89,8 @@ function createNonUserLabelElements() {
     labelDiv.classList.add('labelDiv', 'row', 'ms-2', 'me-1', 'p-2');
   
     const iconDiv = document.createElement('div');
-    iconDiv.classList.add('bi', 'col-1', 'fs-6', 'me-2');
-    iconDiv.classList.add(getIconClass(label.id));
+    iconDiv.classList.add('material-symbols-outlined','col-1', 'fs-5', 'me-2');
+    iconDiv.innerHTML=getIconName(label.id);
   
     labelDiv.appendChild(iconDiv);
   
@@ -138,35 +138,40 @@ function createNonUserLabelElements() {
     return labelDiv;
   }
   
-  function getIconClass(labelId) {
+  function getIconName(labelId) {
     switch (labelId.toLowerCase()) {
       case 'chat':
-        return 'bi-chat-left-text';
+        return 'chat';
       case 'sent':
-        return 'bi-send';
+        return 'send';
       case 'inbox':
-        return 'bi-inbox';
+        return 'inbox';
       case 'trash':
-        return 'bi-trash';
+        return 'delete';
       case 'snoozed':
-        return 'bi-clock';
+        return 'schedule';
       case 'draft':
-        return 'bi-file-earmark';
+        return 'draft';
       case 'spam':
-        return 'bi-exclamation-octagon';
+        return 'report';
       case 'starred':
-        return 'bi-star';
+        return 'star';
       case 'important':
-        return 'bi-flag';
+        return 'label_important';
       case 'unread':
-        return 'bi-flag';
+        return 'markunread_mailbox';
       case 'category_updates':
-        return 'bi-exclamation-circle';
+        return 'error';
       case 'category_promotions':
-        return 'bi-tag';
+        return 'sell';
       case 'category_social':
-        return 'bi-person-lines-fill';
+        return 'group';
+      case 'category_personal':
+        return 'person';
+      case 'category_forums':
+          return 'forum';
       default:
-        return 'bi-inbox';
+        return '';
     }
   }
+  
