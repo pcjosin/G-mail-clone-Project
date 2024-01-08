@@ -1,83 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Compose Mail</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
       rel="stylesheet"
     />
 
-
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
 
     <script
       async
       src="https://apis.google.com/js/api.js"
-      onload="gapiLoaded()"></script>
+      onload="gapiLoaded()"
+    ></script>
     <script async src="https://accounts.google.com/gsi/client"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="outer-compose-container">
+      <div id="to-area">
+        <input
+          type="email"
+          placeholder="Receipents"
+          id="email-container"
+          onselect="emailSelected()"
+        />
+      </div>
+      <div id="subject-area">
+        <input type="text" placeholder="Subject" id="subject-container" />
+      </div>
+      <div
+        id="message-container"
+        onkeydown="handleKeyPress(event)"
+        contenteditable="true"
+      ></div>
+      <div id="compose-footer">
+        <button
+          type="button"
+          class="btn btn-primary send-button"
+          onclick="sendEmail()"
+        >
+          Send
+        </button>
 
-        <div id="to-area">
-            <input type="email" placeholder="Receipents" id="email-container" onselect="emailSelected()">
-        </div>
-        <div id="subject-area">
-            <input type="text" placeholder="Subject" id="subject-container">
-        </div>
-        <div  id="message-container"  onkeydown="handleKeyPress(event)" contenteditable="true">
+        <div id="compose-space"></div>
+        <div id="compose-space"></div>
 
+        <div id="compose-font-size" class="button-to-right-of-send">
+          <span class="material-symbols-outlined"> text_fields </span>
+        </div>
+        <div id="compose-space"></div>
 
+        <div id="compose-vr"></div>
+        <div id="compose-space"></div>
+
+        <div id="compose-bold" class="button-to-right-of-send">
+          <span class="material-symbols-outlined"> format_bold </span>
         </div>
-        <div id="send-button-row">
-            <button type="button" class="btn btn-primary send-button" onclick="sendEmail()">Send</button>
+        <div id="compose-space"></div>
+
+        <div id="compose-italic" class="button-to-right-of-send">
+          <span class="material-symbols-outlined"> format_italic </span>
         </div>
+        <div id="compose-space"></div>
+
+        <div id="compose-underline" class="button-to-right-of-send">
+          <span class="material-symbols-outlined"> format_underlined </span>
+        </div>
+
+        <div id="compose-space"></div>
+
+        <div id="compose-font-color" class="button-to-right-of-send">
+          <span class="material-symbols-outlined"> text_format </span>
+        </div>
+        <div id="compose-space"></div>
+
+        <div id="compose-reset" class="button-to-right-of-send">
+          <span class="material-symbols-outlined"> device_reset </span>
+        </div>
+        <div id="compose-space"></div>
+        <div id="compose-vr"></div>
+        <div id="compose-space"></div>
+
+        <div id="compose-attachment" class="button-to-right-of-send">
+          <span
+            class="material-symbols-outlined compose-edit"
+            id="compose-attach-file"
+          >
+            attach_file
+          </span>
+        </div>
+
+        <div id="compose-space"></div>
+
+        <div id="compose-insert-link" class="button-to-right-of-send">
+          <span
+            class="material-symbols-outlined compose-edit"
+            id="compose-insert-linkk"
+          >
+            link
+          </span>
+        </div>
+      </div>
     </div>
-    <script>
-    // JavaScript to handle the editable div
-    var editableDiv = document.getElementById("message-container");
 
-    // Set initial content
-    editableDiv.innerHTML = "Type text here...";
+    <div id="compose-text-list">
+      <div id="compose-list-small" class="compose-list-size">Small</div>
+      <div id="compose-list-normal" class="compose-list-size">Normal</div>
+      <div id="compose-list-large" class="compose-list-size">Large</div>
+      <div id="compose-list-huge" class="compose-list-size">Huge</div>
+    </div>
 
-    // Add focus and blur events for styling
-    editableDiv.addEventListener("focus", function() {
-        editableDiv.style.border = "1px solid #007BFF";
-    });
+    <div id="compose-color-picker">
+      <!-- color picker -->
 
-    editableDiv.addEventListener("blur", function() {
-        editableDiv.style.border = "1px solid #ccc";
-    });
+      <div id="color-fb-div">
+        <form id="color-picker-form">
+          <input
+            type="radio"
+            checked
+            name="choice"
+            value="1"
+            id="text-color-choice"
+          />
+          <label for="text-color-choice">Text color</label><br />
+          <input
+            type="radio"
+            name="choice"
+            value="2"
+            id="background-color-choice"
+          />
+          <label for="background-color-choice">Background color</label>
+        </form>
+      </div>
+      <table id="compose-color-table">
+        <tr>
+          <td><div id="x000000" class="color-pick-div"></div></td>
+          <td><div id="x808080" class="color-pick-div"></div></td>
+          <td><div id="xc0c0c0" class="color-pick-div"></div></td>
+          <td><div id="xffffff" class="color-pick-div"></div></td>
+          <td><div id="x800080" class="color-pick-div"></div></td>
+        </tr>
+        <tr>
+          <td><div id="xff0000" class="color-pick-div"></div></td>
+          <td><div id="xffa500" class="color-pick-div"></div></td>
+          <td><div id="xa52a2a" class="color-pick-div"></div></td>
+          <td><div id="x800000" class="color-pick-div"></div></td>
+          <td><div id="xff00ff" class="color-pick-div"></div></td>
+        </tr>
+        <tr>
+          <td><div id="xffff00" class="color-pick-div"></div></td>
+          <td><div id="x00ff00" class="color-pick-div"></div></td>
+          <td><div id="x008000" class="color-pick-div"></div></td>
+          <td><div id="x808000" class="color-pick-div"></div></td>
+          <td><div id="xffc0cb" class="color-pick-div"></div></td>
+        </tr>
+        <tr>
+          <td><div id="x00008b" class="color-pick-div"></div></td>
+          <td><div id="x0000ff" class="color-pick-div"></div></td>
+          <td><div id="xadd8e6" class="color-pick-div"></div></td>
+          <td><div id="x00ffff" class="color-pick-div"></div></td>
+          <td><div id="x7fffd4" class="color-pick-div"></div></td>
+        </tr>
+      </table>
+    </div>
 
-    // Add input event for capturing text changes
-    editableDiv.addEventListener("input", function() {
-        // Access the text content
-        var textContent = editableDiv.innerText;
-        console.log("Text content:", textContent);
-    });
+    <div id="compose-insert-link-div">
+      <div id="insert-link-header">
+        <div>Edit Link</div>
+        <div>
+          <!-- close button -->
+        </div>
+      </div>
+      <div id="insert-link-row1">
+        <span id="link-text-todisplay">Text to display: </span>
+        <input type="text" id="compose-link-text-todisplay" />
+      </div>
+      <div id="insert-link-row2">To what URL should this link go?</div>
+      <div id="insert-link-row3">
+        <input type="text" id="compose-link-url" />
+      </div>
+      <div id="insert-link-row4">Test this link</div>
+      <div id="insert-link-row5">
+        <span id="insert-link-row5-span">Not sure what to put in the box?</span>
+        First, find the page on the web that you want to link to. (A
+        <a href="https://www.google.com/" target="_blank">search engine</a>
+        might be useful.) Then, copy the web address from the box in your
+        browser's address bar, and paste it into the box above.
+      </div>
+      <div id="insert-link-footer">
+        <button
+          type="button"
+          class="btn btn-primary compose-link-button"
+          onclick="insertLink()"
+        >
+          OK
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary compose-link-button"
+          id="cancel-insert-link"
+          onclick="cancelInsertLink()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
 
-    function handleKeyPress(event) {
-        // Check if the pressed key is Enter (keyCode 13) and not Shift + Enter
-        if (event.keyCode === 13 && !event.shiftKey) {
-            // Prevent the default behavior (inserting a new line)
-            event.preventDefault();
-
-            // Insert a line break (<br>) at the current caret position
-            document.execCommand('insertHTML', false, '<br>');
-        }
-    }
-
-</script>
-</body>
-
+    <script src="../script/editHtmlEmail.js"></script>
+  </body>
 </html>

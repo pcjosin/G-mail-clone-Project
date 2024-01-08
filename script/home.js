@@ -109,7 +109,7 @@ function gapiLoaded() {
          
 
         
-          listLatestEmails(20);
+          listLatestEmails(30);
         } else {
           document.getElementById("nextpage-content").innerText =
             "Access token not found.";
