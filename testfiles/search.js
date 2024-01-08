@@ -18,7 +18,7 @@ async function searchMessages() {
             document.getElementById('search-input-box').value = ""
             cancelButtonSvg.style.visibility = 'hidden'
             emailListContainer.innerHTML = ''
-            listLatestEmails()
+            listLatestEmails(30)
           }
         })
    

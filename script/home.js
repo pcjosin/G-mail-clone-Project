@@ -2,7 +2,8 @@ let emailListContainer;
 let emailBody;
 let emailSubject;
 let isSearchActive=false
-let source="Inbox"
+let source="Inbox";
+let currentMessageId;
 
 
 
@@ -109,7 +110,7 @@ function gapiLoaded() {
          
 
         
-          listLatestEmails(20);
+          listLatestEmails(30);
         } else {
           document.getElementById("nextpage-content").innerText =
             "Access token not found.";
@@ -173,28 +174,28 @@ document.addEventListener("click", function (event) {
 
 //app drawer display
 
-let menuIcon = document.getElementById("icon-menu");
-let appDivOpen = document.getElementById("app-drawer-expand-container");
-menuIcon.onclick = () => {
-  appDivOpen.style.display = 'block';
-  console.log("App drawer clicked");
-};
+// let menuIcon = document.getElementById("icon-menu");
+// let appDivOpen = document.getElementById("app-drawer-expand-container");
+// menuIcon.onclick = () => {
+//   appDivOpen.style.display = 'block';
+//   console.log("App drawer clicked");
+// };
 
-//hide the app drawer when clicked outside
+// //hide the app drawer when clicked outside
 
 
-document.addEventListener("click", function (event) {
-  // Check if the clicked element is NOT the div or a child of the div
-  if (
-    event.target !== appDivOpen &&
-    !appDivOpen.contains(event.target) &&
-    event.target !== menuIcon &&
-    !menuIcon.contains(event.target)
-  ) {
-    // Hide the div
-    appDivOpen.style.display = 'none';
-  } 
-});
+// document.addEventListener("click", function (event) {
+//   // Check if the clicked element is NOT the div or a child of the div
+//   if (
+//     event.target !== appDivOpen &&
+//     !appDivOpen.contains(event.target) &&
+//     event.target !== menuIcon &&
+//     !menuIcon.contains(event.target)
+//   ) {
+//     // Hide the div
+//     appDivOpen.style.display = 'none';
+//   } 
+// });
 
 
 
@@ -258,10 +259,9 @@ function displayLayoutDiv(){
               layoutIcon.innerHTML = '';
               await layoutIcon.appendChild(verticalSplitIcon);
               
-              // stopListEmails = false;
+              
               console.log("latest emails in split view 1")
-              // await listLabels();
-              await listVerticalSplitEmails(50);
+              await listVerticalSplitEmails(30);
               console.log("latest emails in split view 2")  
           })
           .catch(error => console.error('Error loading HTML:', error));
@@ -280,9 +280,6 @@ function displayLayoutDiv(){
         .then(async(data) => {
           document.getElementById("display-area").innerHTML = data; 
           console.log("email list html loaded sucessfully");
-          // stopListEmails = false;
-          // await listLabels();
-          isSearchActive = false
           listDefaultSplitEmails(50);
         })
       }
@@ -309,10 +306,8 @@ function displayLayoutDiv(){
                 layoutIcon.innerHTML = '';
                 await layoutIcon.appendChild(verticalSplitIcon);
                 
-                stopListEmails = false;
                 console.log("latest emails in split view 1")
-                // await listLabels();
-                await listHorizontalSplitEmails(50);
+                await listHorizontalSplitEmails(30);
                 console.log("latest emails in split view 2")  
             })
             .catch(error => console.error('Error loading HTML:', error));
@@ -417,6 +412,8 @@ async function listDefaultSplitEmails(numberOfEmails) {
 
 //function to handle the click in split view
 
+
+
 async function clickHandleSplit(emailElementId) {
   fetch("../html/mail.html")
     .then((response) => response.text())
@@ -438,6 +435,83 @@ async function clickHandleSplit(emailElementId) {
   emailSubject.innerText = emailSubjectContent;
   emailBody.innerHTML = emailBodyContent
 }
+
+
+
+//functions to handle next and prev button inside mail open window.
+
+function getPrevMessageId(currentMessageId) {
+  return new Promise((resolve, reject) => {
+      gapi.client.gmail.users.messages.list({
+          'userId': 'me',
+      }).then(response => {
+          const messages = response.result.messages;
+          const currentIndex = messages.findIndex(message => message.id === currentMessageId);
+
+          if (currentIndex !== -1 && currentIndex < messages.length - 1) {
+              const prevMessageId = messages[currentIndex - 1].id;
+              resolve(prevMessageId);
+          } else {
+              reject('No next message found.');
+          }
+      }).catch(error => {
+          reject('Error fetching message list: ' + error.message);
+      });
+  });
+}
+
+async function prevButtonHandle(){
+  // Use the currentMessageId variable
+  if (currentMessageId) {
+    // Use currentMessageId to fetch the next email
+    let prevMessageId = await getPrevMessageId(currentMessageId);
+    if (prevMessageId) {
+      clickHandle(prevMessageId);
+    } else {
+      console.log("No more emails to display.");
+    }
+  } else {
+    console.log("No current email selected.");
+  }
+}
+
+function getNextMessageId(currentMessageId) {
+  return new Promise((resolve, reject) => {
+      gapi.client.gmail.users.messages.list({
+          'userId': 'me',
+      }).then(response => {
+          const messages = response.result.messages;
+          const currentIndex = messages.findIndex(message => message.id === currentMessageId);
+
+          if (currentIndex !== -1 && currentIndex < messages.length - 1) {
+              const nextMessageId = messages[currentIndex + 1].id;
+              resolve(nextMessageId);
+          } else {
+              reject('No next message found.');
+          }
+      }).catch(error => {
+          reject('Error fetching message list: ' + error.message);
+      });
+  });
+}
+
+async function nextButtonHandle() {
+  // Use the currentMessageId variable
+  if (currentMessageId) {
+    // Use currentMessageId to fetch the next email
+    let nextMessageId = await getNextMessageId(currentMessageId);
+    if (nextMessageId) {
+      clickHandle(nextMessageId);
+    } else {
+      console.log("No more emails to display.");
+    }
+  } else {
+    console.log("No current email selected.");
+  }
+}
+
+
+
 
 
 //Function to search a query regarding emails
