@@ -46,18 +46,18 @@
                             archive
                         </span>
                     </div>
-                    <div id="report-spam" class="mx-2" onclick="reportSpam(currentmessageId)">
+                    <div id="report-spam" class="mx-2" onclick="reportSpam(currentMessageId)">
                         <span class="material-symbols-outlined mail-icon">
                             report
                         </span>
                     </div>
-                    <div id="trash" class="mx-2" onclick="moveToTrash(currentmessageId)">
+                    <div id="trash" class="mx-2" onclick="moveToTrash(currentMessageId)">
                         <span class="material-symbols-outlined mail-icon">
                             delete
                         </span>
                     </div>
                 </div>
-                <div id="unread-snooze-container" class="ms-5" onclick="markAsUnread(currentmessageId)">
+                <div id="unread-snooze-container" class="ms-5" onclick="markAsUnread(currentMessageId)">
                     <div id="mark-as-unread" class="mx-2">
                         <span class="material-symbols-outlined mail-icon">
                             mark_email_unread
@@ -97,11 +97,11 @@
                     <span id="mail-count"><span class="mail-index">24</span> of <span id="total-mails">12,258</span></span>
                 </div>
                 <div id="previous-container" class="ms-5">
-                    <span class="material-symbols-outlined mail-icon">
+                    <span class="material-symbols-outlined  mail-icon" onclick="prevButtonHandle()" style="cursor: pointer;">
                         arrow_back_ios
                     </span>
                 </div>
-                <div id="next-container" class="ms-5">
+                <div id="next-container" class="ms-5" onclick="nextButtonHandle()" style="cursor: pointer;">
                     <span class="material-symbols-outlined mail-icon">
                         arrow_forward_ios
                     </span>
@@ -165,7 +165,7 @@
                                     <td><div id="reaction"><span class="material-symbols-outlined mail-icon">
                                         mood
                                         </span></div></td>
-                                    <td><div id="reply" onclick="replyMessage(currentmessageId)"><span class="material-symbols-outlined mail-icon">
+                                    <td><div id="reply" onclick="replyMessage(currentMessageId)"><span class="material-symbols-outlined mail-icon">
                                         reply
                                         </span></div></td> 
                                     <td><div id="more"><span class="material-symbols-outlined mail-icon">
@@ -184,7 +184,7 @@
                 </div>
                 <div id="reply-forward-reaction-footer" class="ms-5 m-4">
                     <div id="reply-footer" class="ms-5 mx-4">
-                        <button type="button" class="pb-5 " onclick="replyMessage(currentmessageId)">
+                        <button type="button" class="pb-5 " onclick="replyMessage(currentMessageId)">
                             <span class="material-symbols-outlined mail-icon">
                             reply
                             </span>
@@ -192,7 +192,7 @@
                         </button>
                     </div>
                     <div id="forward-footer" class="mx-2">
-                        <button type="button" class="pb-5" onclick="forwardMessage(currentmessageId)"><span class="material-symbols-outlined mail-icon">
+                        <button type="button" class="pb-5" onclick="forwardMessage(currentMessageId)"><span class="material-symbols-outlined mail-icon">
                             forward
                         </span>Forward</button>
                     </div>

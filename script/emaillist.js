@@ -1,4 +1,10 @@
 // let mainListContent = document.getElementById('main-list-content');
+//let currentPage = 1;
+let nextPageToken = null;
+let displayedEmailIds = [];
+//let nextPageTokens = [];
+let pageTokens = [] // extra
+let pageCount = 1;
 
 function loadEmailContent(response) {
     var shortMonthNames = [
@@ -167,18 +173,49 @@ function loadEmailContent(response) {
   }
 //=============================================================================================
 
-  async function listLatestEmails(numberOfEmails) {
+  // async function listLatestEmails(numberOfEmails) {
+  //   try {
+  //     const response = await gapi.client.gmail.users.messages.list({
+  //       userId: "me",
+  //       labelIds: ["INBOX"],
+  //       maxResults: numberOfEmails,
+  //     });
+  
+  //     if(isSearchActive){
+  //       console.log("in a search")
+  //       return ;
+  //     }
+  
+  //     for (const message of response.result.messages) {
+  //       const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+       
+  
+  //       const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+        
+  //       emailListElement.setAttribute("id", message.id);
+  //       emailListElement.draggable=true
+  //       emailListElement.addEventListener('dragstart', handleDragStart);
+  //       emailListElement.onclick = () =>clickHandle(message.id)
+  //       emailListContainer.appendChild(emailListElement);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error listing emails:", error);
+  //   }
+  // }
+  
+  async function listLatestEmails(numberOfEmails, pageToken = undefined) {
     try {
       const response = await gapi.client.gmail.users.messages.list({
         userId: "me",
         labelIds: ["INBOX"],
         maxResults: numberOfEmails,
+        pageToken: pageToken,
       });
   
-      if(isSearchActive){
-        console.log("in a search")
-        return ;
-      }
+      console.log(response.result.messages);
+  
+      // Clear the displayedEmailIds array when loading a new set
+      displayedEmailIds = [];
   
       for (const message of response.result.messages) {
         const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
@@ -190,16 +227,19 @@ function loadEmailContent(response) {
         const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
         
         emailListElement.setAttribute("id", message.id);
-        emailListElement.draggable=true
-        emailListElement.addEventListener('dragstart', handleDragStart);
-        emailListElement.onclick = () =>clickHandle(message.id)
+        emailListElement.onclick = () => clickHandle(message.id);
+  
         emailListContainer.appendChild(emailListElement);
+        displayedEmailIds.push(message.id);
       }
+  
+      // Update nextPageToken only if it's a valid value
+      nextPageToken = response.result.nextPageToken || undefined;
+      pageTokens.push(nextPageToken);
     } catch (error) {
       console.error("Error listing emails:", error);
     }
   }
-  
   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // function to return a preview of email
   async function getEmailPreview(messageId) {
@@ -280,6 +320,43 @@ function loadEmailContent(response) {
       default:
         // Handle default case or do nothing
         break;
+    }
+  }  
+
+  async function nextSetEmailLoad() {
+    try {
+      document.getElementById("main-list-content").innerHTML = "";
+      await listLatestEmails(20, nextPageToken);
+      pageCount++;
+    } catch (error) {
+      console.error("Error loading next set of emails:", error);
+    }
+  }
+ 
+
+  async function prevSetEmailLoad() {
+    try {
+      document.getElementById("main-list-content").innerHTML = "";
+      
+      // Calculate the previous page count
+      let prevPageCount = Math.max(pageCount - 1, 1);
+  
+      // Retrieve the previous page token based on the pageCount
+      nextPageToken = pageTokens[prevPageCount - 1];
+  
+      // Update the pageCount to the previous value
+      pageCount = prevPageCount;
+
+      if(pageCount == 1){
+        await listLatestEmails(20)
+      } else{
+        await listLatestEmails(20, nextPageToken);
+      }
+  
+      // Call listLatestEmails with the retrieved page token
+      
+    } catch (error) {
+      console.error("Error loading previous set of emails:", error);
     }
   }
   

@@ -105,3 +105,14 @@ a{
     overflow-y: scroll;
     height: 75vh;
 }
+
+#report-spam{
+    cursor: pointer;
+}
+#trash{
+    cursor: pointer;
+}
+#unread-snooze-container{
+    cursor: pointer;
+
+}
