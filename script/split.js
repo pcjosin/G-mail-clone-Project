@@ -49,7 +49,6 @@ function displayLayoutDiv(){
             .then(async (data) => {
                 document.getElementById("display-area").innerHTML = data;
                 console.log("html loaded sucessfully");
-  
                 //changing the icon to toggle views
                 let layoutIcon = document.getElementById('main-list-header-right-view');
                 let verticalSplitIcon = document.createElement('span');
@@ -59,7 +58,7 @@ function displayLayoutDiv(){
                 
                 // stopListEmails = false;
                 console.log("latest emails in split view 1")
-                // await listLabels();
+                // await createNonUserLabelElements();
                 await listVerticalSplitEmails(30);
                 console.log("latest emails in split view 2")  
             })
