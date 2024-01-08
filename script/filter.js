@@ -1,6 +1,7 @@
 let filterSvg = document.getElementById('filter-button-svg');
 let filterDiv = document.getElementById('filter-expand-div');
 filterDiv.style.display = 'none'
+//checking if the click is on filter icon 
 document.addEventListener('click', function(event) {
     if (event.target === filterSvg || filterSvg.contains(event.target) || filterDiv.contains(event.target)) {
         console.log("filter clicked");
@@ -25,6 +26,7 @@ document.addEventListener('click', function(event) {
     }
 });
 
+//function to filter emails based on from address,to address, subject, the words that mail does and doesn't have
 async function filterEmails(from, to, subject, hasWords, doesntHaveWords) {
     // Build the query string based on the provided parameters
     let queryString = '';
@@ -54,7 +56,7 @@ async function filterEmails(from, to, subject, hasWords, doesntHaveWords) {
         const response = await gapi.client.gmail.users.messages.list({
             'userId': 'me',
             'q': queryString.trim(),
-            'maxResults': 30,  // Adjust the number of results as needed
+            'maxResults': 30,
         });
 
         const messages = response.result.messages;
@@ -63,8 +65,7 @@ async function filterEmails(from, to, subject, hasWords, doesntHaveWords) {
             console.log('Filtered Messages:');
             for (let i = 0; i < messages.length; i++) {
                 console.log('Message ID: ' + messages[i].id);
-                listSearchedEmails(messages[i].id);
-                // You can perform additional actions with the filtered messages here
+                listSearchedEmails(messages[i].id); //function to display the result emails after filtering
             }
         } else {
             console.log('No messages found.');
