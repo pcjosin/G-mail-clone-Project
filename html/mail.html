@@ -28,6 +28,8 @@
       integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd"
       crossorigin="anonymous"
     />
+
+    <script src="../script/emailDisplay.js"></script>
 </head>
 <body>
     <div id="mail-container" >
@@ -44,18 +46,18 @@
                             archive
                         </span>
                     </div>
-                    <div id="report-spam" class="mx-2">
+                    <div id="report-spam" class="mx-2" onclick="reportSpam(currentmessageId)">
                         <span class="material-symbols-outlined">
                             report
                         </span>
                     </div>
-                    <div id="trash" class="mx-2">
+                    <div id="trash" class="mx-2" onclick="moveToTrash(currentmessageId)">
                         <span class="material-symbols-outlined">
                             delete
                         </span>
                     </div>
                 </div>
-                <div id="unread-snooze-container" class="ms-5">
+                <div id="unread-snooze-container" class="ms-5" onclick="markAsUnread(currentmessageId)">
                     <div id="mark-as-unread" class="mx-2">
                         <span class="material-symbols-outlined">
                             mark_email_unread
@@ -163,7 +165,7 @@
                                     <td><div id="reaction"><span class="material-symbols-outlined">
                                         mood
                                         </span></div></td>
-                                    <td><div id="reply"><span class="material-symbols-outlined">
+                                    <td><div id="reply" onclick="replyMessage(currentmessageId)"><span class="material-symbols-outlined">
                                         reply
                                         </span></div></td>
                                     <td><div id="more"><span class="material-symbols-outlined">
@@ -182,13 +184,16 @@
                 </div>
                 <div id="reply-forward-reaction-footer" class="ms-5 m-4">
                     <div id="reply-footer" class="ms-5 mx-4">
-                        <button type="button" class="pb-5"><span class="material-symbols-outlined">
+                        <button type="button" class="pb-5 " onclick="replyMessage(currentmessageId)">
+                            <span class="material-symbols-outlined">
                             reply
-                        </span>Reply</button>
+                            </span>
+                            <span>Reply</span>
+                        </button>
                     </div>
                     <div id="forward-footer" class="mx-2">
-                        <button type="button" class="pb-5"><span class="material-symbols-outlined">
-                            redo
+                        <button type="button" class="pb-5" onclick="forwardMessage(currentmessageId)"><span class="material-symbols-outlined">
+                            forward
                         </span>Forward</button>
                     </div>
                     <div id="reaction-footer" class="mx-4">
