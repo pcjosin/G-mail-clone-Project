@@ -189,8 +189,11 @@ function loadEmailContent(response,messageId) {
       for (const message of response.result.messages) {
         const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
        
-  
-        const emailListElement = loadEmailContent(messagePreview,message.id); //calling function to generate an email preview element
+        if(isSearchActive){
+          console.log("stopped due to search")
+          return;
+        }
+        const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
         
         emailListElement.setAttribute("id", message.id);
         emailListElement.draggable=true

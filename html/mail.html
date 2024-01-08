@@ -28,63 +28,65 @@
       integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd"
       crossorigin="anonymous"
     />
+
+    <script src="../script/emailDisplay.js"></script>
 </head>
 <body>
     <div id="mail-container" >
         <div id="top-section">
             <div id="top-section-left" class="m-4">
                 <div id="back-button-container"  class="ms-4">
-                    <span class="material-symbols-outlined">
+                    <span class="material-symbols-outlined mail-icon" id="material-symbol-back" style="cursor: pointer;" onclick="handleBackButton()">
                         arrow_back
                     </span>
                 </div>
                 <div id="archive-trash-container" class="ms-5">
                     <div id="archive" class="mx-2">
-                        <span class="material-symbols-outlined">
+                        <span class="material-symbols-outlined mail-icon">
                             archive
                         </span>
                     </div>
-                    <div id="report-spam" class="mx-2">
-                        <span class="material-symbols-outlined">
+                    <div id="report-spam" class="mx-2" onclick="reportSpam(currentmessageId)">
+                        <span class="material-symbols-outlined mail-icon">
                             report
                         </span>
                     </div>
-                    <div id="trash" class="mx-2">
-                        <span class="material-symbols-outlined">
+                    <div id="trash" class="mx-2" onclick="moveToTrash(currentmessageId)">
+                        <span class="material-symbols-outlined mail-icon">
                             delete
                         </span>
                     </div>
                 </div>
-                <div id="unread-snooze-container" class="ms-5">
+                <div id="unread-snooze-container" class="ms-5" onclick="markAsUnread(currentmessageId)">
                     <div id="mark-as-unread" class="mx-2">
-                        <span class="material-symbols-outlined">
+                        <span class="material-symbols-outlined mail-icon">
                             mark_email_unread
                         </span>
                     </div>
                     <div id="snooze" class="mx-2">
-                        <span class="material-symbols-outlined">
+                        <span class="material-symbols-outlined mail-icon">
                             schedule
                         </span>
                     </div>
                     <div id="add-to-tasks" class="mx-2">
-                        <span class="material-symbols-outlined">
+                        <span class="material-symbols-outlined mail-icon">
                             add_task
                         </span>
                     </div>
                 </div>
                 <div id="move-label-container" class="ms-5">
                     <div id="move" class="mx-2">
-                        <span class="material-symbols-outlined">
+                        <span class="material-symbols-outlined mail-icon">
                             drive_file_move
                         </span>
                     </div>
                     <div id="label" class="mx-2">
-                        <span class="material-symbols-outlined">
+                        <span class="material-symbols-outlined mail-icon">
                             label
                         </span>
                     </div>
                     <div id="more-options" class="mx-2">
-                        <span class="material-symbols-outlined">
+                        <span class="material-symbols-outlined mail-icon">
                             more_vert
                         </span>
                     </div>
@@ -95,12 +97,12 @@
                     <span id="mail-count"><span class="mail-index">24</span> of <span id="total-mails">12,258</span></span>
                 </div>
                 <div id="previous-container" class="ms-5">
-                    <span class="material-symbols-outlined">
+                    <span class="material-symbols-outlined mail-icon">
                         arrow_back_ios
                     </span>
                 </div>
                 <div id="next-container" class="ms-5">
-                    <span class="material-symbols-outlined">
+                    <span class="material-symbols-outlined mail-icon">
                         arrow_forward_ios
                     </span>
                 </div>
@@ -117,7 +119,7 @@
                             </div>
                             <div id="important-and-category" class="mt-2">
                                 <div id="important">
-                                    <span class="material-symbols-outlined">
+                                    <span class="material-symbols-outlined mail-icon">
                                         label_important
                                     </span>
                                 </div>
@@ -130,13 +132,13 @@
                     <div class="col-md-4">
                         <div id="mail-header-right" class="mx-md-3 mt-2 text-md-right">
                             <div id="print" class="mx-2">
-                                <span class="material-symbols-outlined">
+                                <span class="material-symbols-outlined mail-icon">
                                     print
                                 </span>
                             </div>
                             <button id="summarize-button" onclick="summarizeEmailContent(this.id)">Summarize</button>
                             <div id="in-new-window" class="mx-5">
-                                <span class="material-symbols-outlined">
+                                <span class="material-symbols-outlined mail-icon">
                                     open_in_new
                                 </span>
                             </div>
@@ -157,16 +159,16 @@
                                 <tr id="sender-date-reply">         
                                     <td id="sender-adress"style="width: 600px;">sender-email-address@gmail.com</td>
                                     <td><span id="send-date" class="g3" title="Dec 16, 2023, 2:07 PM" alt="Dec 16, 2023, 2:07 PM" role="gridcell" tabindex="-1">Dec 16, 2023, 2:07 PM (3 days ago)</span></td>
-                                    <td><div id="star"><span class="material-symbols-outlined">
+                                    <td><div id="star"><span class="material-symbols-outlined mail-icon">
                                         star
                                         </span></div></td>
-                                    <td><div id="reaction"><span class="material-symbols-outlined">
+                                    <td><div id="reaction"><span class="material-symbols-outlined mail-icon">
                                         mood
                                         </span></div></td>
-                                    <td><div id="reply"><span class="material-symbols-outlined">
+                                    <td><div id="reply" onclick="replyMessage(currentmessageId)"><span class="material-symbols-outlined mail-icon">
                                         reply
-                                        </span></div></td>
-                                    <td><div id="more"><span class="material-symbols-outlined">
+                                        </span></div></td> 
+                                    <td><div id="more"><span class="material-symbols-outlined mail-icon">
                                         more_vert
                                         </span></div></td>
                                 </tr>
@@ -182,18 +184,21 @@
                 </div>
                 <div id="reply-forward-reaction-footer" class="ms-5 m-4">
                     <div id="reply-footer" class="ms-5 mx-4">
-                        <button type="button" class="pb-5"><span class="material-symbols-outlined">
+                        <button type="button" class="pb-5 " onclick="replyMessage(currentmessageId)">
+                            <span class="material-symbols-outlined mail-icon">
                             reply
-                        </span>Reply</button>
+                            </span>
+                            <span>Reply</span>
+                        </button>
                     </div>
                     <div id="forward-footer" class="mx-2">
-                        <button type="button" class="pb-5"><span class="material-symbols-outlined">
-                            redo
+                        <button type="button" class="pb-5" onclick="forwardMessage(currentmessageId)"><span class="material-symbols-outlined mail-icon">
+                            forward
                         </span>Forward</button>
                     </div>
                     <div id="reaction-footer" class="mx-4">
                         <div id="reaction-border">
-                            <span class="material-symbols-outlined">
+                            <span class="material-symbols-outlined mail-icon">
                                 mood
                             </span>
                         </div>

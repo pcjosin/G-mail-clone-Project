@@ -62,8 +62,14 @@
     border-radius: 40px;
     box-shadow: 0 2px 2px 0 #0000, 0 1px 3px 1px #0000;
 }
-#search-bar-input{
-        background-color: #eaf1fb;
+.search-box form:focus-within{
+    background-color: white;
+}
+
+.search-bar-input input:focus {
+    outline: none; 
+    border: none; 
+    background-color: white;
 }
 
 .search-bar-input input{
@@ -73,7 +79,8 @@
     max-width: 720px;
     font-family: "Google Sans",Helvetica,Arial,sans-serif;
     border: none;
-    background-color: transparent;}
+    background-color: transparent;
+}
 
 
 @media screen and (max-width: 800px) {
@@ -88,10 +95,20 @@
 
 .bi-x{
     color: #5f6368; 
+    margin-left: 80px;
 }
-
+.bi-x:hover{
+    background-color: #ededed;
+    border-radius: 90%;
+}
 .bi-filter{
     color: #5f6368;
+    width: 25px;
+    height: 25px;
+}
+.bi-filter:hover{
+    background-color: #ededed;
+    border-radius: 90%;
 }
 
 .cancel-button svg{
@@ -103,13 +120,24 @@
     top: 30px;
     left: 78%; */
     color: #5f6368;
+    width: 25px;
+    height: 25px;
 }
-
+.bi-question-circle:hover{
+    background-color: #ededed;
+    border-radius: 90%;
+}
+.bi-gear:hover{
+    background-color: #ededed;
+    border-radius: 90%;
+}
 .bi-gear{
     /* position: absolute;
     top: 30px;
     left: 82%; */
-    color: #5f6368;  
+    color: #5f6368;
+    width: 25px;
+    height: 25px;  
 }
 
 .bi-icon-menu{
@@ -119,8 +147,13 @@
     top: 30px;
     left: 86%; */
     color: #5f6368;  
+    width: 25px;
+    height: 25px;
 }
-
+.bi-icon-menu:hover{
+    background-color: #ededed;
+    border-radius: 90%;
+}
 #right-icons{
     width: 100%;
     
@@ -154,6 +187,9 @@
     width: 135px;
     color: #001d35;
     padding: 0 24px 0 0;
+}
+.compose button:hover{
+    box-shadow: 5px 5px 5px rgba(81, 81, 81, 0.5);
 }
 /* .compose{
     position: absolute;
@@ -420,10 +456,15 @@ justify-content: space-around;
 #layout-div-expand{
     z-index: 30;
     position: absolute;
-    top: 24%;
+    top: 23%;
     right: 2%;
     background-color: white;
     width: 150px;
+    border-radius: 8px;
+    box-shadow: 10px 10px 10px rgba(81, 81, 81, 0.5);
+    padding: 10px;
+    border: solid 1px #a8a7a7 ;
+    display: none;
 }
 
 #layout-div-expand button{
@@ -494,13 +535,9 @@ justify-content: space-around;
     padding-bottom: 2px;
 }
 
-td{
-    
+#app-table-td {
     text-align: center;
     padding: 20px;
-
-    
-
 }
 
 .app-table{
@@ -589,4 +626,166 @@ td{
     width:300px;
     z-index: 200;
     display:none;
+}
+
+#filter-expand-div{
+    position: absolute;
+    top: 70px;
+    left: 270px;
+    z-index: 150 !important;
+    background-color:white !important;
+    overflow-y: hidden;
+    display: none;
+    height: auto;
+    width: 550px;
+    font-family: "Google Sans",Helvetica,Arial,sans-serif;
+    padding: 15px;
+    border: solid 2px #a8a7a7 ;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+#from-input{
+    width: 77%;
+    margin: 10px 0px 10px 0px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #a8a7a7;
+}
+#from-input:focus {
+    outline: none;
+    border-bottom: 2px solid #1a73e8; 
+}
+#to-input{
+    width: 77%;
+    margin: 10px 0px 10px 0px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #a8a7a7;
+}
+#to-input:focus {
+    outline: none;
+    border-bottom: 2px solid #1a73e8; 
+}
+#subject-input{
+    width: 77%;
+    margin: 10px 0px 10px 0px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #a8a7a7;
+}
+#subject-input:focus {
+    outline: none;
+    border-bottom: 2px solid #1a73e8; 
+}
+#has-input{
+    width: 77%;
+    margin: 10px 0px 10px 0px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #a8a7a7;
+}
+#has-input:focus {
+    outline: none;
+    border-bottom: 2px solid #1a73e8; 
+}
+#donot-input{
+    width: 77%;
+    margin: 10px 0px 10px 0px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #a8a7a7;
+}
+#donot-input:focus {
+    outline: none;
+    border-bottom: 2px solid #1a73e8; 
+}
+
+#from-label{
+    font-family: "Google Sans",Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    color: #5f6368;
+    margin-right: 65px;
+    margin-left: 10px;
+}
+#to-label{
+    font-family: "Google Sans",Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    color: #5f6368;
+    margin-right: 89px;
+    margin-left: 10px;
+}
+#subject-label{
+    font-family: "Google Sans",Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    color: #5f6368;
+    margin-right: 50px;
+    margin-left: 10px;
+}
+#has-label{
+    font-family: "Google Sans",Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    color: #5f6368;
+    margin-right: 5px;
+    margin-left: 10px;
+}
+#donot-label{
+    font-family: "Google Sans",Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    color: #5f6368;
+    margin-right: 16px;
+    margin-left: 10px;  
+}
+
+#filter-apply{
+    text-align: right;
+    margin-right: 15px;
+}
+
+#filter-apply button{
+    font-family: "Google Sans",Roboto,RobotoDraft,Helvetica,Arial,sans-serif;   
+    align-items: center;
+    outline: none;
+    background: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #444746;
+    cursor: pointer;
+    font-weight: 500;
+    height: 36px;
+    min-width: 80px;
+    padding: 0 16px;
+    background-color: #1a73e8;
+    color: #fff;
+    border: none;
+}
+
+#support-expand-div{
+    position: absolute;
+    top: 60px;
+    right: 120px;
+    z-index: 150 !important;
+    background-color:white !important;
+    overflow-y: hidden;
+    height: 200px;
+    width: 250px;
+    font-family: "Google Sans",Helvetica,Arial,sans-serif;
+    padding: 15px;
+    border: solid 2px #a8a7a7 ;
+    box-shadow: 5px 5px 5px rgba(81, 81, 81, 0.5);
+    border-radius: 15px;
+}
+
+#support-expand-div button{
+    width: 200px;
+    text-align: left;
+    height: 30px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: none;
+    background-color: white;
+}
+
+#support-expand-div button:hover{
+    background-color: rgba(203, 203, 203, 0.308);
+    width: 100%;   
 }
