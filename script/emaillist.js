@@ -218,10 +218,14 @@ function loadEmailContent(response) {
       displayedEmailIds = [];
   
       for (const message of response.result.messages) {
-        const messagePreview = await getEmailPreview(message.id);
-        console.log(messagePreview);
-  
-        const emailListElement = loadEmailContent(messagePreview);
+        const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+       
+        if(isSearchActive){
+          console.log("stopped due to search")
+          return;
+        }
+        const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+        
         emailListElement.setAttribute("id", message.id);
         emailListElement.onclick = () => clickHandle(message.id);
   

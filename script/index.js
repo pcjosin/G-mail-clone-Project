@@ -97,8 +97,3 @@ function handleAuthClick() {
     tokenClient.requestAccessToken({ prompt: '' });
   }
 }
-
-
-
-
-

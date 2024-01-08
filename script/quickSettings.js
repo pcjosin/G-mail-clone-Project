@@ -1,45 +1,65 @@
-window.onload=()=>{
-  fetch("../html/Quicksettings.html")
-      .then((response) => response.text())
-      .then((data) => {
+"use strict";
+window.onload = () => {
+    fetch("../html/Quicksettings.html")
+        .then((response) => response.text())
+        .then((data) => {
         // Inject the loaded content into the container
-        document.getElementById("quick-settings").innerHTML = data;
-      })
-      .catch((error) => console.error("Error:", error));
-
-      document.getElementById("quick-settings").style.display="none";
+        const quickSettingsContainer = document.getElementById("quick-settings");
+        if (quickSettingsContainer) {
+            quickSettingsContainer.innerHTML = data;
+        }
+    })
+        .catch((error) => console.error("Error:", error));
+    const quickSettingsElement = document.getElementById("quick-settings");
+    if (quickSettingsElement) {
+        quickSettingsElement.style.display = "none";
+    }
+};
+const loadQuickSettings = () => {
+    const quickSettingsElement = document.getElementById("quick-settings");
+    if (quickSettingsElement) {
+        quickSettingsElement.style.display = "block";
+        const displayArea = document.getElementById("display-area");
+        if (displayArea) {
+            displayArea.classList.remove("col-md-10");
+            displayArea.classList.add("col-md-7");
+        }
+        const mainHeaderDiv = document.getElementById("main-list-header");
+        if (mainHeaderDiv) {
+            mainHeaderDiv.style.width = "57%";
+        }
+        quickSettingsElement.classList.add("col-md-3");
+    }
+};
+const closeQuickSettings = () => {
+    const displayArea = document.getElementById("display-area");
+    if (displayArea) {
+        displayArea.classList.remove("col-md-7");
+        displayArea.classList.add("col-md-10");
+    }
+    const mainHeaderDiv = document.getElementById("main-list-header");
+    if (mainHeaderDiv) {
+        mainHeaderDiv.style.width = "82%";
+    }
+    const quickSettingsElement = document.getElementById("quick-settings");
+    if (quickSettingsElement) {
+        quickSettingsElement.classList.remove("col-md-3");
+        quickSettingsElement.style.display = "none";
+    }
+};
+// Change density of email layout
+function densityInput(id) {
+    const previewBars = document.getElementsByClassName('preview-bar');
+    for (let index = 0; index < previewBars.length; index++) {
+        const previewBar = previewBars[index];
+        if (id === "default-radio-button") {
+            previewBar.style.padding = '9px';
+        }
+        else if (id === "comfortable-radio-button") {
+            previewBar.style.padding = '15px';
+        }
+        else if (id === "compact-radio-button") {
+            previewBar.style.padding = '1px';
+        }
+    }
 }
-
-let loadQuickSettings=()=> {
-    // fetch("html/Quicksettings.html")
-    //   .then((response) => response.text())
-    //   .then((data) => {
-    //     // Inject the loaded content into the container
-    //     document.getElementById("quick-settings").innerHTML = data;
-    //   })
-    //   .catch((error) => console.error("Error:", error));
-       
-      document.getElementById("quick-settings").style.display="block";
-      let displayArea=document.getElementById('display-area') ;
-      displayArea.classList.remove('col-md-10');
-  displayArea.classList.add('col-md-7');
-  let mainHeaderDiv = document.getElementById("main-list-header");
-  mainHeaderDiv.style.width = '57%';
-
-      let quickSettings=document.getElementById('quick-settings');
-      quickSettings.classList.add('col-md-3');
-  };
-
-  let closeQuickSettings=()=>{
-    let displayArea=document.getElementById('display-area') ;
-    displayArea.classList.remove('col-md-7');
-    displayArea.classList.add('col-md-10');
-    let mainHeaderDiv = document.getElementById("main-list-header");
-    mainHeaderDiv.style.width = '82%';
-
-    let quickSettings=document.getElementById('quick-settings');
-    quickSettings.classList.remove('col-md-3');
-
-    // document.getElementById("quick-settings").innerHTML ="";
-    document.getElementById("quick-settings").style.display="none";
-  };

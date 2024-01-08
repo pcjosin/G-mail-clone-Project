@@ -60,7 +60,7 @@ function displayLayoutDiv(){
                 // stopListEmails = false;
                 console.log("latest emails in split view 1")
                 // await listLabels();
-                await listVerticalSplitEmails(30);
+                await listVerticalSplitEmails(50);
                 console.log("latest emails in split view 2")  
             })
             .catch(error => console.error('Error loading HTML:', error));
@@ -110,7 +110,7 @@ function displayLayoutDiv(){
                   stopListEmails = false;
                   console.log("latest emails in split view 1")
                   // await listLabels();
-                  await listHorizontalSplitEmails(30);
+                  await listHorizontalSplitEmails(50);
                   console.log("latest emails in split view 2")  
               })
               .catch(error => console.error('Error loading HTML:', error));

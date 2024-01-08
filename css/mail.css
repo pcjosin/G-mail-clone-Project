@@ -72,7 +72,7 @@
 
 #reply-footer button{
     border: solid 1px black;
-    border-radius: 18px;
+    border-radius:25px 25px;
     height: 39px;
     width: 120px;
     background-color: white;
@@ -80,7 +80,7 @@
 
 #forward-footer button{
     border: solid 1px black;
-    border-radius: 18px;
+    border-radius: 25px 25px;
     height: 39px;
     width: 120px;
     background-color: white;
@@ -93,7 +93,7 @@
     height: 40px;
     width: 40px;
 }
-.material-symbols-outlined{
+.mail-icon{
     margin: 6px;
 }
 
@@ -104,4 +104,15 @@ a{
 #mail-content{
     overflow-y: scroll;
     height: 75vh;
+}
+
+#report-spam{
+    cursor: pointer;
+}
+#trash{
+    cursor: pointer;
+}
+#unread-snooze-container{
+    cursor: pointer;
+
 }

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gmail</title>
+    <title>Gmail mini</title>
     <link rel="icon" href="../assets/icons/Gmail_icon.webp" />
     <link rel="stylesheet" href="../css/home.css" />
    
@@ -13,23 +13,20 @@
     <link rel="stylesheet" href="../css/quickSettings.css" />
     <link rel="stylesheet" href="../css/folder.css" />
     <link rel="stylesheet" href="../css/mail.css" />
-    <script src="../config/keys.js"></script>
+    <script src="../config.js"></script>
 
 
      <!-- importing the scripts -->
     
-     
      <script src="../script/folder.js"></script>
      <script src="../script/changeTheme.js"></script>
      <script src="../script/summarize.js"></script>
-    
+     <script src="../script/support.js"></script>
      <script src="../script/emailDisplay.js"></script>
      <script src="../script/emaillist.js"></script>
      <script src="../script/quickSettings.js"></script>
      <script src="../script/label.js"></script>
-     
-    
-     
+
     <!-- BootStrap 5 CDN link-->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -154,6 +151,7 @@
                   height="24"
                   viewBox="0 0 24 24"
                   class="bi bi-filter"
+                  id="filter-button-svg"
                 >
                   <path
                     d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"
@@ -165,7 +163,7 @@
           <div id="right-icons">
             <svg
               class="bi bi-question-circle"
-              id="question-circle"
+              id="support-button-svg"
               xmlns="http://www.w3.org/2000/svg"
               width="24px"
               height="24px"
@@ -276,25 +274,61 @@
     </div>
     <script src="../script/folder.js"></script>
 
+    <div id="filter-expand-div">
+      <div id="from-field">
+        <label for="" id="from-label">From </label><input type="text" name="" id="from-input" >
+      </div>
+      <div id="to-field">
+        <label for="" id="to-label">To </label><input type="text" id="to-input">
+      </div>
+      <div id="subject-field">
+        <label for="" id="subject-label">Subject </label><input type="text" id="subject-input">
+      </div>
+      <div id="has-field">
+        <label for="" id="has-label">Has the words </label><input type="text" id="has-input">
+      </div>
+      <div id="donot-have-field">
+        <label for="" id="donot-label">Doesn't have</label><input type="text" id="donot-input">
+      </div>
+      <div id="filter-apply">
+        <button type="button" id="filter-apply-button">Search</button>
+      </div>
+    </div>
+
+    <div id="support-expand-div">
+      
+        <button type="button" id="help-button">Help</button>
+      
+      
+        <button type="button" id="training-button">Training</button>
+      
+      
+        <button type="button" id="updates-button">Updates</button>
+      
+      
+        <button type="button" id="feedback-button">Send feedback to Google</button>
+      
+    </div>
+
     <!-- Shows app drawer when app drawer symbol is clicked -->
     <div id="app-drawer-expand-container">
       <table class="app-table">
         <tr class="app-drawer-expand-row1">
           <td>
             <a href="https://www.google.co.in/"
-              ><img src="../assets/images/IOS_Google_icon.png" alt="g-icon"
+              ><img src="../assets/google_apps/icons8-google-48.png" alt="g-icon"
             /></a>
             <p>Google</p>
           </td>
           <td>
             <a href="https://www.google.com/intl/en_in/business/"
-              ><img src="../assets/images/g-buisness.jpg" alt=""
+              ><img src="../assets/google_apps/icons8-my-business-48.png" alt=""
             /></a>
             <p>Buisness</p>
           </td>
           <td>
             <a href="https://www.google.com/maps"
-              ><img src="../assets/images/g-map.png"
+              ><img src="../assets/google_apps/icons8-google-maps-old-48.png"
             /></a>
             <p>Maps</p>
           </td>
@@ -303,21 +337,21 @@
           <td>
             <a href="https://contacts.google.com/"
               ><img
-                src="../assets/images/Google_Contacts_icon.svg.png"
+                src="../assets/google_apps/icons8-google-contacts-48.png"
                 alt="google contacts"
             /></a>
             <p>Contacts</p>
           </td>
           <td>
             <a href="https://www.youtube.com/"
-              ><img src="../assets/images/Youtube_logo.png" alt="youtube icon"
+              ><img src="../assets/google_apps/icons8-youtube-48.png" alt="youtube icon"
             /></a>
             <p>Youtube</p>
           </td>
           <td>
             <a href="https://drive.google.com/drive/my-drive"
               ><img
-                src="../assets/images/Google_Drive_logo.png"
+                src="../assets/google_apps/icons8-google-drive-48.png"
                 alt="google drive"
             /></a>
             <p>Drive</p>
@@ -327,7 +361,7 @@
           <td>
             <a href="https://www.google.com/photos/about/"
               ><img
-                src="../assets/images/Google_Photos_icon_(2020).svg.png"
+                src="../assets/google_apps/icons8-google-photos-48.png"
                 alt="google photos"
             /></a>
             <p>Photos</p>
@@ -335,7 +369,7 @@
           <td>
             <a href="https://news.google.com/home?hl=en-IN&gl=IN&ceid=IN:en"
               ><img
-                src="../assets/images/Google_News_icon.svg.png"
+                src="../assets/google_apps/icons8-google-news-48.png"
                 alt="google news"
             /></a>
             <p>News</p>
@@ -343,7 +377,7 @@
           <td>
             <a href="https://meet.google.com/"
               ><img
-                src="../assets/images/Google_Meet_icon_(2020).svg.png"
+                src="../assets/google_apps/icons8-google-meet-48.png"
                 alt="google meet"
             /></a>
             <p>Meet</p>
@@ -379,8 +413,9 @@
         
       </div>
     </div>
-     <script src="../script/compose.js"></script>
+    <script src="../script/compose.js"></script>
     <script  src="../script/home.js"></script>
+    <script src="../script/filter.js"></script>
     <script src="../script/appDrawer.js"></script>
     <script
       

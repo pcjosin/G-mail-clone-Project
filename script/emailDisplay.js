@@ -1,6 +1,5 @@
 
 
-
 async function getSenderName(messageId) {
     try {
       const emailData = await getEmailContent(messageId);
@@ -50,7 +49,7 @@ async function getSenderName(messageId) {
   
   // Process the email data, body, sender's email, sender's name, and send time as needed
   async function clickHandle(emailElementId) {
-    currentMessageId = emailElementId;
+    currentMessageId=emailElementId;
     fetch("mail.html")
       .then((response) => response.text())
       .then((data) => {
@@ -70,6 +69,8 @@ async function getSenderName(messageId) {
     emailDateContent= await getSendTime(emailElementId)
     console.log(emailBodyContent)
     summaryButton.id = emailElementId;
+
+    markAsRead(emailElementId);
 
     senderEmailAdressContent= await getSenderEmail(emailElementId) 
     // Assume senderEmail contains the email address of the sender
@@ -327,10 +328,10 @@ async function summarizeEmailContent(emailElementId){
   function markAsUnread(messageId) {
     // Use Gmail API to mark the email as unread
     gapi.client.gmail.users.messages.modify({
-      'userId': 'me',
-      'id': messageId,
-      'resource': {
-        'removeLabelIds': ['UNREAD']
+      userId: 'me',
+      id: messageId,
+      resource: {
+        addLabelIds: ['UNREAD']
       }
     }).then(response => {
       console.log('Email marked as unread:', response.result);
@@ -338,3 +339,94 @@ async function summarizeEmailContent(emailElementId){
       console.error('Error marking email as unread:', error);
     });
   }
+
+  function markAsRead(messageId) {
+    // Use Gmail API to mark the email as unread
+    gapi.client.gmail.users.messages.modify({
+      userId: 'me',
+      id: messageId,
+      resource: {
+        removeLabelIds: ['UNREAD']
+      }
+    }).then(response => {
+      console.log('Email marked as read:', response.result);
+    }, error => {
+      console.error('Error marking email as read:', error);
+    });
+  }
+
+  function moveToTrash(messageId) {
+    let messageDiv = document.getElementById('message-display-div');
+
+    gapi.client.gmail.users.messages.modify({
+      userId: 'me',
+      id: messageId,
+      resource: {
+        addLabelIds: ['TRASH'],
+        removeLabelIds: []  // Remove all existing label IDs
+      }
+    }).then(function(response) {
+      console.log('Message moved to trash:', response);
+      messageDiv.innerHTML="message deleted";
+      messageDiv.style.display = 'block';
+      hideMessageDiv();
+      
+    }, function(error) {
+      console.error('Error moving message to trash:', error);
+    });
+  }
+
+  function reportSpam(messageId) {
+    let messageDiv = document.getElementById('message-display-div');
+    gapi.client.gmail.users.messages.modify({
+      userId: 'me',
+      id: messageId,
+      resource: {
+        addLabelIds: ['SPAM'],
+        removeLabelIds: []  // Remove all existing label IDs
+      }
+    }).then(function(response) {
+      console.log('Message moved to spam:', response);
+      messageDiv.innerHTML="reported as spam";
+      messageDiv.style.display = 'block';
+      hideMessageDiv();
+    }, function(error) {
+      console.error('Error moving message to spam:', error);
+    });
+  }
+
+  async function replyMessage(messageId) {
+    console.log("currentmessage id",messageId);
+    loadCompose();
+    let replyMailId = await getSenderEmail(messageId);
+    let replySubject= await getSendSubject(messageId);
+    let replyBody=await getEmailBodyHtml(messageId);
+   
+    const toEmail = document.getElementById("email-container");
+    const subject= document.getElementById("subject-container");
+    const htmlBody= document.getElementById("message-container");
+
+    toEmail.value=replyMailId.split(' ').reverse()[0].slice(1,-1);
+    subject.value="Re:"+replySubject;
+    htmlBody.innerHTML=" <br>"+replyBody;
+    
+  }
+
+  async function forwardMessage(messageId) {
+    loadCompose();
+    let forwardSubject= await getSendSubject(messageId);
+    let forwardBody=await getEmailBodyHtml(messageId);
+    let from=await getSenderEmail(messageId);
+    let date=await getSendTime(messageId);
+   
+    const subject= document.getElementById("subject-container");
+    const htmlBody= document.getElementById("message-container");
+
+    let fwdLabel="--------Forwarded message---------<br>From: "+from+"<br>Date: "+date+"<br>Subject: "+forwardSubject;
+    subject.value="Fwd:"+forwardSubject;
+    htmlBody.innerHTML=" <br>"+fwdLabel+"<br>"+forwardBody;
+    
+  }
+
+
+  

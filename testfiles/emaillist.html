@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gmail Mini</title>
-    <link rel="stylesheet" href="../css/horizontalsplit.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,12 +23,14 @@
       integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd"
       crossorigin="anonymous"
     />
-</head>
-<body>
-    <div id="main-split-container">
-        <div id="email-split-list">
-            <div id="main-list-container">
-                      <div id="main-list-header" class="d-flex row col-md-10">
+    <!-- <link rel="stylesheet" href="../css/emaillist.css"/> -->
+
+    <link rel="stylesheet" href="../css/emaillist.css">
+    <link rel="stylesheet" href="./list.css">
+  </head>
+  <body>
+    <div id="main-list-container">
+              <div id="main-list-header" class="d-flex row col-md-10">
           <div id="main-list-header-left" class="d-flex col">
             <div id="main-list-header-checkbox" class="p-3">
               <i class="bi bi-square"></i>
@@ -59,37 +60,26 @@
             <div id="main-list-header-right-older" class="p-3">
               <i class="bi bi-chevron-right"></i>
             </div>
-            <div id="main-list-header-right-view" class="p-2">
+            <div id="main-list-header-right-view" class="p-3">
               <span class="material-symbols-outlined"> reorder </span>
             </div>
             <div id="main-list-header-right-viewSelect" class="p-3">
-              <i class="bi bi-caret-down-fill" onclick="displayLayoutDiv()"></i>
+              <i class="bi bi-caret-down-fill" onclick=""></i>
             </div>
           </div>
         </div>
-          
-                <div id="main-list-content">
-                    
-                </div>
-          
-                <div id="layout-div-expand">
-          
-                </div>
-        </div>
-        </div>
-        <div id="email-split-view">
-            <p>No Conversations Selected</p>
-            <div id="footer">
-                <p>Last account activity: in 1 minute</p>
-                <div id="footer-links" >
-                    <a href="https://policies.google.com/terms?hl=en" target="_blank" class="mx-3">Terms</a>
-                    <a href="https://policies.google.com/privacy?hl=en"target="_blank" class="mx-3">Privacy</a>
-                    <a href="https://www.google.com/gmail/about/policy/" target="_blank" class="mx-3">Program Policies</a>
-                </div>
-            </div>
-        </div>
+
+      <div id="main-list-content">
+
+
+      </div>
+
+      <div id="layout-div-expand">
+
+      </div>
     </div>
-    <script src="script/home.js"></script>
-    <script async src="script/emaillist.js"></script>
-</body>
+  </body>
+      <script aysnc src="./emaillist.js"></script>
+      <!-- <script src="../script/home.js"></script> -->
+
 </html>
