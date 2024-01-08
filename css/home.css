@@ -464,6 +464,7 @@ justify-content: space-around;
     box-shadow: 10px 10px 10px rgba(81, 81, 81, 0.5);
     padding: 10px;
     border: solid 1px #a8a7a7 ;
+    display: none;
 }
 
 #layout-div-expand button{
