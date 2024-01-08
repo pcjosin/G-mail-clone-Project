@@ -304,10 +304,11 @@ body{
 }
 
 #insert-link-row4 {
-    color: blue;
-    text-decoration: underline;
     font-size: small;
     margin-top: 10px;
+    text-decoration: underline;
+    color: #0000ff;
+    cursor: pointer;
 }
 
 #insert-link-row5 {

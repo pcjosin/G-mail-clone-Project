@@ -162,15 +162,34 @@ function loadCompose() {
         }
       });
       
-      //initialise event listeners
       insertLinkButton.addEventListener('mousedown', function () {
         // window.alert("bold clicked");
         insertLinkDiv.style.display = 'block';
+        let composeLinkUrl = document.getElementById('compose-link-url');
+        let testLinkText = document.getElementById('insert-link-row4');
+
+        testLinkText.addEventListener('mousedown', function () {
+          let testUrl = composeLinkUrl.value;
+          if (testUrl.length <= 0) {
+            window.alert('Link is not valid: URL field empty!');
+          }
+          else {
+            try {
+              const newUrl = new URL(testUrl);
+              window.open(testUrl, '_blank');
+              console.log('in here');
+            } catch (err) {
+              window.alert('Link is not valid: Check URL you entered!');
+            }
+          }
+        });
+
       });
 
     })
     .catch((error) => console.error("Error:", error));
 }
+
 
 
 
@@ -257,6 +276,29 @@ function cancelInsertLink() {
 }
 
 
+function insertLink() {
+
+  let messageDiv = document.getElementById("message-container");
+  let insertLinkDiv = document.getElementById('compose-insert-link-div');
+
+
+  const linkElement = document.createElement('a');
+  let composeLinkTextToDisp = document.getElementById('compose-link-text-todisplay');
+  let composeLinkUrl = document.getElementById('compose-link-url');
+
+  if (!composeLinkTextToDisp.value || !composeLinkUrl.value) {
+    console.log('no url or text');
+    window.alert('Enter all fields or click cancel to go back!')
+  }
+  else {
+    linkElement.href = composeLinkUrl.value;
+    linkElement.innerText = composeLinkTextToDisp.value;
+    messageDiv.appendChild(linkElement);
+  }
+  composeLinkTextToDisp.value = '';
+  composeLinkUrl.value = '';
+  insertLinkDiv.style.display = 'none';
+}
 
 function getSelectedText() {
   if (window.getSelection) {
