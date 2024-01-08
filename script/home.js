@@ -509,38 +509,40 @@ function handleBackButton() {
   switch (source) {
     case "Spam":
       loadPage2Content();
-      listEmailsByLabel('SPAM', 20);
+      listEmailsByLabel('SPAM', 30);
       break;
       console.log("Spam back Clicked");
  
     case "Draft":
       loadPage2Content();
-      listEmailsByLabel('DRAFT', 20);
+      listEmailsByLabel('DRAFT', 30);
       break;
       console.log("Draft back clicked");
  
     case "Sent":
       loadPage2Content();
-      listEmailsByLabel('SENT', 20);
+      listEmailsByLabel('SENT', 30);
       break;
       console.log("Sent back clicked");
- 
+    case "Inbox":
+      loadPage2Content();
+      listEmailsByLabel('INBOX', 30)  
     case "Trash":
       loadPage2Content();
-      listEmailsByLabel('TRASH', 20);
+      listEmailsByLabel('TRASH', 30);
       break;
       console.log("Sent back clicked");
     case "Important":
         loadPage2Content();
-        listEmailsByLabel('IMPORTANT', 20);
+        listEmailsByLabel('IMPORTANT', 30);
         break;
     case "Starred":
           loadPage2Content();
-          listEmailsByLabel('STARRED', 20);
+          listEmailsByLabel('STARRED', 30);
           break;
     case "Unread":
         loadPage2Content();
-        listEmailsByLabel('UNREAD', 20);
+        listEmailsByLabel('UNREAD', 30);
         break;
   }  
 }
