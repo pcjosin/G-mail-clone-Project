@@ -2,7 +2,7 @@ let emailListContainer;
 let emailBody;
 let emailSubject;
 let isSearchActive=false
-source="INBOX"
+let source="Inbox"
 
 
 
@@ -282,6 +282,7 @@ function displayLayoutDiv(){
           console.log("email list html loaded sucessfully");
           // stopListEmails = false;
           // await listLabels();
+          isSearchActive = false
           listDefaultSplitEmails(50);
         })
       }
@@ -439,4 +440,109 @@ async function clickHandleSplit(emailElementId) {
 }
 
 
+//Function to search a query regarding emails
+ 
+async function searchMessages() {
+  // Specify your search query
+  let searchBoxInput = document.getElementById('search-input-box');
+  document.addEventListener('input', function(event){
+    if(event.target.contains(searchBoxInput)){
+      console.log("search box changed");
+      isSearchActive = true;
+      let query = document.getElementById('search-input-box').value;
+      let cancelButtonSvg = document.getElementById('cancel-button-svg');
+      cancelButtonSvg.style.visibility = 'visible'
+ 
+      document.addEventListener('click', function(event){
+        if(event.target.contains(cancelButtonSvg)){
+          document.getElementById('search-input-box').value = ""
+          cancelButtonSvg.style.visibility = 'hidden'
+          emailListContainer.innerHTML = ''
+          //listLatestEmails()
+        }
+      })
+ 
+      // Performing the search using users.messages.list
+      gapi.client.gmail.users.messages.list({
+      'userId': 'me',
+      'q': query,
+      maxResults: 30,
+      }).then(function(response) {
+        console.log("response: ", response)
+      let messages = response.result.messages;
+      console.log("Search messages: ", messages)
+      if (messages && messages.length > 0) {
+          console.log('Messages:');
+          emailListContainer.innerHTML = ''
+          for (let i = 0; i < messages.length; i++) {
+              console.log('Message ID: ' + messages[i].id);
+              listSearchedEmails(messages[i].id)
+          }
+          isSearchActive = false;
+      } else {
+          console.log('No messages found.');
+      }
+      });
+    }
+  })
+}
+searchMessages()
+ 
+async function listSearchedEmails(message) {
+  try {
+      const messagePreview = await getEmailPreview(message); // calling function to get a preview of email
+      console.log("messagePreview: ",messagePreview);
+ 
+      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+      console.log("emailListElement: ",emailListElement);
+ 
+      emailListElement.setAttribute("id", message);
+      emailListElement.onclick = () => clickHandle(message);
+ 
+      emailListContainer.appendChild(emailListElement);
+  } catch (error) {
+    console.error("Error listing emails:", error);
+  }
+}
 
+function handleBackButton() {
+  switch (source) {
+    case "Spam":
+      loadPage2Content();
+      listEmailsByLabel('SPAM', 30);
+      break;
+      console.log("Spam back Clicked");
+ 
+    case "Draft":
+      loadPage2Content();
+      listEmailsByLabel('DRAFT', 30);
+      break;
+      console.log("Draft back clicked");
+ 
+    case "Sent":
+      loadPage2Content();
+      listEmailsByLabel('SENT', 30);
+      break;
+      console.log("Sent back clicked");
+    case "Inbox":
+      loadPage2Content();
+      listEmailsByLabel('INBOX', 30)  
+    case "Trash":
+      loadPage2Content();
+      listEmailsByLabel('TRASH', 30);
+      break;
+      console.log("Sent back clicked");
+    case "Important":
+        loadPage2Content();
+        listEmailsByLabel('IMPORTANT', 30);
+        break;
+    case "Starred":
+          loadPage2Content();
+          listEmailsByLabel('STARRED', 30);
+          break;
+    case "Unread":
+        loadPage2Content();
+        listEmailsByLabel('UNREAD', 30);
+        break;
+  }  
+}

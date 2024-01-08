@@ -3,7 +3,7 @@ function changeTheme(id){
     let displayBody=document.getElementById('main-body');
 
     // changing background image
-    displayBody.style.backgroundImage=`url('http://127.0.0.1:5500/assets/images/themes/${id}.jpg')`;
+    displayBody.style.backgroundImage=`url('http://127.0.0.1:5500/gmail-clone/assets/images/themes/${id}.jpg')`;
     displayBody.style.backgroundSize='cover';
 
     // setting containers to transparent
