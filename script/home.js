@@ -258,9 +258,8 @@ function displayLayoutDiv(){
               layoutIcon.innerHTML = '';
               await layoutIcon.appendChild(verticalSplitIcon);
               
-              // stopListEmails = false;
+              
               console.log("latest emails in split view 1")
-              // await listLabels();
               await listVerticalSplitEmails(30);
               console.log("latest emails in split view 2")  
           })
@@ -280,9 +279,6 @@ function displayLayoutDiv(){
         .then(async(data) => {
           document.getElementById("display-area").innerHTML = data; 
           console.log("email list html loaded sucessfully");
-          // stopListEmails = false;
-          // await listLabels();
-          isSearchActive = false
           listDefaultSplitEmails(50);
         })
       }
@@ -309,9 +305,7 @@ function displayLayoutDiv(){
                 layoutIcon.innerHTML = '';
                 await layoutIcon.appendChild(verticalSplitIcon);
                 
-                stopListEmails = false;
                 console.log("latest emails in split view 1")
-                // await listLabels();
                 await listHorizontalSplitEmails(30);
                 console.log("latest emails in split view 2")  
             })
