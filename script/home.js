@@ -1,10 +1,11 @@
 let emailListContainer;
 let emailBody;
 let emailSubject;
-
-
-
-
+var source = "";
+let currentMessageId;
+let currentPage = 1;
+let nextPageToken = null;
+let displayedEmailIds = [];
 
 function loadPage2Content() {
   fetch("html/emaillist.html")
@@ -16,10 +17,6 @@ function loadPage2Content() {
     })
     .catch((error) => console.error("Error:", error));
 }
-
-
-
-
 
 // Call the function to load content on page load
 //loadPage2Content("mail.html");
@@ -102,10 +99,8 @@ function gapiLoaded() {
               // Handle errors
               console.error("Error fetching user profile:", error);
             });
-            createNonUserLabelElements();
-         
+          createNonUserLabelElements();
 
-        
           listLatestEmails(50);
         } else {
           document.getElementById("nextpage-content").innerText =
@@ -115,35 +110,104 @@ function gapiLoaded() {
   });
 }
 
-async function listLatestEmails(numberOfEmails) {
+// async function listLatestEmails(numberOfEmails,) {
+//   try {
+//     const response = await gapi.client.gmail.users.messages.list({
+//       userId: "me",
+//       labelIds: ["INBOX"],
+//       maxResults: numberOfEmails,
+//       pageToken: currentPage > 1 ? nextPageToken : undefined,
+//     });
+
+//     console.log(response.result.messages);
+
+//     for (const message of response.result.messages) {
+//       const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+//       console.log(messagePreview);
+
+//       const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+//       //   emailListElement.draggable = true;
+//       //   emailListElement.addEventListener("dragstart", handleDragStart);
+//       //   emailListElement.addEventListener("dragover", handleDragOver);
+//       // emailListElement.addEventListener("drop", handleDrop);
+//       //downloadAttachment(message.id)
+//       emailListElement.setAttribute("id", message.id);
+//       emailListElement.onclick = () => clickHandle(message.id);
+
+//       emailListContainer.appendChild(emailListElement);
+//     }
+//     nextPageToken = response.result.nextPageToken;
+//   } catch (error) {
+//     console.error("Error listing emails:", error);
+//   }
+// }
+
+// async function listLatestEmails(numberOfEmails, pageToken = undefined) {
+//   try {
+//     const response = await gapi.client.gmail.users.messages.list({
+//       userId: "me",
+//       labelIds: ["INBOX"],
+//       maxResults: numberOfEmails,
+//       pageToken: pageToken,
+//     });
+
+//     console.log(response.result.messages);
+
+//     // Clear the displayedEmailIds array when loading a new set
+//     displayedEmailIds = [];
+
+//     for (const message of response.result.messages) {
+//       const messagePreview = await getEmailPreview(message.id);
+//       console.log(messagePreview);
+
+//       const emailListElement = loadEmailContent(messagePreview);
+//       emailListElement.setAttribute("id", message.id);
+//       emailListElement.onclick = () => clickHandle(message.id);
+
+//       emailListContainer.appendChild(emailListElement);
+//       displayedEmailIds.push(message.id);
+//     }
+
+//     nextPageToken = response.result.nextPageToken;
+//   } catch (error) {
+//     console.error("Error listing emails:", error);
+//   }
+// }
+
+
+
+async function listLatestEmails(numberOfEmails, pageToken = undefined) {
   try {
     const response = await gapi.client.gmail.users.messages.list({
       userId: "me",
       labelIds: ["INBOX"],
       maxResults: numberOfEmails,
+      pageToken: pageToken,
     });
 
     console.log(response.result.messages);
 
+    // Clear the displayedEmailIds array when loading a new set
+    displayedEmailIds = [];
+
     for (const message of response.result.messages) {
-      const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
+      const messagePreview = await getEmailPreview(message.id);
       console.log(messagePreview);
 
-      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
-      emailListElement.draggable = true;
-      emailListElement.addEventListener("dragstart", handleDragStart);
-      emailListElement.addEventListener("dragover", handleDragOver);
-    emailListElement.addEventListener("drop", handleDrop);
+      const emailListElement = loadEmailContent(messagePreview);
       emailListElement.setAttribute("id", message.id);
       emailListElement.onclick = () => clickHandle(message.id);
 
       emailListContainer.appendChild(emailListElement);
+      displayedEmailIds.push(message.id);
     }
+
+    // Update nextPageToken only if it's a valid value
+    nextPageToken = response.result.nextPageToken || undefined;
   } catch (error) {
     console.error("Error listing emails:", error);
   }
 }
-
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // function to return a preview of email
 async function getEmailPreview(messageId) {
@@ -229,6 +293,7 @@ async function getEmailContent(messageId) {
 
 // Process the email data, body, sender's email, sender's name, and send time as needed
 async function clickHandle(emailElementId) {
+  currentMessageId = emailElementId;
   fetch("mail.html")
     .then((response) => response.text())
     .then((data) => {
@@ -371,59 +436,70 @@ async function getSendSubject(messageId) {
 function createNonUserLabelElements() {
   let parentDiv = document.getElementById("main-sidebar");
 
-  gapi.client.gmail.users.labels.list({
-    'userId': 'me'
-  })
-  .then(response => {
-    const labelsData = response.result.labels.filter(label => !label.type || label.type !== 'user');
+  gapi.client.gmail.users.labels
+    .list({
+      userId: "me",
+    })
+    .then((response) => {
+      const labelsData = response.result.labels.filter(
+        (label) => !label.type || label.type !== "user"
+      );
 
-    labelsData.forEach(label => {
-      const labelDiv = createLabelElement(label);
+      labelsData.forEach((label) => {
+        const labelDiv = createLabelElement(label);
+        // Assuming you have a container div with the id 'label-container'
+        parentDiv.appendChild(labelDiv);
+      });
+      const generatedFoldersDiv = generateFoldersDiv();
+      parentDiv.appendChild(generatedFoldersDiv);
+    })
+    .catch((error) => {
+      console.error("Error loading labels:", error);
+      // Handle the error, e.g., display an error message in the UI
+      const errorDiv = document.createElement("div");
+      errorDiv.innerText = "Error loading labels. Please try again.";
       // Assuming you have a container div with the id 'label-container'
-      parentDiv.appendChild(labelDiv);
+      document.getElementById("label-container").appendChild(errorDiv);
     });
-    const generatedFoldersDiv = generateFoldersDiv();
-    parentDiv.appendChild(generatedFoldersDiv);
-  })
-  .catch(error => {
-    console.error('Error loading labels:', error);
-    // Handle the error, e.g., display an error message in the UI
-    const errorDiv = document.createElement('div');
-    errorDiv.innerText = 'Error loading labels. Please try again.';
-    // Assuming you have a container div with the id 'label-container'
-    document.getElementById('label-container').appendChild(errorDiv);
-  });
 }
 
 // Assuming createLabelElement and getIconClass functions remain unchanged
 function createLabelElement(label) {
-  const labelDiv = document.createElement('div');
-  labelDiv.classList.add('labelDiv', 'row', 'ms-2', 'me-1', 'p-2');
+  const labelDiv = document.createElement("div");
+  labelDiv.classList.add("labelDiv", "row", "ms-2", "me-1", "p-2");
 
-  const iconDiv = document.createElement('div');
-  iconDiv.classList.add('bi', 'col-1', 'fs-6', 'me-2');
+  const iconDiv = document.createElement("div");
+  iconDiv.classList.add("bi", "col-1", "fs-6", "me-2");
   iconDiv.classList.add(getIconClass(label.id));
 
   labelDiv.appendChild(iconDiv);
 
-  const anchor = document.createElement('a');
+  const anchor = document.createElement("a");
   const labelName = label.name.toLowerCase();
   anchor.innerHTML = labelName.charAt(0).toUpperCase() + labelName.slice(1);
-  anchor.classList.add('col-6', 'labelAnchor', 'fs-6');
+  anchor.classList.add("col-6", "labelAnchor", "fs-6");
   labelDiv.appendChild(anchor);
 
   // Checking for spam emails
   anchor.onclick = () => {
-    document.getElementById('main-list-content').innerHTML = '';
+    document.getElementById("main-list-content").innerHTML = "";
 
-    if (anchor.innerHTML === 'Spam') {
+    if (anchor.innerHTML === "Spam") {
+      sessionStorage.setItem("spamConditionMet", "true");
       listSpamEmails(20);
-    } else if (anchor.innerHTML === 'Draft') {
+      source = "Spam";
+    } else if (anchor.innerHTML === "Draft") {
+      sessionStorage.setItem("draftConditionMet", "true");
       listDraftEmails(20);
-    } else if (anchor.innerHTML === 'Sent') {
+      source = "Draft";
+    } else if (anchor.innerHTML === "Sent") {
+      sessionStorage.setItem("sentConditionMet", "true");
       listSentEmails(20);
-    } else if (anchor.innerHTML === 'Trash') {
+      source = "Sent";
+    } else if (anchor.innerHTML === "Trash") {
+      sessionStorage.setItem("trashConditionMet", "true");
       listTrashEmails(20);
+      source = "Trash";
     }
   };
 
@@ -432,39 +508,38 @@ function createLabelElement(label) {
 
 function getIconClass(labelId) {
   switch (labelId.toLowerCase()) {
-    case 'chat':
-      return 'bi-chat-left-text';
-    case 'sent':
-      return 'bi-send';
-    case 'inbox':
-      return 'bi-inbox';
-    case 'trash':
-      return 'bi-trash';
-    case 'snoozed':
-      return 'bi-clock';
-    case 'draft':
-      return 'bi-file-earmark';
-    case 'spam':
-      return 'bi-exclamation-octagon';
-    case 'starred':
-      return 'bi-star';
-    case 'important':
-      return 'bi-flag';
-    case 'unread':
-      return 'bi-flag';
-    case 'category_updates':
-      return 'bi-exclamation-circle';
-    case 'category_promotions':
-      return 'bi-tag';
-    case 'category_social':
-      return 'bi-person-lines-fill';
+    case "chat":
+      return "bi-chat-left-text";
+    case "sent":
+      return "bi-send";
+    case "inbox":
+      return "bi-inbox";
+    case "trash":
+      return "bi-trash";
+    case "snoozed":
+      return "bi-clock";
+    case "draft":
+      return "bi-file-earmark";
+    case "spam":
+      return "bi-exclamation-octagon";
+    case "starred":
+      return "bi-star";
+    case "important":
+      return "bi-flag";
+    case "unread":
+      return "bi-flag";
+    case "category_updates":
+      return "bi-exclamation-circle";
+    case "category_promotions":
+      return "bi-tag";
+    case "category_social":
+      return "bi-person-lines-fill";
     default:
-      return 'bi-inbox';
+      return "bi-inbox";
   }
 }
 
 // Call the function to create non-user label elements
-
 
 //Function to list and display spam emails
 async function listSpamEmails(numberOfEmails) {
@@ -807,18 +882,17 @@ let appDiv = document.getElementById("menu-icon-container");
 let appDivOpen = document.getElementById("app-drawer-expand-container");
 appDiv.onclick = () => {
   appDivOpen = document.getElementById("app-drawer-expand-container");
-  appDivOpen.style.display = 'block';
+  appDivOpen.style.display = "block";
   console.log("App drawer clicked");
 };
 
 //hide the app drawer when clicked outside
 
-
 document.addEventListener("click", function (event) {
   // Check if the clicked element is NOT the div or a child of the div
   if (
     event.target !== appDivOpen &&
-    !appDivOpen.contains(event.target)&&
+    !appDivOpen.contains(event.target) &&
     appDiv.target !== appDiv &&
     !appDiv.contains(event.target)
   ) {
@@ -826,9 +900,6 @@ document.addEventListener("click", function (event) {
     appDivOpen.style.display = "none";
   }
 });
-
-
-
 
 // document.addEventListener("DOMContentLoaded", function () {
 //   var imageClick = document.getElementById("menu-icon-image");
@@ -855,7 +926,7 @@ document.addEventListener("click", function (event) {
 // appDiv.onclick = (event) => {
 //   toggleAppDrawer();
 //   console.log("App drawer clicked");
-  
+
 //   // Stop the event propagation to prevent immediate hiding
 //   event.stopPropagation();
 // };
@@ -879,17 +950,11 @@ function loadCompose() {
     .catch((error) => console.error("Error:", error));
 }
 
-
-
-
-
 //=================================================================================compose copy
-
 
 // const CLIENT_ID =
 //   "280715447136-ejl9bcsuj842het5ifgbj7naj1jjqml3.apps.googleusercontent.com";
 // const API_KEY = "AIzaSyAGzP3_IUN8Ds05jBNckdYrFR6jyDeoeEo";
-
 
 // const accessToken = localStorage.getItem("accessToken");
 
@@ -943,7 +1008,6 @@ function loadCompose() {
 //     sendEmail();
 //   });
 
-
 //   tokenClient.callback = async (resp) => {
 //     if (resp.error !== undefined) {
 //       throw (resp);
@@ -962,8 +1026,6 @@ function loadCompose() {
 //     tokenClient.requestAccessToken({ prompt: '' });
 //   }
 // }
-
-
 
 // function sendEmail() {
 //   const recipientEmail = document.getElementById("email-container").value;
@@ -993,7 +1055,6 @@ function loadCompose() {
 //     alert("Email sent successfully!");
 //   });
 // }
-
 
 /////////////////////////////////////////////////////////////////////////////////////
 
@@ -1046,9 +1107,9 @@ function sendEmail() {
 
   const rawMessage = btoa(
     `To: ${recipientEmail}\r\n` +
-    "Subject: Your Email Subject Here\r\n" +
-    'Content-Type: text/plain; charset="UTF-8"\r\n\r\n' +
-    emailMessage
+      "Subject: Your Email Subject Here\r\n" +
+      'Content-Type: text/plain; charset="UTF-8"\r\n\r\n' +
+      emailMessage
   );
 
   const request = gapi.client.gmail.users.messages.send({
@@ -1062,5 +1123,168 @@ function sendEmail() {
     console.log(response);
     alert("Email sent successfully!");
   });
+}
+
+////////////////////////////++ Attachment Download Trial
+
+function downloadAttachment(messageId) {
+  gapi.client.gmail.users.messages
+    .get({
+      userId: "me",
+      id: messageId,
+    })
+    .then(
+      function (response) {
+        const message = response.result;
+
+        // Implement logic to extract and download attachment here
+        const attachment = message.payload.parts[0].body.attachmentId;
+        // Use the attachment ID to download the attachment using the Gmail API
+      },
+      function (error) {
+        console.error("Error loading email:", error);
+      }
+    );
+}
+
+// function getEmailId() {
+//   // Implement this function to extract the email ID from the current Gmail page
+//   // You may need to inspect the Gmail DOM to find the relevant elements
+// }
+
+// Trigger the initialization of the Gmail API client
+// handleClientLoad();
+
+///code to customise back button when mail is opened
+function handleBackButton() {
+  switch (source) {
+    case "Spam":
+      loadPage2Content();
+      listSpamEmails(20);
+      break;
+      console.log("Spam back Clicked");
+
+    case "Draft":
+      loadPage2Content();
+      listDraftEmails(20);
+      break;
+      console.log("Draft back clicked");
+
+    case "Sent":
+      loadPage2Content();
+      listSentEmails(20);
+      break;
+      console.log("Sent back clicked");
+
+    case "Trash":
+      loadPage2Content();
+      listTrashEmails(20);
+      break;
+      console.log("Sent back clicked");
+
+  }  
+}
+
+
+
+function getNextMessageId(currentMessageId) {
+  return new Promise((resolve, reject) => {
+      gapi.client.gmail.users.messages.list({
+          'userId': 'me',
+      }).then(response => {
+          const messages = response.result.messages;
+          const currentIndex = messages.findIndex(message => message.id === currentMessageId);
+
+          if (currentIndex !== -1 && currentIndex < messages.length - 1) {
+              const nextMessageId = messages[currentIndex + 1].id;
+              resolve(nextMessageId);
+          } else {
+              reject('No next message found.');
+          }
+      }).catch(error => {
+          reject('Error fetching message list: ' + error.message);
+      });
+  });
+}
+
+
+async function nextButtonHandle() {
+  // Use the currentMessageId variable
+  if (currentMessageId) {
+    // Use currentMessageId to fetch the next email
+    let nextMessageId = await getNextMessageId(currentMessageId);
+    if (nextMessageId) {
+      clickHandle(nextMessageId);
+    } else {
+      console.log("No more emails to display.");
+    }
+  } else {
+    console.log("No current email selected.");
+  }
+}
+
+function getPrevMessageId(currentMessageId) {
+  return new Promise((resolve, reject) => {
+      gapi.client.gmail.users.messages.list({
+          'userId': 'me',
+      }).then(response => {
+          const messages = response.result.messages;
+          const currentIndex = messages.findIndex(message => message.id === currentMessageId);
+
+          if (currentIndex !== -1 && currentIndex < messages.length - 1) {
+              const prevMessageId = messages[currentIndex - 1].id;
+              resolve(prevMessageId);
+          } else {
+              reject('No next message found.');
+          }
+      }).catch(error => {
+          reject('Error fetching message list: ' + error.message);
+      });
+  });
+}
+
+async function prevButtonHandle(){
+  // Use the currentMessageId variable
+  if (currentMessageId) {
+    // Use currentMessageId to fetch the next email
+    let prevMessageId = await getPrevMessageId(currentMessageId);
+    if (prevMessageId) {
+      clickHandle(prevMessageId);
+    } else {
+      console.log("No more emails to display.");
+    }
+  } else {
+    console.log("No current email selected.");
+  }
+}
+
+
+
+async function nextSetEmailLoad() {
+  try {
+    currentPage++;
+    document.getElementById("main-list-content").innerHTML = "";
+    await listLatestEmails(50, nextPageToken);
+  } catch (error) {
+    console.error("Error loading next set of emails:", error);
+  }
+}
+
+
+
+async function prevSetEmailLoad() {
+  try {
+    if (currentPage > 1) {
+      currentPage--;
+
+      // Use nextPageToken for next emails and undefined for previous emails
+      const pageToken = currentPage > 1 ? nextPageToken : undefined;
+
+      document.getElementById("main-list-content").innerHTML = "";
+      await listLatestEmails(50, pageToken);
+    }
+  } catch (error) {
+    console.error("Error loading previous set of emails:", error);
+  }
 }
 

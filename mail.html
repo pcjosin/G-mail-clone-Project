@@ -11,15 +11,18 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <!-- Icons link -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <!-- <script src="./script/mail.js"></script> -->
+        
 </head>
 <body>
     <div id="mail-container" >
         <div id="top-section">
             <div id="top-section-left" class="m-4">
                 <div id="back-button-container" class="ms-4">
-                    <a href="home.html"><span class="material-symbols-outlined">
+                    <span class="material-symbols-outlined" id="material-symbol-back" style="cursor: pointer;" onclick="handleBackButton()">
                         arrow_back
-                    </span></a>
+                    </span>
+        
                 </div>
                 <div id="archive-trash-container" class="ms-5">
                     <div id="archive" class="mx-2">
@@ -78,12 +81,12 @@
                     <span id="mail-count"><span class="mail-index">24</span> of <span id="total-mails">12,258</span></span>
                 </div>
                 <div id="previous-container" class="ms-5">
-                    <span class="material-symbols-outlined">
+                    <span class="material-symbols-outlined" onclick="prevButtonHandle()">
                         arrow_back_ios
                     </span>
                 </div>
                 <div id="next-container" class="ms-5">
-                    <span class="material-symbols-outlined">
+                    <span class="material-symbols-outlined" onclick="nextButtonHandle()">
                         arrow_forward_ios
                     </span>
                 </div>
