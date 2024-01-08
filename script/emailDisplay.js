@@ -65,9 +65,9 @@ async function getSenderName(messageId) {
       .catch((error) => console.error("Error:", error));
   
     emailSubjectContent = await getSendSubject(emailElementId);
-    emailBodyContent = await getEmailBodyHtml(emailElementId);
+   
     emailDateContent= await getSendTime(emailElementId)
-    console.log(emailBodyContent)
+    
     summaryButton.id = emailElementId;
 
     senderEmailAdressContent= await getSenderEmail(emailElementId) 
@@ -80,64 +80,120 @@ async function getSenderName(messageId) {
     // Update your HTML elements
 
     emailSubject.innerText = emailSubjectContent;
-    emailBody.innerHTML = emailBodyContent;
+    await setEmailContent(emailElementId,emailBody);
     const formattedTimestamp = formatTimestamp(emailDateContent);
     emailDate.innerText=formattedTimestamp;
     senderEmailAdress.innerText=senderEmailAdressContent
-    console.log(generateSummary(emailBody))
+    //console.log(generateSummary(emailBody))
     
   
   }
-  
-  
-  async function getEmailBodyHtml(messageId) {
-    try {
-      // Use the Gmail API to get the email content
-      const response = await gapi.client.gmail.users.messages.get({
-        userId: "me",
-        id: messageId,
-      });
-  
-      // Access the email data from the response
-      const emailData = response.result;
-  
-      // Check if the email has parts
-      if (emailData.payload && emailData.payload.parts) {
-        // Iterate through parts
-        for (const part of emailData.payload.parts) {
-          // Check if the part is text/html (HTML content)
-          if (
-            part.mimeType === "text/html" &&
-            part.body &&
-            part.body.data
-          ) {
-            // Decode the base64-encoded data using custom function
-            console.log(part.body.data)
-            const htmlContent = atob(part.body.data.replace(/\-/g, '+').replace(/\_/g, '/'));
-  
-            console.log(htmlContent)
-            // Return the decoded HTML content
-            return htmlContent;
-          }
-        }
+  // setEmailContent function takes a messageId and a containerDiv as arguments
+// It fetches the email content using the Gmail API and sets the content in the provided containerDiv
+
+async function setEmailContent(messageId, containerDiv) {
+  try {
+    const response = await gapi.client.gmail.users.messages.get({
+      userId: "me",
+      id: messageId,
+    });
+
+    const emailData = response.result;
+    console.log(emailData)
+
+    if (emailData.payload ) {
+      const htmlPart = emailData.payload.body
+     
+
+      if (htmlPart) {
+        const htmlContent = atob(htmlPart.data.replace(/\-/g, '+').replace(/\_/g, '/'));
+        containerDiv.innerHTML = htmlContent;
+        return;
       }
-  
-      // Return an empty string if no valid HTML content is found
-      return "";
-    } catch (error) {
-      console.error("Error getting email HTML content:", error);
-      return ""; // Return an empty string in case of an error
+
+      const textPart = emailData.payload.parts.find(
+        (part) => part.mimeType === "text/plain" && part.body && part.body.data
+      );
+
+      if (textPart) {
+        const textContent = atob(textPart.body.data.replace(/\-/g, '+').replace(/\_/g, '/'));
+        containerDiv.innerText = textContent;
+        return;
+      }
     }
+
+    containerDiv.innerHTML = "";
+  } catch (error) {
+    console.error("Error setting email content:", error);
   }
+}
+
   
-  function decodeBase64(encodedString) {
-    const binaryString = atob(encodedString);
-    const bytes = new Uint8Array(binaryString.length);
-    for (let i = 0; i < binaryString.length; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
-    }
-    return String.fromCharCode.apply(null, bytes);
+  
+// setEmailContent function takes a messageId and a containerDiv as arguments
+
+
+
+function findPartByMimeType(parts, mimeType) {
+  return parts.find((part) => part.mimeType === mimeType);
+}
+
+function decodeBody(body) {
+  console.log(body.data)
+  return body && body.data ? atob(body.data.replace(/\-/g, '+').replace(/\_/g, '/')) : "";
+}
+
+async function getAttachment(attachmentId) {
+  const attachmentResponse = await gapi.client.gmail.users.messages.attachments.get({
+    userId: "me",
+    id: attachmentId,
+  });
+
+  return attachmentResponse.result.data;
+}
+
+function processAttachment(attachmentData, containerDiv) {
+  const attachmentContent = decodeBase64(attachmentData);
+  containerDiv.innerHTML = `<pre>${attachmentContent}</pre>`;
+}
+
+function decodeBase64(encodedData) {
+  return atob(encodedData.replace(/\-/g, '+').replace(/\_/g, '/'));
+}
+
+
+function findPartByMimeType(parts, mimeType) {
+  return parts.find((part) => part.mimeType === mimeType);
+}
+
+function decodeBody(body) {
+  if (body && body.data) {
+    return decodeBase64(body.data);
   }
+  return "";
+}
+
+function decodeBase64(encodedData) {
+  return atob(encodedData.replace(/\-/g, '+').replace(/\_/g, '/'));
+}
+
+
+function processAttachment(attachmentData) {
+  // Handle the attachment data as needed
+  // For example, you can create a download link or display the attachment in the UI
+  console.log("Attachment Data:", attachmentData);
+}
+
+// Rest of the functions remain unchanged...
+
+
+function hasAttachment(parts) {
+  return parts.some((part) => part.mimeType === "application/octet-stream");
+}
+
+// Rest of the functions remain unchanged...
+
+
   
   async function getSenderEmail(messageId) {
     try {
@@ -337,3 +393,65 @@ async function summarizeEmailContent(emailElementId){
       console.error('Error marking email as unread:', error);
     });
   }
+
+
+  async function getAttachments(messageId) {
+    try {
+      const response = await gapi.client.gmail.users.messages.get({
+        userId: "me",
+        id: messageId,
+      });
+  
+      const emailData = response.result;
+  
+      if (emailData.payload && emailData.payload.parts) {
+        const attachments = emailData.payload.parts.filter(part => part.filename && part.body && part.body.attachmentId);
+  
+        const attachmentDataArray = await Promise.all(attachments.map(async (attachment) => {
+          const attachmentData = await getAttachment(attachment.body.attachmentId);
+          return {
+            filename: attachment.filename,
+            data: attachmentData,
+          };
+        }));
+  
+        return attachmentDataArray;
+      }
+  
+      return [];
+    } catch (error) {
+      console.error("Error getting attachments:", error);
+      return [];
+    }
+  }
+  
+  async function getAttachment(attachmentId) {
+    try {
+      const attachmentResponse = await gapi.client.gmail.users.messages.attachments.get({
+        userId: "me",
+        messageId: messageId,
+        id: attachmentId,
+      });
+  
+      return attachmentResponse.result.data;
+    } catch (error) {
+      console.error("Error getting attachment:", error);
+      return null;
+    }
+  }
+  
+  // Usage example:
+  async function processAttachments(messageId) {
+    const attachments = await getAttachments(messageId);
+  
+    attachments.forEach(attachment => {
+      console.log(`Filename: ${attachment.filename}`);
+      console.log(`Data:`, attachment.data);
+      // Process or display the attachment data as needed
+    });
+  }
+  
+  // Call the processAttachments function with the messageId
+  
+ 
+  

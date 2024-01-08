@@ -1,6 +1,8 @@
-// let mainListContent = document.getElementById('main-list-content');
+ let mainListContent = document.getElementById('main-list-content');
+ let messageIdList=[]
 
-function loadEmailContent(response) {
+
+function loadEmailContent(response,messageId) {
     var shortMonthNames = [
   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -71,9 +73,12 @@ function loadEmailContent(response) {
   
     const checkbox = document.createElement("div");
   
-    checkbox.classList.add("list-check-box");
-    checkbox.innerHTML = '<i class="bi bi-square check-star-flag"></i>';
-  
+    const checkboxIcon = document.createElement('i');
+   checkboxIcon.classList.add('bi', 'bi-square', 'check-star-flag');
+   checkboxIcon.setAttribute('id',  'checkBoxIcon'+messageId);
+   checkboxIcon.addEventListener('click', toggleCheckbox);
+   checkbox.appendChild(checkboxIcon);
+
     leftDiv.appendChild(checkbox);
   
     const star = document.createElement("div");
@@ -179,12 +184,13 @@ function loadEmailContent(response) {
         console.log("in a search")
         return ;
       }
-  
+      
+      messageIdList=[]
       for (const message of response.result.messages) {
         const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
        
   
-        const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+        const emailListElement = loadEmailContent(messagePreview,message.id); //calling function to generate an email preview element
         
         emailListElement.setAttribute("id", message.id);
         emailListElement.draggable=true
@@ -280,3 +286,111 @@ function loadEmailContent(response) {
     }
   }
   
+
+  function toggleCheckbox(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const checkboxIcon = document.getElementById(event.target.id);
+
+    if (checkboxIcon) {
+        const extractedMessageId = extractMessageId(checkboxIcon.id);
+
+        if (checkboxIcon.classList.contains('checked')) {
+            checkboxIcon.classList.remove('checked');
+            deleteMessageId(extractedMessageId);
+        } else {
+            checkboxIcon.classList.add('checked');
+            messageIdList.push(extractedMessageId);
+        }
+
+        toggleClass(checkboxIcon, 'bi-square');
+        toggleClass(checkboxIcon, 'bi-check-square');
+
+        console.log(messageIdList);
+    } else {
+        console.error('Checkbox icon not found.');
+    }
+}
+
+function deleteMessageId(messageId) {
+    const index = messageIdList.indexOf(messageId);
+    if (index !== -1) {
+        messageIdList.splice(index, 1);
+        console.log(`MessageId ${messageId} removed from messageIdList`);
+    } else {
+        console.error(`MessageId ${messageId} not found in messageIdList`);
+    }
+}
+
+function toggleClass(element, className) {
+    if (element.classList.contains(className)) {
+        element.classList.remove(className);
+    } else {
+        element.classList.add(className);
+    }
+}
+
+function extractMessageId(id) {
+    const index = id.indexOf('checkBoxIcon');
+    if (index !== -1) {
+        return id.substring(index + 'checkBoxIcon'.length);
+    } else {
+        console.error('Invalid checkbox ID format:', id);
+        return '';
+    }
+}
+
+function moveToTrash(messageId) {
+  let messageDiv = document.getElementById('message-display-div');
+
+  gapi.client.gmail.users.messages.modify({
+    userId: 'me',
+    id: messageId,
+    resource: {
+      addLabelIds: ['TRASH'],
+      removeLabelIds: []  // Remove all existing label IDs
+    }
+  }).then(function(response) {
+    console.log('Message moved to trash:', response);
+    messageDiv.innerHTML="message deleted";
+    messageDiv.style.display = 'block';
+    hideMessageDiv();
+   
+  }, function(error) {
+    console.error('Error moving message to trash:', error);
+  });
+}
+
+
+
+function markAsUnread(messageId) {
+    // Use Gmail API to mark the email as unread
+    gapi.client.gmail.users.messages.modify({
+      userId: 'me',
+      id: messageId,
+      resource: {
+        addLabelIds: ['UNREAD']
+      }
+    }).then(response => {
+      console.log('Email marked as unread:', response.result);
+    }, error => {
+      console.error('Error marking email as unread:', error);
+    });
+  }
+
+
+
+  function groupDelete() {
+    // Iterate over the message IDs in the messageIdList and call moveToTrash for each ID
+    messageIdList.forEach(messageId => {
+        moveToTrash(messageId);
+    });
+}
+
+function groupMarkAsUnread() {
+  // Iterate over the message IDs in the messageIdList and call markAsUnread for each ID
+  messageIdList.forEach(messageId => {
+      markAsUnread(messageId);
+  });
+}
