@@ -34,7 +34,7 @@ function createFormDiv() {
   formDiv.classList.add('folder-create-form');
 
   const nameLabel = document.createElement('label');
-  nameLabel.innerText = 'Folder Name:';
+  nameLabel.innerText = 'Folder Name';
 
   const inputName = document.createElement('input');
   inputName.type = 'text';

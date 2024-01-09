@@ -443,16 +443,21 @@ function markAsRead(messageId) {
 async function groupDelete() {
   console.log("reached");
 
-  
+  let messageDiv = document.getElementById('message-display-div');
   await (messageIdList.map(async messageId => {
        moveToTrash(messageId);
   }));
+  messageDiv.innerHTML="messages deleted";
+  messageDiv.style.display = 'block';
+  hideMessageDivReload();
 
   console.log("Group delete completed");
-  location.reload();
+
+
 }
 
 async function groupMarkAsRead() {
+  let messageDiv = document.getElementById('message-display-div');
   console.log("reached");
 
 
@@ -461,7 +466,10 @@ async function groupMarkAsRead() {
   }));
 
   console.log("Group mark as read completed");
-  location.reload();
+  messageDiv.innerHTML="messages marked read";
+  messageDiv.style.display = 'block';
+  hideMessageDivReload();
+  
   }  
 
   async function nextSetEmailLoad() {
@@ -499,4 +507,13 @@ async function groupMarkAsRead() {
     } catch (error) {
       console.error("Error loading previous set of emails:", error);
     }
+}
+
+
+function hideMessageDivReload() { //hide message after 5 seconds
+  setTimeout(function () {
+    let messageDiv = document.getElementById('message-display-div');
+    messageDiv.style.display = 'none';
+    location.reload()
+  }, 5000);
 }

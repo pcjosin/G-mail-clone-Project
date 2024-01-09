@@ -101,6 +101,46 @@ async function setEmailContent(messageId, containerDiv) {
     });
 
     const emailData = response.result;
+
+    if (emailData.payload.parts) {
+      // Try to find the HTML part in payload.parts
+      const htmlPart = emailData.payload.parts.find(
+        (part) => part.mimeType === "text/html" && part.body && part.body.data
+      );
+
+      if (htmlPart) {
+        const htmlContent = atob(htmlPart.body.data.replace(/\-/g, '+').replace(/\_/g, '/'));
+        containerDiv.innerHTML = htmlContent;
+        return;
+      }}
+
+      // If payload.parts is not available, try using payload.body.data
+      if (!emailData.payload.parts) {
+        const textHtmlPart = emailData.payload.body;
+        if (textHtmlPart && textHtmlPart.data) {
+          const textHtmlContent = atob(textHtmlPart.data.replace(/\-/g, '+').replace(/\_/g, '/'));
+          containerDiv.innerHTML = textHtmlContent;
+          return;
+        }
+      
+
+      // Fallback: If no HTML part or body.data is found, set containerDiv.innerHTML to an empty string
+      containerDiv.innerHTML = "";
+    }
+  } catch (error) {
+    console.error("Error setting email content:", error);
+  }
+}
+
+/*
+async function setEmailContent(messageId, containerDiv) {
+  try {
+    const response = await gapi.client.gmail.users.messages.get({
+      userId: "me",
+      id: messageId,
+    });
+
+    const emailData = response.result;
     console.log(emailData)
 
     if (emailData.payload ) {
@@ -129,7 +169,7 @@ async function setEmailContent(messageId, containerDiv) {
     console.error("Error setting email content:", error);
   }
 }
-
+*/
   
   
 // setEmailContent function takes a messageId and a containerDiv as arguments
