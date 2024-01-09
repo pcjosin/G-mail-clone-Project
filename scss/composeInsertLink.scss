@@ -1,0 +1,23 @@
+$shadow-color: #ababab;
+
+@mixin common-styles {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+@mixin link-div($top, $left) {
+  position: absolute;
+  height: 340px;
+  width: 600px;
+  top: $top;
+  left: $left;
+  @include common-styles;
+  box-shadow: 0 0 10000px 0 $shadow-color;
+  display: none;
+  }
+
+
+#compose-insert-link-div {
+  @include link-div(17%, 15%);
+}

@@ -253,7 +253,7 @@ body{
 
 
 /* insert div link */
-
+/* 
 #compose-insert-link-div {
     position: absolute;
     height: 340px;
@@ -266,6 +266,7 @@ body{
     padding: 20px;
     display: none;
 }
+*/
 
 #insert-link-header {
     font-size: x-large;
@@ -333,7 +334,7 @@ body{
     margin-left: 10px;
     width: 100px;
     border-radius: 20px;
-}
+} 
 
 .button-to-right-of-send{
     height: 31px;
@@ -346,10 +347,3 @@ body{
 .button-to-right-of-send:hover{
     background-color: #dbdbdb;
 }
-
-#cssvaluetest{
-
-
-
-
-text-decoration:dashed;}

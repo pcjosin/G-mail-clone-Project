@@ -3,22 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gmail</title>
+    <title>Gmail mini</title>
     <link rel="icon" href="../assets/icons/Gmail_icon.webp" />
     <link rel="stylesheet" href="../css/home.css" />
    
 
     <!-- Quick settings link -->
     <link rel="stylesheet" href="../css/compose.css" />
+    <link rel="stylesheet" href="../scss/composeInsertLink.css" /> 
     <link rel="stylesheet" href="../css/quickSettings.css" />
     <link rel="stylesheet" href="../css/folder.css" />
     <link rel="stylesheet" href="../css/mail.css" />
-    <script src="../config/keys.js"></script>
+    <link rel="stylesheet" href="../scss/support.css">
+    <script src="../config.js"></script>
 
 
      <!-- importing the scripts -->
     
-     <script src="../script/search.js"></script> 
      <script src="../script/folder.js"></script>
      <script src="../script/changeTheme.js"></script>
      <script src="../script/summarize.js"></script>
@@ -27,7 +28,6 @@
      <script src="../script/emailDisplay.js"></script>
      <script src="../script/quickSettings.js"></script>
      <script src="../script/label.js"></script>
-     <script src="../script/search.js"></script>
 
     <!-- BootStrap 5 CDN link-->
     <script
@@ -313,7 +313,7 @@
     </div>
 
     <!-- Shows app drawer when app drawer symbol is clicked -->
-    <div id="app-drawer-expand-container">
+    <!-- <div id="app-drawer-expand-container">
       <table class="app-table">
         <tr class="app-drawer-expand-row1">
           <td>
@@ -386,6 +386,81 @@
           </td>
         </tr>
       </table>
+    </div> -->
+
+    <div id="app-drawer-expand-container">
+      <table class="app-table">
+        <tr class="app-drawer-expand-row1">
+          <td><div id="inside-td-appdiv">
+            <a href="https://www.google.co.in/"
+              ><img src="../assets/google_apps/icons8-google-48.png" alt="g-icon"
+            /></a>
+            <p>Google</p></div>
+          </td>
+          <td><div id="inside-td-appdiv">
+            <a href="https://www.google.com/intl/en_in/business/"
+              ><img src="../assets/google_apps/icons8-my-business-48.png" alt=""
+            /></a>
+            <p>Buisness</p></div>
+          </td>
+          <td><div id="inside-td-appdiv">
+            <a href="https://www.google.com/maps"
+              ><img src="../assets/google_apps/icons8-google-maps-old-48.png"
+            /></a>
+            <p>Maps</p></div>
+          </td>
+        </tr>
+        <tr>
+          <td><div id="inside-td-appdiv">
+            <a href="https://contacts.google.com/"
+              ><img
+                src="../assets/google_apps/icons8-google-contacts-48.png"
+                alt="google contacts"
+            /></a>
+            <p>Contacts</p></div>
+          </td>
+          <td><div id="inside-td-appdiv">
+            <a href="https://www.youtube.com/"
+              ><img src="../assets/google_apps/icons8-youtube-48.png" alt="youtube icon"
+            /></a>
+            <p>Youtube</p></div>
+          </td>
+          <td><div id="inside-td-appdiv">
+            <a href="https://drive.google.com/drive/my-drive"
+              ><img
+                src="../assets/google_apps/icons8-google-drive-48.png"
+                alt="google drive"
+            /></a>
+            <p>Drive</p></div>
+          </td>
+        </tr>
+        <tr>
+          <td><div id="inside-td-appdiv">
+            <a href="https://www.google.com/photos/about/"
+              ><img
+                src="../assets/google_apps/icons8-google-photos-48.png"
+                alt="google photos"
+            /></a>
+            <p>Photos</p></div>
+          </td>
+          <td><div id="inside-td-appdiv">
+            <a href="https://news.google.com/home?hl=en-IN&gl=IN&ceid=IN:en"
+              ><img
+                src="../assets/google_apps/icons8-google-news-48.png"
+                alt="google news"
+            /></a>
+            <p>News</p></div>
+          </td>
+          <td><div id="inside-td-appdiv">
+            <a href="https://meet.google.com/"
+              ><img
+                src="../assets/google_apps/icons8-google-meet-48.png"
+                alt="google meet"
+            /></a>
+            <p>Meet</p></div>
+          </td>
+        </tr>
+      </table>
     </div>
 
     <div id="message-display-div">
@@ -418,7 +493,7 @@
     <script src="../script/compose.js"></script>
     <script  src="../script/home.js"></script>
     <script src="../script/filter.js"></script>
-   
+    <script src="../script/appDrawer.js"></script>
     <script
       
       src="https://apis.google.com/js/api.js"

@@ -1,4 +1,3 @@
- let currentmessageId;
 
 
 async function getSenderName(messageId) {
@@ -50,7 +49,7 @@ async function getSenderName(messageId) {
   
   // Process the email data, body, sender's email, sender's name, and send time as needed
   async function clickHandle(emailElementId) {
-    currentmessageId=emailElementId;
+    currentMessageId=emailElementId;
     fetch("mail.html")
       .then((response) => response.text())
       .then((data) => {
