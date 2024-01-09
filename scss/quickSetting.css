@@ -1,0 +1,111 @@
+#quick-settings-main {
+  margin-top: 100px;
+  background-color: rgba(255, 255, 255, 0.831);
+  border-radius: 20px;
+  padding: 10px;
+  height: 85vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin-right: 5px;
+  z-index: 20;
+  position: absolute;
+  flex-direction: column;
+}
+
+body {
+  font-family: "Google Sans", Helvetica, Arial, sans-serif;
+}
+
+.allSettings {
+  border-radius: 20px;
+  border: solid 1px rgb(189, 189, 189);
+  font-family: sans-serif;
+  color: #1a73e8;
+  font-weight: bolder;
+  background-color: transparent;
+  z-index: 2;
+}
+.allSettings:hover {
+  background-color: rgb(245, 251, 255);
+}
+
+.close {
+  border: 0px;
+  background-color: transparent;
+  color: black !important;
+  font-size: 15px !important;
+}
+
+#themeSelection {
+  display: flex;
+  height: 10%;
+  width: 100%;
+}
+#themeSelection label > img {
+  width: 90%;
+  height: 100%;
+  border-radius: 10px;
+  margin: 2px;
+  margin-top: 20px;
+}
+#themeSelection input[type=radio] {
+  display: none;
+}
+#themeSelection input[type=radio]:checked + label > img {
+  border: solid 3px rgb(0, 140, 255);
+}
+
+#quick-settings-header .row .col-10 {
+  font-weight: 500;
+  font-size: 20px;
+}
+
+#themes-heading,
+#density-header {
+  font-weight: 400;
+  font-size: 15px;
+  margin-left: 20px;
+}
+#themes-heading:not(#density-header),
+#density-header:not(#density-header) {
+  margin-top: 20px;
+}
+
+#comfortable,
+#compact,
+#default {
+  margin-top: 20px;
+  display: flex;
+  width: 50%;
+  height: auto;
+}
+#comfortable .row,
+#compact .row,
+#default .row {
+  display: flex !important;
+  flex-direction: row !important;
+}
+#comfortable-input,
+#compact-input,
+#default-input {
+  display: flex;
+  margin-left: 20px;
+  font-size: 15px;
+}
+#comfortable-input label,
+#compact-input label,
+#default-input label {
+  margin-left: 5px;
+}
+#comfortable-image img,
+#compact-image img,
+#default-image img {
+  margin-left: 20px;
+}
+#comfortable-radio-button,
+#compact-radio-button,
+#default-radio-button {
+  margin-top: -10px;
+  width: 18px;
+  height: auto;
+}/*# sourceMappingURL=quickSetting.css.map */
