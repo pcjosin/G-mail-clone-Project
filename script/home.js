@@ -429,7 +429,7 @@ async function clickHandleSplit(emailElementId) {
     .catch((error) => console.error("Error:", error));
 
   emailSubjectContent = await getSendSubject(emailElementId);
-  emailBodyContent = await getEmailBodyHtml(emailElementId);
+  await setEmailContent(emailElementId,emailBody);
 
   // Update your HTML elements
   emailSubject.innerText = emailSubjectContent;
@@ -532,7 +532,7 @@ async function searchMessages() {
           document.getElementById('search-input-box').value = ""
           cancelButtonSvg.style.visibility = 'hidden'
           emailListContainer.innerHTML = ''
-          //listLatestEmails()
+          
         }
       })
  

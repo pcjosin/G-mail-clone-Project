@@ -345,6 +345,10 @@ function formatTimestamp(timestampString) {
     }
   }
 
+
+
+  
+
 async function summarizeEmailContent(emailElementId){
     
     fetch("mail.html")
@@ -361,9 +365,9 @@ async function summarizeEmailContent(emailElementId){
       .catch((error) => console.error("Error:", error));
   
     emailSubjectContent = await getSendSubject(emailElementId);
-    emailBodyContent = await getEmailBodyHtml(emailElementId);
+    
     emailDateContent= await getSendTime(emailElementId)
-    console.log(emailBodyContent)
+    
 
     senderEmailAdressContent= await getSenderEmail(emailElementId) 
     // Assume senderEmail contains the email address of the sender
@@ -374,7 +378,7 @@ async function summarizeEmailContent(emailElementId){
   
     // Update your HTML elements
     emailSubject.innerText = emailSubjectContent;
-    emailBody.innerHTML = emailBodyContent;
+    await setEmailContent(emailElementId,emailBody);
     const formattedTimestamp = formatTimestamp(emailDateContent);
     emailDate.innerText=formattedTimestamp;
     senderEmailAdress.innerText=senderEmailAdressContent
