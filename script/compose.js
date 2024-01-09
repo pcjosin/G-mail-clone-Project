@@ -289,6 +289,7 @@ function insertLink() {
   if (!composeLinkTextToDisp.value || !composeLinkUrl.value) {
     console.log('no url or text');
     window.alert('Enter all fields or click cancel to go back!')
+    return;
   }
   else {
     linkElement.href = composeLinkUrl.value;
