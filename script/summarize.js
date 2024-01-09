@@ -3,9 +3,9 @@ function tokenizeText(text) {
 }
 
 
-
+  // Recursively traverse the element and its children to get text content
 function extractTextAndTokenize(element, chunkSize) {
-    // Recursively traverse the element and its children to get text content
+  
     let textContent = '';
 
     function traverse(node) {
@@ -22,13 +22,7 @@ function extractTextAndTokenize(element, chunkSize) {
     }
 
     traverse(element);
-
-    // Tokenize the filtered text content
     const tokens = textContent
-
-    // Split tokens into chunks
-    
-
     console.log(textContent);
     return textContent;
 }

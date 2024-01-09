@@ -5,7 +5,7 @@ import torch
 
 app = Flask(__name__)
 CORS(app)
-print("kkk")
+
 
 @app.route('/summarize', methods=['POST'])
 def summarize_text():
@@ -14,7 +14,7 @@ def summarize_text():
         
         content = request.json['text']
 
-        # Split the content into chunks (adjust the chunk size as needed)
+        
         chunk_size = 500
         text_chunks = [content[i:i + chunk_size] for i in range(0, len(content), chunk_size)]
 

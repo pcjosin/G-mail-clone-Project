@@ -193,7 +193,7 @@ function loadEmailContent(response,messageId) {
           console.log("stopped due to search")
           return;
         }
-        const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+        const emailListElement = loadEmailContent(messagePreview,message.id); //calling function to generate an email preview element
         
         emailListElement.setAttribute("id", message.id);
         emailListElement.draggable=true
@@ -314,6 +314,20 @@ function loadEmailContent(response,messageId) {
     } else {
         console.error('Checkbox icon not found.');
     }
+    const groupDelete = document.getElementById('group-delete');
+    const groupMarkAsRead = document.getElementById('group-mark-as-read');
+
+    if (messageIdList.length > 0) {
+      // Toggle the display property
+      groupDelete.style.display = "block"
+      groupMarkAsRead.style.display = "block"
+    } else {
+      // If messageIdList is empty, hide the group actions
+      groupDelete.style.display = 'none';
+      groupMarkAsRead.style.display = 'none';
+    }
+  
+
 }
 
 function deleteMessageId(messageId) {
@@ -367,33 +381,41 @@ function moveToTrash(messageId) {
 
 
 
-function markAsUnread(messageId) {
-    // Use Gmail API to mark the email as unread
-    gapi.client.gmail.users.messages.modify({
+function markAsRead(messageId) {
+  // Use Gmail API to mark the email as unread by removing the 'READ' label
+  gapi.client.gmail.users.messages.modify({
       userId: 'me',
       id: messageId,
       resource: {
-        addLabelIds: ['UNREAD']
+          removeLabelIds: ['UNREAD']  // Remove 'READ' label to mark as unread
       }
-    }).then(response => {
+  }).then(response => {
       console.log('Email marked as unread:', response.result);
-    }, error => {
+  }, error => {
       console.error('Error marking email as unread:', error);
-    });
-  }
-
-
-
-  function groupDelete() {
-    // Iterate over the message IDs in the messageIdList and call moveToTrash for each ID
-    messageIdList.forEach(messageId => {
-        moveToTrash(messageId);
-    });
+  });
 }
 
-function groupMarkAsUnread() {
-  // Iterate over the message IDs in the messageIdList and call markAsUnread for each ID
-  messageIdList.forEach(messageId => {
-      markAsUnread(messageId);
-  });
+async function groupDelete() {
+  console.log("reached");
+
+  
+  await (messageIdList.map(async messageId => {
+       moveToTrash(messageId);
+  }));
+
+  console.log("Group delete completed");
+  location.reload();
+}
+
+async function groupMarkAsRead() {
+  console.log("reached");
+
+
+  await (messageIdList.map(async messageId => {
+     markAsRead(messageId);
+  }));
+
+  console.log("Group mark as read completed");
+  location.reload();
 }

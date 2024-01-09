@@ -123,3 +123,10 @@ justify-content: flex-end!important;
 .categoryShow{
     display: block;
 }
+
+
+.group-action {
+    height: 80%;
+    cursor: pointer;
+    display: none; /* Set the default display to none */
+  }
