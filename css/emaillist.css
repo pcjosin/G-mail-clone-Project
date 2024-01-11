@@ -24,7 +24,23 @@
     width: 100%;
             box-shadow: none;
 }
+.central-vertical-div{
+    width:30%;
+}
+.previewVerticalTitle{
+width:10vw;
+margin-left: 5px;
+white-space: nowrap !important;
+    /* Prevents text from wrapping to the next line */
+    overflow: hidden;
+    /* Hides any overflow */
+    text-overflow: ellipsis;
+    
+    /* width: 10vw; */
 
+    margin-left: 7px;
+    margin-right: 7px;
+}
 .preview-time{
 display:flex !important;
 justify-content: flex-end!important;
@@ -38,6 +54,10 @@ justify-content: flex-end!important;
 .right-div{
         display: flex;
 
+}
+.right-split-div{
+    display: flex;
+    width:40%;
 }
 .list-check-box{
     margin-left: 15px;

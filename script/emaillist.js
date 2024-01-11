@@ -6,6 +6,10 @@ let displayedEmailIds = [];
 let pageTokens = [] // extra
 let pageCount = 1;
 
+let fromNumber = 1;
+let toNumber = 30;
+
+
 function loadEmailContent(response) {
     var shortMonthNames = [
   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -135,9 +139,15 @@ function loadEmailContent(response) {
   
     const previewTitle = document.createElement("div");
     previewTitle.classList.add("previewTitle");
-    if (labels.includes("UNREAD")) {
-      previewTitle.classList.add("bold-text");
-    }
+  if (labels.includes("UNREAD")) {
+    sendertext.classList.add("bold-text");
+    emailPreviewBar.style.backgroundColor = 'white';
+
+  }
+  else {
+    emailPreviewBar.style.backgroundColor = '#eaf1fb';
+
+  }
   
     previewTitle.innerText = previewTitleContent + " - ";
   
@@ -330,8 +340,15 @@ function loadEmailContent(response) {
   async function nextSetEmailLoad() {
     try {
       document.getElementById("main-list-content").innerHTML = "";
-      await listLatestEmails(20, nextPageToken);
+      fromNumber = fromNumber + 30;
+      toNumber = toNumber + 30;
+      document.getElementById('from-number').innerText = fromNumber;
+      document.getElementById('to-number').innerText = toNumber;
+      
+      await listLatestEmails(30, nextPageToken);
+      
       pageCount++;
+
     } catch (error) {
       console.error("Error loading next set of emails:", error);
     }
@@ -341,6 +358,17 @@ function loadEmailContent(response) {
   async function prevSetEmailLoad() {
     try {
       document.getElementById("main-list-content").innerHTML = "";
+      if (fromNumber <= 1) {
+        fromNumber = 1;
+        toNumber = 30;
+      }
+      else {
+        fromNumber = fromNumber - 30;
+        toNumber = toNumber - 30;
+        document.getElementById('from-number').innerText = fromNumber;
+        document.getElementById('to-number').innerText = toNumber;
+
+      }
       
       // Calculate the previous page count
       let prevPageCount = Math.max(pageCount - 1, 1);
@@ -352,9 +380,9 @@ function loadEmailContent(response) {
       pageCount = prevPageCount;
 
       if(pageCount == 1){
-        await listLatestEmails(20)
+        await listLatestEmails(30)
       } else{
-        await listLatestEmails(20, nextPageToken);
+        await listLatestEmails(30, nextPageToken);
       }
   
       // Call listLatestEmails with the retrieved page token
@@ -364,3 +392,183 @@ function loadEmailContent(response) {
     }
   }
   
+
+
+
+//++++++++++++++++++++++++++++++++++++++++======================+++++++++++++++++++++++++++++++================
+  
+
+
+
+
+function loadVerticalEmailContent(response) {
+  var shortMonthNames = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  ];
+
+
+  const previewTitleContent = response.result.payload.headers.find(
+    (header) => header.name === "Subject"
+  ).value;
+  let senderNameContent =
+    response.result.payload.headers
+      .find((header) => header.name === "From")
+      .value.split("<")[0] == ""
+      ? response.result.payload.headers.find(
+        (header) => header.name === "From"
+      ).value
+      : response.result.payload.headers
+        .find((header) => header.name === "From")
+        .value.split("<")[0];
+  if (senderNameContent.length > 19) {
+    senderNameContent = senderNameContent.slice(0, 19) + '.';
+  }
+  const sndDateTime = new Date(response.result.payload.headers.find((header) => header.name === "Date").value);
+
+  let today = new Date();
+
+
+  if (today.getFullYear() === sndDateTime.getFullYear() &&
+    today.getMonth() === sndDateTime.getMonth() &&
+    today.getDate() === sndDateTime.getDate()) {
+    var sendTimeContent = sndDateTime.toLocaleTimeString().replace(/:\d{2} /, ' ');
+
+  }
+  else if (today.getFullYear() === sndDateTime.getFullYear()) {
+    var sendTimeContent = shortMonthNames[parseInt(sndDateTime.getMonth())] + ' ' + sndDateTime.getDate();
+
+
+  }
+  else {
+    var sendTimeContent = sndDateTime.toLocaleDateString();
+
+
+  }
+
+
+
+  // const sendTimeContent 
+
+
+  const previewTextContent = response.result.snippet;
+  const labels = response.result.labelIds;
+
+
+
+
+
+  const emailPreviewBar = document.createElement("div");
+  emailPreviewBar.classList.add("preview-bar");
+
+  const centralLineDiv = document.createElement("div");
+  centralLineDiv.classList.add("mt-1", "mb-1", "central-vertical-div");
+
+  //left section
+
+  const leftDiv = document.createElement("div");
+
+  leftDiv.classList.add("left-div");
+
+  const checkbox = document.createElement("div");
+
+  checkbox.classList.add("list-check-box");
+  checkbox.innerHTML = '<i class="bi bi-square check-star-flag"></i>';
+
+  leftDiv.appendChild(checkbox);
+
+  const star = document.createElement("div");
+
+  star.classList.add("list-star");
+
+  if (labels.includes("STARRED")) {
+    star.innerHTML =
+      '<i class="bi bi-star-fill check-star-flag" style="color:yellow"></i>';
+  } else {
+    star.innerHTML = '<i class="bi bi-star check-star-flag"></i>';
+  }
+
+  leftDiv.appendChild(star);
+
+  const important = document.createElement("div");
+
+  important.classList.add("list-important");
+
+  if (labels.includes("IMPORTANT")) {
+    important.innerHTML =
+      '<i class="bi bi-caret-right-fill check-star-flag" style="color:yellow"></i>';
+  } else {
+    important.innerHTML =
+      '<i class="bi bi-caret-right check-star-flag"></i>';
+  }
+
+  leftDiv.appendChild(important);
+
+  const sender = document.createElement("div");
+  sender.classList.add("sender-div");
+
+  const sendertext = document.createElement("span");
+  sendertext.classList.add("sendertext");
+
+  if (labels.includes("UNREAD")) {
+    sendertext.classList.add("bold-text");
+    emailPreviewBar.style.backgroundColor = 'white';
+
+  }
+  else {
+    emailPreviewBar.style.backgroundColor = '#eaf1fb';
+
+  }
+
+  sendertext.innerText = senderNameContent;
+  sender.appendChild(sendertext);
+  leftDiv.appendChild(sender);
+
+  centralLineDiv.appendChild(leftDiv);
+
+  //right section
+
+  const rightDiv = document.createElement("div");
+  rightDiv.classList.add("right-split-div", "col-md-8", "d-flex");
+
+  const preview = document.createElement("div");
+  preview.classList = ("preview", "col");
+
+  const previewTitle = document.createElement("div");
+  previewTitle.classList.add("previewVerticalTitle");
+  if (labels.includes("UNREAD")) {
+    previewTitle.classList.add("bold-text");
+  }
+
+  previewTitle.innerText = previewTitleContent + " - ";
+
+  const previewText = document.createElement("div");
+  previewText.classList.add("previewText");
+  previewText.innerText = previewTextContent;
+
+  preview.appendChild(previewTitle);
+  preview.appendChild(previewText);
+
+  rightDiv.appendChild(preview);
+
+  const sendTime = document.createElement("div");
+  sendTime.classList.add("preview-time", "col-md-3", "col-sm-3", "pe-4");
+
+  const sendTimeinside = document.createElement("span");
+  if (labels.includes('UNREAD')) {
+    sendTimeinside.classList.add("bold-text");
+  }
+  sendTimeinside.innerText = sendTimeContent;
+
+  sendTime.appendChild(sendTimeinside);
+
+  rightDiv.appendChild(sendTime);
+
+  centralLineDiv.appendChild(rightDiv);
+
+  emailPreviewBar.appendChild(centralLineDiv);
+  emailPreviewBar.classList.add('clickable');
+  return emailPreviewBar;
+
+  // }
+}

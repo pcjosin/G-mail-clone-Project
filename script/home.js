@@ -8,6 +8,8 @@ let currentMessageId;
 
 
 
+
+
 function loadPage2Content() {
   fetch("emaillist.html")
     .then((response) => response.text())
@@ -15,6 +17,7 @@ function loadPage2Content() {
       // Inject the loaded content into the container
       document.getElementById("display-area").innerHTML = data;
       emailListContainer = document.getElementById("main-list-content");
+
     })
     .catch((error) => console.error("Error:", error));
 }
@@ -335,7 +338,7 @@ async function listVerticalSplitEmails(numberOfEmails) {
       const messagePreview = await getEmailPreview(message.id); // calling function to get a preview of email
       console.log(messagePreview);
 
-      const emailListElement = loadEmailContent(messagePreview); //calling function to generate an email preview element
+      const emailListElement = loadVerticalEmailContent(messagePreview); //calling function to generate an email preview element
 
       emailListElement.setAttribute("id", message.id);
       emailListElement.onclick = () => clickHandleSplit(message.id);
