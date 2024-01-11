@@ -108,7 +108,8 @@ async function addNewFolderApiCall(labelName) {
 function createFolderElement(folderData) {
   const folderElementDiv = document.createElement('div');
   folderElementDiv.classList.add('text-folder');
-  folderElementDiv.id = folderData.id;
+  console.log(folderData.id)
+  folderElementDiv.setAttribute('id', folderData.id);
 
   const iconElement = document.createElement('i');
   iconElement.classList.add('bi', 'bi-folder');
@@ -124,7 +125,9 @@ function createFolderElement(folderData) {
   folderElementDiv.draggable = true;
 
   folderElementDiv.addEventListener('dragover', handleDragOver);
-  folderElementDiv.addEventListener('drop', handleDrop);
+  folderElementDiv.addEventListener('drop', function (event) {
+    handleDrop(event, this.id);
+  });
 
 
   // Clicking the folder element will trigger the listEmailsByCustomFolder function
@@ -282,6 +285,7 @@ function loadFoldersFromAPI(containerDiv) {
     const foldersData = response.result.labels.filter(folder => !folder.type || folder.type === 'user');
     foldersData.forEach(folder => {
       const folderDiv = createFolderElement(folder);
+       // Set the id attribute to the label ID
       containerDiv.appendChild(folderDiv);
     });
   }).catch(error => {
@@ -312,23 +316,21 @@ function addEmailToLabel(messageId, labelId) {
   });
 }
 
-function handleDrop(event) {
-  // Get the dragged data
+function handleDrop(event, folderId) {
+  
   const data = event.dataTransfer.getData('text');
 
-  // Get the target element's ID and text content
-  const targetId = event.target.id;
+  
+  const targetId = folderId;
   const textContent = event.dataTransfer.getData('text/plain');
 
-  console.log(targetId, textContent)
+  console.log(targetId + ":" + textContent);
   addEmailToLabel(textContent, targetId);
-  displayBanner(`email added to the folder: ${event.target.textContent}`, 'success');
-
+  displayBanner(`email added to the folder: ${textContent}`, 'success');
 
   setTimeout(() => {
     removeBanner();
   }, 2000);
-
 
   // Prevent the default behavior
   event.preventDefault();
