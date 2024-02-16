@@ -1,0 +1,118 @@
+#top-section{
+    display: flex;
+    position: relative;
+}
+
+#top-section-left{
+    display: flex;
+}
+
+#top-section-right{
+    display: flex;
+    position: absolute;
+    right: 0;
+}
+
+#archive-trash-container{
+    display: flex;
+}
+
+#unread-snooze-container{
+    display: flex;
+}
+
+#move-label-container{
+    display: flex;
+}
+
+#mail-header{
+    display: flex;
+    position: relative;
+}
+
+#mail-header-left{
+    display: flex;
+}
+
+#mail-header-right{
+    display: flex;
+    position: absolute;
+    right: 0;
+}
+
+#email-body{
+    width: 100%;
+}
+
+#email-sender img{
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
+#email-text{
+    display: flex;
+    flex-direction: row;
+}
+
+#sender-details table{
+    width: 100%;
+    border-collapse: separate; 
+    border-spacing: 20px;  
+}
+
+#content img{
+    width: 90%;
+    height: 100%;
+}
+
+#reply-forward-reaction-footer{
+    display: flex;
+}
+
+#reply-footer button{
+    border: solid 1px black;
+    border-radius:25px 25px;
+    height: 39px;
+    width: 120px;
+    background-color: white;
+}
+
+#forward-footer button{
+    border: solid 1px black;
+    border-radius: 25px 25px;
+    height: 39px;
+    width: 120px;
+    background-color: white;
+    background-position: center;
+}
+
+#reaction-border{
+    border: solid 2px black;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+.mail-icon{
+    margin: 6px;
+}
+
+a{
+    text-decoration: none;
+    color: black !important;
+} 
+#mail-content{
+    overflow-y: scroll;
+    height: 75vh;
+}
+
+#report-spam{
+    cursor: pointer;
+}
+#trash{
+    cursor: pointer;
+}
+#unread-snooze-container{
+    cursor: pointer;
+
+}

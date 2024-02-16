@@ -1,0 +1,12 @@
+#compose-insert-link-div {
+  position: absolute;
+  height: 340px;
+  width: 600px;
+  top: 17%;
+  left: 15%;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10000px 0 #ababab;
+  display: none;
+}/*# sourceMappingURL=composeInsertLink.css.map */
